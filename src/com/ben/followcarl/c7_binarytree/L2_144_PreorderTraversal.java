@@ -14,7 +14,7 @@ class L2_144_PreorderTraversal {
         while (!stack.isEmpty()) {
             TreeNode node = stack.removeFirst();
             res.add(node.val);
-            // 入栈，右边结点先入栈，左结点后入
+            // 入栈，右边结点先入栈后出，左结点后入先出，这样可以实现中左右的遍历顺序。
             if (node.right != null) stack.addFirst(node.right);
             if (node.left != null) stack.addFirst(node.left);
         }
