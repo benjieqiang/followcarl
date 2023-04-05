@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5847c145-80dc-4a8d-85a3-3acc197bacb6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ben/followcarl/c7_binarytree/L2_144_PreorderTraversal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ben/followcarl/c7_binarytree/L2_144_PreorderTraversal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,22 +71,9 @@
       <recent name="com.ben.followcarl.c7_binarytree" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.L4_226_InvertTree">
+  <component name="RunManager" selected="Application.L5_101_IsSymmetric">
     <configuration name="L2_144_PreorderTraversal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ben.followcarl.c7_binarytree.L2_144_PreorderTraversal" />
-      <module name="followcarl" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ben.followcarl.c7_binarytree.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="L2_145_PostorderTraversal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.ben.followcarl.c7_binarytree.L2_145_PostorderTraversal" />
       <module name="followcarl" />
       <extension name="coverage">
         <pattern>
@@ -138,13 +124,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="L5_101_IsSymmetric" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.ben.followcarl.c7_binarytree.L5_101_IsSymmetric" />
+      <module name="followcarl" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ben.followcarl.c7_binarytree.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.L5_101_IsSymmetric" />
         <item itemvalue="Application.L4_226_InvertTree" />
         <item itemvalue="Application.L2_144_PreorderTraversal" />
         <item itemvalue="Application.L3_107_LevelOrderBottom" />
         <item itemvalue="Application.L2_94_InorderTraversal" />
-        <item itemvalue="Application.L2_145_PostorderTraversal" />
       </list>
     </recent_temporary>
   </component>
@@ -161,7 +160,8 @@
       <workItem from="1678957237543" duration="13326000" />
       <workItem from="1680082383372" duration="7328000" />
       <workItem from="1680178645430" duration="721000" />
-      <workItem from="1680358834533" duration="5445000" />
+      <workItem from="1680358834533" duration="6428000" />
+      <workItem from="1680707176015" duration="2297000" />
     </task>
     <servers />
   </component>
@@ -246,6 +246,11 @@
           <url>file://$PROJECT_DIR$/src/com/ben/followcarl/c7_binarytree/L4_226_InvertTree.java</url>
           <line>22</line>
           <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ben/followcarl/c7_binarytree/L5_101_IsSymmetric.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
