@@ -1,5 +1,8 @@
 package com.ben.followcarl.c7_binarytree;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class L8_222_CountNodes {
     public int countNodes(TreeNode root) {
         if (root == null) return 0;
@@ -14,12 +17,14 @@ public class L8_222_CountNodes {
         return 1 + leftCount + rightCount;
     }
 
-    // 完全二叉树的性质，
+    // 完全二叉树的性质：
+    // 1. 如果树是一个满二叉树，则结点总数：2^深度-1
     public int countNodes2(TreeNode root) {
         if(root == null) return 0;
         TreeNode left = root.left;
         TreeNode right = root.right;
         int leftDepth = 0, rightDepth = 0;
+//        开始根据左深度和右深度是否相同来判断该子树是不是满二叉树
         while (left != null) {
             left = left.left;
             leftDepth++;
@@ -29,12 +34,29 @@ public class L8_222_CountNodes {
             rightDepth++;
         }
         if (leftDepth == rightDepth) {
-            return (2 << leftDepth) - 1;
+            return (2 << leftDepth) - 1; // 注意(2<<1) 相当于2^2，返回满足满二叉树的子树节点数量
         }
-
+        // 左中右后序遍历；
         return countNodes(root.left) + countNodes(root.right) + 1;
     }
 
+    public int countNodes3(TreeNode root) {
+        if(root == null) return 0;
+        //层序遍历
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int res = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.remove();
+                res++;
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
+            }
+        }
+        return res;
+    }
     public static void main(String[] args) {
         TreeNode node1 = new TreeNode(1);
         TreeNode node2 = new TreeNode(2);
@@ -45,7 +67,7 @@ public class L8_222_CountNodes {
         node1.right = node3;
         node2.right = node4;
         node3.right = node5;
-        int res = new L8_222_CountNodes().countNodes(node1);
+        int res = new L8_222_CountNodes().countNodes3(node1);
         System.out.println(res);
     }
 }
