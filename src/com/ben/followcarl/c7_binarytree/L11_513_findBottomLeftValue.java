@@ -10,6 +10,7 @@ import java.util.LinkedList;
  * @version: 1.0
  */
 public class L11_513_findBottomLeftValue {
+    // 层序遍历，利用队列，每次把结果值更新成最左边的节点的值；
     public int findBottomLeftValue(TreeNode root) {
         if (root == null) return 0;
         Deque<TreeNode> queue = new LinkedList<>();
