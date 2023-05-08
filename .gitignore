@@ -30,4 +30,5 @@ bin/
 
 /.idea/
 
+/target/
 .idea/workspace.xml
