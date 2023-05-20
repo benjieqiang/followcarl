@@ -23,11 +23,11 @@ public class L1_77_combine {
             res.add(new LinkedList<>(path));
             return;
         }
-        // 单层递归逻辑,树的宽度由n来决定，树的高度由k来决定；
+        // 单层递归逻辑,树的宽度由n来决定,树的高度由k来决定；
         // 剪枝：n - (k - path.size()) + 1
         for (int i = startIndex; i <= n; i++) {
             path.add(i);
-            backtracking(n, k, i + 1); // 已经取出来一个数字i之后，那么接着从i+1的位置继续取数，直到path的长度为k;
+            backtracking(n, k, i + 1); // 已经取出来一个数字i之后，那么接着从i+1的位置继续取数，直到path的长度为k
             path.removeLast();
         }
         // 剪枝优化： 求至多从哪里开始？

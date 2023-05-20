@@ -16,6 +16,16 @@ public class L2_216_combinationSum3 {
     LinkedList<Integer> path = new LinkedList<>();
     int sum = 0;
 
+    /**
+     * @param k: 1-9中选k个数
+     * @param n: 和
+     * @param startIndex: 决定了下一次递归从哪里开始，不能重复
+     * @return void
+     * @description TODO
+     * @author benjieqiang
+     * @date 2023/5/19 6:32 PM
+     */
+
     void backtracking(int k, int n, int startIndex) {
         if (path.size() == k) {
             if (sum == n) res.add(new ArrayList<>(path));
