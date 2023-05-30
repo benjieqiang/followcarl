@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * @Description: TODO
  * @Version: 1.0
  */
-public class L5_131_patition {
+public class L6_131_patition {
 
     List<List<String>> res = new ArrayList<>();
     LinkedList<String> path = new LinkedList<>();

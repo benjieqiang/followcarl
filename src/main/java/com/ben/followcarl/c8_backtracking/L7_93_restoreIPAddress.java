@@ -11,7 +11,7 @@ import java.util.List;
  * @Description: TODO
  * @Version: 1.0
  */
-public class L6_93_restoreIPAddress {
+public class L7_93_restoreIPAddress {
     List<String> res = new ArrayList<>();
 
     public List<String> restoreIpAddresses(String s) {
