@@ -23,11 +23,11 @@ public class L12_47_permuteUnique {
         }
         for (int i = 0; i < nums.length; i++) {
             // used[i - 1] == true，说明同⼀树枝nums[i - 1]使⽤过
-            // used[i - 1] == false，说明同⼀树层nums[i - 1]使⽤过 ，进行树层去重
+            // 前后元素相同且used[i - 1] == false，说明同⼀树层nums[i - 1]使⽤过 ，进行树层去重
             if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false) {
                 continue;
             }
-            // 排除已经抽的元素
+            // 排除已经抽的元素，同一个元素不能使用多次
             if (used[i] == true) continue;
             path.add(nums[i]);
             used[i] = true;
@@ -38,7 +38,7 @@ public class L12_47_permuteUnique {
     }
 
     public List<List<Integer>> permuteUnique(int[] nums) {
-        Arrays.sort(nums);
+        Arrays.sort(nums); //相同元素挨在一起，便于树层去重
         used = new boolean[nums.length];
         backtracking(nums);
         return res;
