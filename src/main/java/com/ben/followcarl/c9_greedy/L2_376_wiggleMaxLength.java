@@ -41,7 +41,8 @@ public class L2_376_wiggleMaxLength {
     @Test
     public void testWiggleMaxLength() {
 //        int nums[] = {1,7,4,9,2,5};
-        int[] nums = {1,2,2,2,3,4}; // 单调坡度有平坡：[1,2,2,2,3,4]
+//        int[] nums = {1,2,2,2,3,4}; // 单调坡度有平坡：[1,2,2,2,3,4]
+        int[] nums = {2, 2}; //两个相等元素
         System.out.println(wiggleMaxLength(nums));
     }
 }
