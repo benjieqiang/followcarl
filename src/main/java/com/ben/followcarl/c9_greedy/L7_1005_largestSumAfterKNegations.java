@@ -9,7 +9,8 @@ import java.util.stream.IntStream;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-02  21:52
- * @Description: TODO
+ * @Description: 贪心思路：1. 绝对值大的负数变成正数，当前值最大达到局部最优-》整体和最大；
+ *                       2. 第一步完成之后，k大于0，那么需要判断k是否奇偶，偶数不需要反转，奇数反转一次最小的元素即可完成整体和最大；
  * @Version: 1.0
  */
 public class L7_1005_largestSumAfterKNegations {
