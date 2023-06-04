@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
  */
 public class L7_1005_largestSumAfterKNegations {
     public int largestSumAfterKNegations(int[] nums, int k) {
-        //1. 先排序，按照绝对值从大到小的顺序；
+        //1. 先排序，按照绝对值从大到小的顺序；先转成流
         nums = IntStream.of(nums)
                 .boxed()
                 .sorted((o1, o2) -> Math.abs(o2) - Math.abs(o1))
