@@ -5,11 +5,18 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-11  21:54
- * @Description: dp[i] = max(dp[i], max((i - j) * j, dp[i - j] * j))
+ * @Description: TODO
+ * [i] = max(dp[i], max((i - j) * j, dp[i - j] * j))
  * 重点在递推公式：
  * 1. dp[i]含义，第i个数拆了之后得到的最大乘积
- * 2. 对于数i可以拆成两个数：j和i-j（j从1到i ）
+ * 2. 对于数i可以拆成两个数：整数j和整数i-j（j从1到i ）
  *          可以拆成三个数及以上：j和dp[i-j]
+ *          为啥是j和dp[i-j]?比如整数6拆分
+ *          1 5
+ *          2 4
+ *          3 3
+ *          4 2
+ *          5 1
  * @Version: 1.0
  */
 public class L6_343_integerBreak {
