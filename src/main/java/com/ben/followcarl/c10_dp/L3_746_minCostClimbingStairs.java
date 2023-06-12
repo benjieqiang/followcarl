@@ -28,6 +28,7 @@ public class L3_746_minCostClimbingStairs {
         int[] dp = new int[cost.length + 1];
         dp[0] = 0;
         dp[1] = 0;
+        // 因为要到顶层，所以遍历到比数组长度要大1的位置
         for (int i = 2; i <= cost.length; i++) {
             dp[i] = Math.min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
             System.out.println(Arrays.toString(dp));
