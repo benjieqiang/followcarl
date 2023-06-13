@@ -18,7 +18,7 @@ import java.util.Arrays;
  */
 public class L9_416_canPartition {
     public boolean canPartition(int[] nums) {
-        // 背包的最大容量是su
+        // 背包的最大容量是sum/2
         if (nums.length <= 1) return false;
         int sum = 0;
         for (int num : nums) sum += num;

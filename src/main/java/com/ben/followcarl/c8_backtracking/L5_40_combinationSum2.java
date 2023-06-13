@@ -48,7 +48,7 @@ public class L5_40_combinationSum2 {
 
     @Test
     public void testCombinationSum2() {
-        int[] candidates = {10,1,2,7,6,1,5};
-        System.out.println(combinationSum2(candidates, 8));
+        int[] candidates = {4,3,2,3,5,2,1};
+        System.out.println(combinationSum2(candidates, 5));
     }
 }
