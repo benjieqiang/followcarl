@@ -27,7 +27,6 @@ public class L11_494_findTargetSumWays {
         if (target < 0 && sum < -target) return 0;
         if ((target + sum) % 2 != 0) return 0; //如果发现不能被2整除，则说明装不了；
         int size = (target + sum) / 2; // 正数集合的大小
-        if (size < 0) size = -size; //确保是正数集合；
         //dp[j] 表示：填满j这么大容积的包，有dp[j]种方法
         int[] dp = new int[size + 1];
         dp[0] = 1; // 表示用若干个元素组成和为零的方案数，只有一种方案就是什么都不选，所以设为1
