@@ -1,5 +1,7 @@
 package com.ben.followcarl.c7_binarytree;
 
+import org.junit.Test;
+
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +26,9 @@ public class L3_107_LevelOrderBottom {
         return res;
     }
 
-    public static void main(String[] args) {
+
+    @Test
+    public void testLevelOrderTraversal() {
         TreeNode node1 = new TreeNode(5);
         TreeNode node2 = new TreeNode(4);
         TreeNode node3 = new TreeNode(6);
@@ -35,9 +39,8 @@ public class L3_107_LevelOrderBottom {
         node2.left = node4;
         node2.right = node5;
 
-        L3_107_LevelOrderBottom l3_107_levelOrderBottom = new L3_107_LevelOrderBottom();
 
-        List<List<Integer>> res = l3_107_levelOrderBottom.levelOrderBottom(node1);
+        List<List<Integer>> res = levelOrderBottom(node1);
         System.out.println(res);
     }
 }
