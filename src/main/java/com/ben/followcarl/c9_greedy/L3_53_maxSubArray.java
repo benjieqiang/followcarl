@@ -35,7 +35,7 @@ public class L3_53_maxSubArray {
     // 如果连续和是负数，我们就从下一个位置开始，因为负数加上一个数只能让和更小。
     // 一定要先记录再清0；
     public int maxSubArray(int[] nums) {
-        int res = Integer.MIN_VALUE;
+        int res = Integer.MIN_VALUE; //如果子序列都为负数，那么也得从最大的负数开始计算求和
         int sum = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i]; // 求连续和
@@ -46,7 +46,8 @@ public class L3_53_maxSubArray {
     }
     @Test
     public void testMaxSubArray() {
-        int[] nums = {5,4,-1,7,8};
+//        int[] nums = {5,4,-1,7,8};
+        int[] nums = {-2, -1};
         System.out.println(maxSubArray(nums));
     }
 }
