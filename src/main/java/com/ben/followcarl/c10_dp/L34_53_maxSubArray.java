@@ -19,7 +19,7 @@ public class L34_53_maxSubArray {
     public int maxSubArray(int[] nums) {
         int[] dp = new int[nums.length + 1];
         dp[0] = nums[0];
-        int res = dp[0];
+        int res = dp[0]; // res保存最大的dp[i]
         for (int i = 1; i < nums.length; i++) {
             dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
             if (dp[i] > res) res = dp[i];
@@ -27,9 +27,21 @@ public class L34_53_maxSubArray {
         return res;
     }
 
+    public int maxSubArray2(int[] nums) {
+        if (nums.length == 1) return nums[0];
+        int res = Integer.MIN_VALUE;
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (sum > res) res = sum;
+            if (sum < 0) sum = 0;
+        }
+        return res;
+    }
+
     @Test
     public void testMaxSubArray() {
         int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
-        Assert.assertEquals(6, maxSubArray(nums));
+        Assert.assertEquals(6, maxSubArray2(nums));
     }
 }
