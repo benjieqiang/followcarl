@@ -29,12 +29,30 @@ public class L35_392_isSubsequence {
                 }
                 for (int[] res : dp) {
                     System.out.println(Arrays.toString(res));
+                    System.out.println(" ");
                 }
             }
         }
         return dp[len1][len2] == len1;
     }
 
+    public boolean isSubsequence0624(String s, String t) {
+        if (s.length() > t.length()) return false;
+        int[][] dp = new int[s.length() + 1][t.length() + 1];
+
+        for (int i = 1; i <= s.length(); i++) {
+            char ch1 = s.charAt(i - 1);
+            for (int j = 1; j <= t.length(); j++) {
+                char ch2 = t.charAt(j - 1);
+                if (ch1 == ch2) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                }
+            }
+        }
+        return dp[s.length()][t.length()] == s.length();
+    }
     @Test
     public void testIsSub() {
         String s = "abc";
