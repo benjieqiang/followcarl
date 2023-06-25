@@ -2,6 +2,8 @@ package com.ben.followcarl.c10_dp;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-12  20:39
@@ -50,11 +52,8 @@ public class L8_BagProblem {
             }
         }
         // 5. 打印dp数组
-        for (int i = 0; i < goods; i++) {
-            for (int j = 0; j <= bagSize; j++) {
-                System.out.print(dp[i][j] + "\t");
-            }
-            System.out.println("\n");
+        for (int[] res : dp) {
+            System.out.println(Arrays.toString(res));
         }
         return dp[goods - 1][bagSize];
     }
