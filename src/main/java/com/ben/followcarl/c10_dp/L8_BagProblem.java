@@ -23,7 +23,8 @@ public class L8_BagProblem {
      * j是放入0～bagSize的背包，所以dp有bagSize+1列；
      * 2. dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j-weight[i]] + value[i]);
      *  2.1 不放物品i：背包容量为j它所能装物品的最大价值。也就是在0-i-1的物品中取物品放入容量为j的背包得到的最大价值；
-     *  2.2 放物品i：在0-i-1的物品中选出物品放入背包容量减去物品i的重量所得到的最大价值+ 物品i的价值
+     *      物品i重量已经超过背包重量j，放不进去，所以此时最大价值应该是和前面相同，直接覆盖过来；
+     *  2.2 放物品i：在0-i-1的物品中选出物品放入背包容量减去物品i的重量所得到的最大价值 + 物品i的价值
      * 3. 初始化首行和首列
      * 首行的意思：拿物品0依次放入0，1，2...bagSize这么大的背包中得到的最大价值；
      * 物品0的重量weight[0]需要和背包容量(从0到bagSize)比较大小，不超过就放如物品0的价值，如果超过了放不下就是0；
@@ -38,7 +39,9 @@ public class L8_BagProblem {
     public int test2WeiBagProblem(int[] weight, int[] value, int bagSize) {
 
         int goods = weight.length;
-        int[][] dp = new int[goods][bagSize + 1];
+        int[][] dp = new int[goods][bagSize + 1]; //不知道dp数组应该定义多大，可以举例，
+        // 比如，最后的结果要想在最右下角进行收获，那意味着得有goods-1行，列需要bagSize+1
+        // 不然会越界
 
         for (int j = weight[0]; j <= bagSize; j++) {
             dp[0][j] = value[0];
@@ -47,7 +50,7 @@ public class L8_BagProblem {
         for (int i = 1; i < goods; i++) {
             for (int j = 1; j <= bagSize; j++) {
                 if (j < weight[i]) {
-                    // 如果当前背包的容量装不下i, 那么此时第i个物品能放入背包j的最大价值是
+                    // 如果当前背包的容量装不下i, 那么此时第i个物品能放入背包j的最大价值是上一个最大价值；
                     dp[i][j] = dp[i - 1][j];
                 } else {
                     dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);
@@ -90,29 +93,30 @@ public class L8_BagProblem {
         int[] dp = new int[bagSize + 1];
         // dp[0] = 0; 背包容量为0，肯定能装0个物品，对应价值也为0；
         // dp其他非0下标，只要初始化为非0的最小值就可以；这里给0；
-        //遍历顺序：先遍历物品，物品从0到goods-1，再倒序遍历背包容量
+        // 遍历顺序：先遍历物品，物品从0到goods-1，再倒序遍历背包容量
         // 倒序遍历，因为如果是正序遍历：
-        // 当i = 0时，此时要依次往背包1，2放,因为0号背包放不下，所以是dp[0] = 0
+        // 当i = 0时，即拿出物品0要依次往背包1，2放,因为0号背包放不下，所以是dp[0] = 0
         // dp[1] = dp[1 - weight[0]] + value[0] = dp[0] + value[0] = 15;
         // dp[2] = dp[2- weight[0]] + value[0] = 15+ 15 = 30
-        // 此时看一下dp[2]的含义，2号背包所能装的最大价值是30，物品0只能拿一次，只能是15，这样就矛盾了，所以得倒序遍历。
+        // 此时看一下dp[2]的含义，2号背包所能装的最大价值是30，但是如果按照我们的想法，把物品0拿出来放入到背包2中，
+        // 最大价值只能是15，这样就矛盾了，所以是倒序遍历。
         // 倒序遍历：dp[2] = dp[2 - weight[0]] + value[0] = dp[1] + 15 = 15;
-//        for (int i = 0; i < goods; i++){
-//            for (int j = bagSize; j >= weight[i]; j--){
-//                dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
-//            }
-//        }
+        for (int i = 0; i < goods; i++){
+            for (int j = bagSize; j >= weight[i]; j--){
+                dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
+            }
+        }
         // 测试遍历顺序，先遍历背包，再遍历物品
         // 当j = 4时，dp[4]表示放入4号背包所能装的最大价值；
         // 从0开始遍历物品，dp[4] = max(dp[4],dp[4-weight[0]] + value[0]) = max(dp[4],dp[3]+15) = 15
         // 物品1，dp[4] = max(dp[4], dp[1]+20) = 20
         // 物品2，dp[4] = max(dp[4], dp[0]+30) = 30
         // 也就是说4号背包只能放入物品2，此时最大价值是30，但是实际上背包4的最大价值是35，也就是放入物品0和物品1
-        for (int j = bagSize; j > weight[1]; j--){
-            for (int i = 0; i < weight.length; i++){
-                dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
-            }
-        }
+//        for (int j = bagSize; j > weight[1]; j--){
+//            for (int i = 0; i < weight.length; i++){
+//                dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
+//            }
+//        }
         //打印dp数组
         System.out.println(Arrays.toString(dp));
     }
