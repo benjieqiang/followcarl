@@ -22,13 +22,13 @@ import org.junit.Test;
  *       left + target = sum; //总和
  * 所以：  left = （sum + target)/2;
  * 比如[1,1,1,1,1]可以分成左集合left = [1,1,1,1], 右集合right = [1];
- * 为何必须整除？如果target为2，此时left = 7/2 不能被2整除；
+ * 为何必须整除？如果target为2，此时left = 7/2 不能被2整除，不能拆成两个集合。
  * 分成正数集合-负数集合=target
  * 4-1 = 3
  * 3-2 = 1
  * 2-3 = -1
  * 1-4 = -3
- * 所以target为2时，不能找到一个集合满足能够分割成功两份，他们的差是2；
+ * 所以target为2时，不能找到一个集合满足能够分割成两份，他们的差是2；
  * 所以left 必须得整除；
  *
  * 给了一个容量为left的背包，问有多少种方式能把背包装满；
@@ -45,8 +45,7 @@ public class L11_494_findTargetSumWays {
     public int findTargetSumWays(int[] nums, int target) {
         int sum = 0;
         for (int num : nums) sum += num;
-        // 如果目标和大于sum，凑不出来两个集合满足差为target
-        if (target < 0 && sum < -target) return 0;
+        if (target + sum < 0) return 0; // 此时定义一个数组是非法的，java.lang.NegativeArraySizeException
         if ((target + sum) % 2 != 0) return 0; // 如果发现不能被2整除，则说明装不了；
         int size = (target + sum) / 2; // 正数集合的大小
         // dp[j] 表示：填满j这么大容积的包，有dp[j]种方法
@@ -64,6 +63,13 @@ public class L11_494_findTargetSumWays {
     public void testFind() {
         int[] nums = {1,1,1,1,1};
         int target = 3;
+        System.out.println(findTargetSumWays(nums, target));
+    }
+
+    @Test
+    public void testFind2(){
+        int[] nums = {100};
+        int target = -200;
         System.out.println(findTargetSumWays(nums, target));
     }
 }

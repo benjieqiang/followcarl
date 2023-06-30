@@ -1,5 +1,7 @@
 package com.ben.followcarl.c10_dp;
 
+import java.util.Arrays;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-28  20:48
@@ -17,6 +19,14 @@ public class L14_528_change {
     那么就有了coins【1】在coins【2】之后的情况了
 */
     public int change(int amount, int[] coins) {
-
+        int[] dp = new int[amount + 1];
+        // 初始化dp数组，表示金额为0时只有一种情况，也就是什么都不装
+        dp[0] = 1;
+        for (int i = 0; i < coins.length; i++) {
+            for (int j = coins[i]; j <= amount; j++) {
+                dp[j] += dp[j - coins[i]];
+            }
+        }
+        return dp[amount];
     }
 }
