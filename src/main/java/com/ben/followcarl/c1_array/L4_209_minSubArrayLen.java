@@ -5,9 +5,8 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-07-06  16:57
- * @Description:
- * 给定一个含有n个正整数的数组和一个正整数target 。
- *
+ * @Description: 给定一个含有n个正整数的数组和一个正整数target 。
+ * <p>
  * 找出该数组中满足其和 ≥ target 的长度最小的连续子数组[numsl, numsl+1, ..., numsr-1, numsr]，并返回其长度。
  * 如果不存在符合条件的子数组，返回 0 。
  * 输入：s = 7, nums = [2,3,1,2,4,3] 输出：2 解释：子数组 [4,3] 是该条件下的长度最小的子数组。
@@ -73,7 +72,7 @@ public class L4_209_minSubArrayLen {
     @Test
     public void testMinSub() {
         int target = 7;
-        int[]nums = {2,3,1,2,4,3};
+        int[] nums = {2, 3, 1, 2, 4, 3};
 //        int target = 11;
 //        int[]nums = {1,1,1,1};
 
