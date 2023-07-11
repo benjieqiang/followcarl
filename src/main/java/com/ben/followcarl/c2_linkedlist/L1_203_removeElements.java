@@ -13,7 +13,7 @@ import java.util.List;
 public class L1_203_removeElements {
     public ListNode removeElements(ListNode head, int val) {
         ListNode dummy = new ListNode(0, head);
-        ListNode cur = dummy;
+        ListNode cur = dummy; // 指向虚拟头节点，假设第一个元素就是要删的元素，则直接把cur.next指向他的下一个节点cur.next.next
         // 从虚拟头节点的下一个节点开始遍历，也是头节点开始遍历；
         while (cur.next != null) {
             if (cur.next.val == val) {
