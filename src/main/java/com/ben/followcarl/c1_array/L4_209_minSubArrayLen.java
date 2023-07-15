@@ -6,7 +6,6 @@ import org.junit.Test;
  * @Author: benjieqiang
  * @CreateTime: 2023-07-06  16:57
  * @Description: 给定一个含有n个正整数的数组和一个正整数target 。
- * <p>
  * 找出该数组中满足其和 ≥ target 的长度最小的连续子数组[numsl, numsl+1, ..., numsr-1, numsr]，并返回其长度。
  * 如果不存在符合条件的子数组，返回 0 。
  * 输入：s = 7, nums = [2,3,1,2,4,3] 输出：2 解释：子数组 [4,3] 是该条件下的长度最小的子数组。
@@ -44,7 +43,7 @@ public class L4_209_minSubArrayLen {
      * @param target:
      * @param nums:
      * @return int
-     * @description 滑动窗口
+     * @description 滑动窗口， 最短的窗口
      * 1、窗口里放的是：sum值大于或等于target的最小连续子序列
      * 2、窗口的起始位置如何移动：当窗口里面的和大于或等于target就需要移动起始位置
      * 3、窗口的终止位置如何移动：for循环中遍历；
@@ -69,6 +68,27 @@ public class L4_209_minSubArrayLen {
         return res == Integer.MAX_VALUE ? 0 : res;
     }
 
+    // 默写滑动窗口
+    public int minSubArrayLen3(int target, int[] nums) {
+        int left = 0;
+        int right = 0;
+        int res = Integer.MAX_VALUE;
+        int sum = 0;
+        while (right < nums.length) {
+            sum += nums[right];
+            // 窗口里放的是只要和比target大的最短的子序列；
+            while (sum >= target) {
+                int subLen = right - left + 1;
+                res = Math.min(res, subLen);
+                sum  -= nums[left];
+                left++;
+            }
+            right++;
+        }
+
+        return res == Integer.MAX_VALUE ? 0 : res;
+    }
+
     @Test
     public void testMinSub() {
         int target = 7;
@@ -76,6 +96,6 @@ public class L4_209_minSubArrayLen {
 //        int target = 11;
 //        int[]nums = {1,1,1,1};
 
-        System.out.println(minSubArrayLen2(target, nums));
+        System.out.println(minSubArrayLen3(target, nums));
     }
 }

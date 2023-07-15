@@ -44,9 +44,30 @@ public class L4_904_totalFruit {
         return sub;
     }
 
+    public int totalFruit2(int[] fruits) {
+        HashMap<Integer, Integer> hashMap = new HashMap<>(); // key是水果种类，value是数量
+        int left = 0;
+        int right = 0;
+        int res = 0;
+        while (right < fruits.length) {
+            hashMap.put(fruits[right], hashMap.getOrDefault(fruits[right], 0) + 1);
+            // 最长的子序列，不满足要求的时候，移除left对应元素，left右移
+            while (hashMap.size() > 2) {
+                hashMap.put(fruits[left], hashMap.get(fruits[left]) - 1);
+                if (hashMap.get(fruits[left]) == 0) {
+                    hashMap.remove(fruits[left]);
+                }
+                left++;
+            }
+            res = Math.max(right - left + 1, res);
+            right++;
+        }
+        return res;
+    }
+
     @Test
     public void testFruits() {
         int[] fruits = {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4};
-        System.out.println(totalFruit(fruits));
+        System.out.println(totalFruit2(fruits));
     }
 }
