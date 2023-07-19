@@ -89,6 +89,25 @@ public class L4_209_minSubArrayLen {
         return res == Integer.MAX_VALUE ? 0 : res;
     }
 
+
+    public int maxSubArrayLen(int target, int[] nums) {
+        int left = 0;
+        int right = 0;
+        int res = Integer.MIN_VALUE;
+        int sum = 0;
+        while (right < nums.length) {
+            sum += nums[right];
+            // 此时窗口里放的是最长的子序列；
+            while (sum >= target) {
+                sum  -= nums[left];
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+            right++;
+        }
+
+        return res == Integer.MIN_VALUE ? 0 : res;
+    }
     @Test
     public void testMinSub() {
         int target = 7;
@@ -97,5 +116,12 @@ public class L4_209_minSubArrayLen {
 //        int[]nums = {1,1,1,1};
 
         System.out.println(minSubArrayLen3(target, nums));
+    }
+
+    @Test
+    public void testMaxSub() {
+        int target = 7;
+        int[] nums = {2, 3, 1, 2, 4, 3};
+        System.out.println(maxSubArrayLen(target, nums));
     }
 }
