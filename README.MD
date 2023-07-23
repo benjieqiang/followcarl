@@ -32,4 +32,37 @@ FOLLOW CARL STEP SOON, GET OFFERS LATER.
 
 ## 许可证
 
-本仓库使用 [MIT 许可证](LICENSE)。
+本仓库使用 [Apache License](LICENSE)。
+
+
+# LeetCode Problem Solving Records
+
+This repository is used to record the problem-solving records of LeetCode according to the content on the website [ProgrammerCarl](https://programmercarl.com/).
+
+## Purpose
+FOLLOW CARL STEP SOON, GET OFFERS LATER.
+
+## Problem List
+1. [Two Sum](https://leetcode.com/problems/two-sum/)
+2. [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)
+3. [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+4. [Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)
+5. [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)
+6. [ZigZag Conversion](https://leetcode.com/problems/zigzag-conversion/)
+7. [Reverse Integer](https://leetcode.com/problems/reverse-integer/)
+8. [String to Integer (atoi)](https://leetcode.com/problems/string-to-integer-atoi/)
+9. [Palindrome Number](https://leetcode.com/problems/palindrome-number/)
+10. [Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)
+11. ...
+
+## Solution Approach
+Each problem will be accompanied by a solution approach and code implementation. For specific content, please refer to the corresponding problem link.
+
+## Contributors
+Thanks to the following contributors for their support to this repository:
+- [benjieqiang](https://github.com/benjieqiang)
+
+If you would like to contribute to this repository, please refer to the [Contribution Guidelines](CONTRIBUTING.md).
+
+## License
+This repository is licensed under the [Apache License](LICENSE).
