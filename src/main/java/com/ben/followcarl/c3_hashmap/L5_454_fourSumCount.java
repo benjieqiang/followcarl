@@ -30,7 +30,7 @@ public class L5_454_fourSumCount {
     public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
         //key：nums1中的任一元素和nums2中任一元素之和，value：两数之和的次数，该和肯定由不止一种格式构成；
         //比如：nums1 = [-1,-1] nums2=[-1,1]
-        // map中最终{0=2,-2=2};和为0由两种构成形式, key是元素值，val是次数
+        // map中最终{0=2,-2=2};和为0由两种构成形式
         HashMap<Integer, Integer> hmap = new HashMap<>();
         for (int num1 : nums1) {
             for (int num2 : nums2) {

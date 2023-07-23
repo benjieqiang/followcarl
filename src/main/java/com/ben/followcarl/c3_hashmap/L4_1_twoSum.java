@@ -10,7 +10,7 @@ import java.util.HashSet;
  * @Author: benjieqiang
  * @CreateTime: 2023-07-19  22:56
  * @Description: 两数之和
- *      哈希法：key是数字，val是下标；
+ *
  *             // 遍历数组，第一个元素先进map，{3:0}
  *             // 第二个元素2进来,tmp = 4，元素2入map{3:0, 2:1}
  *             // 第三个元素4进来，tmp = 2，找到了，i是当前元素的下标，tmp对应的值就是另一个元素下标；
@@ -21,7 +21,6 @@ public class L4_1_twoSum {
         HashMap<Integer, Integer> hashMap = new HashMap<>();
         int[] res = new int[2];
         for (int i = 0; i < nums.length; i++) {
-
             int tmp = target - nums[i];
 
             if (hashMap.containsKey(tmp)) {
@@ -29,7 +28,6 @@ public class L4_1_twoSum {
                 res[1] = hashMap.get(tmp);
             }
             hashMap.put(nums[i], i);
-
         }
 
         return res;
@@ -37,7 +35,7 @@ public class L4_1_twoSum {
 
     @Test
     public void testTwoSum() {
-        int[] res = {3,2,4}; //{3,3}
+        int[] res = {3,2,4};
         int target = 6;
         int[] ints = twoSum(res, target);
         System.out.println(Arrays.toString(ints));
