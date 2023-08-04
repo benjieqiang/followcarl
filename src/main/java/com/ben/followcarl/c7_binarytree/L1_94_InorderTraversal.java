@@ -11,6 +11,17 @@ public class L1_94_InorderTraversal {
         return res;
     }
 
+    /**
+     * @param root:
+     * @param list:
+     * @return void
+     * @description 递归法：
+     * 1. 参数和返回值；
+     * 2. 终止条件；
+     * 3. 单层递归逻辑；
+     * @author benjieqiang
+     * @date 2023/8/4 7:42 PM
+     */
     void inorder(TreeNode root, List<Integer> list) {
         if (root == null) {
             return;

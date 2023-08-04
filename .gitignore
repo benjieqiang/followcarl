@@ -32,3 +32,5 @@ bin/
 
 /target/
 .idea/workspace.xml
+
+.idea/misc.xml

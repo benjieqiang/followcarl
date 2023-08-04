@@ -1,20 +1,27 @@
 package com.ben.followcarl.c6_stackqueue;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
+import org.junit.Test;
+
+import java.util.*;
 
 class L6_239_MaxSlidingWindowTest {
     public static void main(String[] args) {
-        L6_239_MaxSlidingWindow2 slidingWindow = new L6_239_MaxSlidingWindow2();
-        int [] nums = {1,3,-1,-3,5,3,6,7};
+        Scanner scanner = new Scanner(System.in);
+        // 1,3,-1,-3,5,3,6,7
+        int[] res = new int[8];
         int k = 3;
-        slidingWindow.maxSlidingWindow(nums, k);
+        for (int i = 0; i < res.length; i++) {
+            int i1 = scanner.nextInt();
+            res[i] = i1;
+        }
+        System.out.println(Arrays.toString(res));
 
     }
 }
+
 class MyOwnQueue {
     Deque<Integer> deque = new LinkedList<>();
+
     //弹出元素时，比较当前要弹出的数值是否等于队列出口的数值，如果相等则弹出
     //同时判断队列当前是否为空
     void poll(int val) {
@@ -22,6 +29,7 @@ class MyOwnQueue {
             deque.poll();
         }
     }
+
     //添加元素时，如果要添加的元素大于入口处的元素，就将入口元素弹出
     //保证队列元素单调递减
     //比如此时队列元素3,1，2将要入队，比1大，所以1弹出，此时队列：3,2
@@ -31,6 +39,7 @@ class MyOwnQueue {
         }
         deque.add(val);
     }
+
     //队列队顶元素始终为最大值
     int peek() {
         return deque.peek();
@@ -63,32 +72,56 @@ public class L6_239_MaxSlidingWindow {
         }
         return res;
     }
-}
 
-class L6_239_MaxSlidingWindow2 {
-    public int[] maxSlidingWindow(int[] nums, int k) {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-        int n = nums.length;
-        int[] res = new int[n - k + 1];
-        int idx = 0;
-        for(int i = 0; i < n; i++) {
-            // 根据题意，i为nums下标，是要在[i - k + 1, i] 中选到最大值，只需要保证两点
-            // 1.队列头结点需要在[i - k + 1, i]范围内，不符合则要弹出
-            while(!deque.isEmpty() && deque.peek() < i - k + 1){
-                deque.poll();
+    /**
+     * @description 思路：
+     * 1. 单调队列：所有队列的元素按照递增或递减顺序的队列，队列头是最小或最大的元素。
+     * <p>
+     * 窗口向右滑动时，把最左边的元素删除，在右边再填一个新元素进来，这种是双端队列，
+     * 得到的窗口要找到队列里的最大值；
+     * <p>
+     * 维护一个单调递减的队列，
+     * <p>
+     * deque:
+     * isEmpty;
+     * add
+     * @author benjieqiang
+     * @date 2023/7/26 11:10 PM
+     */
+    public int[] maxSlidingWindow2(int[] nums, int k) {
+        // 原数组为空或者只有一组元素，直接返回
+        if (nums == null || nums.length == 1) return nums;
+        Deque<Integer> deque = new LinkedList<>();
+        int[] res = new int[nums.length - k + 1];
+        //举例说明：比如[1,2,3,4]， k = 3， 此时res ={3,4}, res的长度为2
+
+        for (int right = 0; right < nums.length; right++) {
+
+            // 如果队列不为空，且当前元素大于等于队尾元素，则移除队尾元素，小弟都撤走，直到遇到新的老大停下来或队列都空了停止；
+            while (!deque.isEmpty() && nums[right] > nums[deque.getLast()]) {
+                deque.removeLast();
             }
-            // 2.既然是单调，就要保证每次放进去的数字要比末尾的都大，否则也弹出
-            while(!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
-                deque.pollLast();
+            deque.addLast(right);
+            // 左窗口
+            int left = right - k + 1;
+            // 队首元素下标小于窗口的left时，队首元素不在窗口内，删除；
+            if (deque.getFirst() < left) {
+                deque.removeFirst();
             }
 
-            deque.offer(i);
-
-            // 因为单调，当i增长到符合第一个k范围的时候，每滑动一步都将队列头节点放入结果就行了
-            if(i >= k - 1){
-                res[idx++] = nums[deque.peek()];
+            // 当窗口右边界right + 1大于等于窗口大小k时，窗口形成了，此时队首元素就是该窗口最大值，加入结果集；
+            if (right + 1 >= k) {
+                res[left] = nums[deque.getFirst()];
             }
         }
         return res;
+    }
+
+    @Test
+    public void testMaxSliding() {
+        int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
+        int k = 3;
+        int[] ints = maxSlidingWindow2(nums, k);
+        System.out.println(Arrays.toString(ints));
     }
 }

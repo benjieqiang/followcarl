@@ -4,6 +4,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
+/**
+ * @description 小顶堆来实现
+ *
+ * @author benjieqiang
+ * @date 2023/7/26 11:51 PM
+ */
 public class L7_347_topKFrequent {
     public int[] topKFrequent(int[] nums, int k) {
         // 定义一个map，key：元素；value：数字的频率；
