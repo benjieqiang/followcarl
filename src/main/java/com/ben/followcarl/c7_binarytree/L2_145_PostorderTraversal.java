@@ -1,5 +1,7 @@
 package com.ben.followcarl.c7_binarytree;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -7,23 +9,35 @@ import java.util.List;
 
 public class L2_145_PostorderTraversal {
     public List<Integer> postorderTraversal(TreeNode root) {
-        Deque<TreeNode> stack = new LinkedList<>();
+//        Deque<TreeNode> stack = new LinkedList<>();
+//        LinkedList<Integer> res = new LinkedList<>();
+//        if (root == null) return res;
+//        stack.push(root);
+//
+//        while (!stack.isEmpty()) {
+//            TreeNode node = stack.pop();
+//            res.push(node.val);
+//
+//            if (node.left != null) stack.push(node.left);
+//            if (node.right != null) stack.push(node.right);
+//        }
+//
+//        return res;
         LinkedList<Integer> res = new LinkedList<>();
         if (root == null) return res;
-        stack.addFirst(root);
-
-        while (!stack.isEmpty()) {
-            TreeNode node = stack.removeFirst();
-            res.addFirst(node.val);
-
-            if (node.left != null) stack.addFirst(node.left);
-            if (node.right != null) stack.addFirst(node.right);
+        Deque<TreeNode> st = new LinkedList<>();
+        st.push(root);
+        while (!st.isEmpty()) {
+            TreeNode node = st.pop();
+            res.push(node.val);
+            if (node.left != null) st.push(node.left);
+            if (node.right != null) st.push(node.right);
         }
-
         return res;
     }
 
-    public static void main(String[] args) {
+    @Test
+    public void testPostOrder() {
         TreeNode node1 = new TreeNode(5);
         TreeNode node2 = new TreeNode(4);
         TreeNode node3 = new TreeNode(6);
@@ -33,10 +47,7 @@ public class L2_145_PostorderTraversal {
         node1.right = node3;
         node2.left = node4;
         node2.right = node5;
-
-        L2_145_PostorderTraversal l2_145_postorderTraversal = new L2_145_PostorderTraversal();
-
-        List<Integer> res = l2_145_postorderTraversal.postorderTraversal(node1);
+        List<Integer> res = postorderTraversal(node1);
         System.out.println(res);
     }
 }

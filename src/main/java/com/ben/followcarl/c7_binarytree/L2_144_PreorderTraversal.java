@@ -1,28 +1,32 @@
 package com.ben.followcarl.c7_binarytree;
 
+
+import org.junit.Test;
+
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-class L2_144_PreorderTraversal {
+public class L2_144_PreorderTraversal {
     public List<Integer> preorderTraversal(TreeNode root) {
         Deque<TreeNode> stack = new LinkedList<>();
-        LinkedList<Integer> res  = new LinkedList<>();
+        LinkedList<Integer> res = new LinkedList<>();
         if (root == null) return res;
-        stack.addFirst(root);
+        stack.push(root);
 
         while (!stack.isEmpty()) {
-            TreeNode node = stack.removeFirst();
+            TreeNode node = stack.pop();
             res.add(node.val);
             // 入栈，右边结点先入栈后出，左结点后入先出，这样可以实现中左右的遍历顺序。
-            if (node.right != null) stack.addFirst(node.right);
-            if (node.left != null) stack.addFirst(node.left);
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
         }
 
         return res;
     }
 
-    public static void main(String[] args) {
+    @Test
+    public void testPreorder() {
         TreeNode node1 = new TreeNode(5);
         TreeNode node2 = new TreeNode(4);
         TreeNode node3 = new TreeNode(6);
@@ -33,10 +37,9 @@ class L2_144_PreorderTraversal {
         node2.left = node4;
         node2.right = node5;
 
-        L2_144_PreorderTraversal l2_144_preorderTraversal = new L2_144_PreorderTraversal();
+        List<Integer> integers = preorderTraversal(node1);
+        System.out.println(integers);
 
-        List<Integer> res = l2_144_preorderTraversal.preorderTraversal(node1);
-        System.out.println(res);
     }
 }
 /*

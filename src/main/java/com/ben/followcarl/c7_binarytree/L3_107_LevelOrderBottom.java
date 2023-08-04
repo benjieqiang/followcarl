@@ -2,26 +2,28 @@ package com.ben.followcarl.c7_binarytree;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
 public class L3_107_LevelOrderBottom {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        LinkedList<List<Integer>> res = new LinkedList<>();
-        Deque<TreeNode> queue = new LinkedList<>();
+        List<List<Integer>> res = new ArrayList<>();
         if (root == null) return res;
-        queue.addFirst(root);
+
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.addLast(root);
         while (!queue.isEmpty()) {
             int size = queue.size();
-            List<Integer> list = new LinkedList<>();
+            List<Integer> list = new ArrayList<>();
             for (int i = 0; i < size; i++) {
-                TreeNode node = queue.removeLast();
+                TreeNode node = queue.removeFirst();
                 list.add(node.val);
-                if (node.left != null) queue.addFirst(node.left);
-                if (node.right != null) queue.addFirst(node.right);
+                if (node.left != null) queue.addLast(node.left);
+                if (node.right != null) queue.addLast(node.right);
             }
-            res.addFirst(list);
+            res.add(list);
         }
         return res;
     }
