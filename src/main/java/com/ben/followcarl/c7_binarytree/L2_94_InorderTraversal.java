@@ -8,6 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Deque;
 
+/**
+ * @description 遍历顺序和加入数组的数值不一样；
+ * @author benjieqiang
+ * @date 2023/8/9 9:18 PM
+ */
 public class L2_94_InorderTraversal {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
@@ -15,10 +20,10 @@ public class L2_94_InorderTraversal {
         Deque<TreeNode> stack = new LinkedList<>();
         TreeNode cur = root;
         while (cur != null || !stack.isEmpty()) {
-            if (cur != null) {
+            if (cur != null) { // 从根节点开始一路向左，斜边入栈，直至为null
                 stack.push(cur);
                 cur = cur.left;//步骤一，遍历左子树
-            } else {
+            } else { // 当遇到叶子节点之后，弹出来第一个元素，加入结果集，然后遍历右孩子
                 cur = stack.pop();
                 list.add(cur.val);////步骤二，取根结点的值
                 cur = cur.right;//步骤三，遍历右子树
