@@ -8,6 +8,16 @@ import java.util.Arrays;
  * @Author: benjieqiang
  * @CreateTime: 2023-05-08  14:34
  * @Description: 105. 从前序与中序遍历序列构造二叉树
+ * 思路很简单: 首先坚持左闭右开原则;
+ * 递归结束条件: 当数组长度为0时,结束;
+ * 1. 先根据前序数组找到根节点,然后去切割中序数组,即找到根节点元素相等的下标index
+ * 2. 用这个下标把中序数组切割为两部分: 左中序数组[0, index)和右中序数组[index+1, inorder.length)分别代表左子树和右子树
+ * 3. 切割前序数组: 前序数组切割成的左前序数组[1, index+1):左子树节点个数肯定要和左中序数组长度一样
+ *                  右前序数组: [index+1, preorder.length)
+ *
+ * 4. 单层递归,处理左右孩子, 左前序和左中序 =》左孩子
+ *      右前序 + 右中序 =》右孩子
+ * 5. 返回root
  * @Version: 1.0
  */
 public class L16_105_BuildTree {

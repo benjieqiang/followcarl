@@ -27,6 +27,7 @@ public class L5_101_IsSymmetric {
             // 如果左右孩子都为空，跳过这次循环；比如[2,3,3,4,5,5,null]，当栈为[5,5,null,4]时，此时弹出两个5，因为他们值相同，所以
             // 继续往栈礼放他们的左右孩子（实际是空的），如果在这里返回true是错误的，得跳过。
             if (rightNode == null && leftNode == null) continue;
+            // 有一个为空则不对称, 或值不等不对称.
             if ((rightNode != null && leftNode == null) || (rightNode == null && leftNode != null) || (rightNode.val != leftNode.val)) {
                 return false;
             }

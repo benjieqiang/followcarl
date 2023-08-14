@@ -1,5 +1,5 @@
 package com.ben.followcarl.acm;
-import java.util.Scanner;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-05-18  12:11
@@ -7,6 +7,9 @@ import java.util.Scanner;
  * 输出a+b的结果
  * @Version: 1.0
  */
+
+
+import java.util.Scanner;
 public class APlusB {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

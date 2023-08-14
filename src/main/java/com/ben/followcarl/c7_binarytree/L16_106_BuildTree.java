@@ -8,6 +8,11 @@ import java.util.Arrays;
  * @Author: benjieqiang
  * @CreateTime: 2023-05-08  10:37
  * @Description: 从中序与后序遍历序列构造二叉树
+ * 注意: 前序和后序无法确定一颗树
+ * 前序[1,2,3]
+ * 后序[3,2,1]
+ * 树可能是 左子树123
+ * 也可能是: 右子树123
  * @Version: 1.0
  */
 public class L16_106_BuildTree {
@@ -56,12 +61,42 @@ public class L16_106_BuildTree {
         return traversal(inorder, postorder);
     }
 
+
+    public TreeNode buildTree2(int[] inorder, int[] postorder) {
+        if (inorder == null || postorder == null) return null;
+        if (inorder.length == 0 || postorder.length == 0 || inorder.length != postorder.length) return null;
+        return dfs(inorder, postorder);
+    }
+    private TreeNode dfs(int[] inorder, int[] postorder) {
+        if (postorder.length == 0) return null;
+        int val = postorder[postorder.length - 1];
+        TreeNode root = new TreeNode(val);
+        int index = 0;
+        for (; index < inorder.length; index++) {
+            if (val == inorder[index]) break;
+        }
+        // 分割
+        int[] leftInorder = Arrays.copyOfRange(inorder, 0, index + 1);
+        int[] rightInorder = Arrays.copyOfRange(inorder, index + 1, inorder.length);
+        System.out.println(Arrays.toString(leftInorder));
+        System.out.println(Arrays.toString(rightInorder));
+        int[] leftPostorder = Arrays.copyOfRange(postorder, 0, index);
+        int[] rightPostorder = Arrays.copyOfRange(postorder, index, postorder.length - 1);
+        System.out.println(Arrays.toString(leftPostorder));
+        System.out.println(Arrays.toString(rightPostorder));
+        // 左右孩子
+        root.left = dfs(leftInorder, leftPostorder);
+        root.right = dfs(rightInorder, rightPostorder);
+
+        return root;
+    }
+
     @Test
     public void testBuildTree() {
         int[] inorder = {9,3,15,20,7};
         int[] postorder = {9,15,7,20,3};
 
-        TreeNode node = buildTree(inorder, postorder);
+        TreeNode node = buildTree2(inorder, postorder);
         System.out.println(node);
     }
 

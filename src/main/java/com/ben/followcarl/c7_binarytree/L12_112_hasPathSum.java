@@ -12,7 +12,7 @@ import org.junit.Test;
 public class L12_112_hasPathSum {
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) return false;
-        // 叶子结点，targetSum为root.val说明找到了，
+        // 叶子结点且targetSum为root.val说明找到了，
         if (root.left == null && root.right == null) return targetSum == root.val;
 
         // 单层递归逻辑，左节点不为空，则看它的左孩子下面是否有满足条件；
@@ -26,6 +26,15 @@ public class L12_112_hasPathSum {
             if (isFind) return true;
         }
         return false;
+    }
+
+    public boolean hasPathSum3(TreeNode root, int targetSum) {
+        if (root == null) return false;
+        // 叶子结点且targetSum为root.val说明找到了，
+        if (root.left == null && root.right == null && targetSum == root.val) return true;
+
+        // 单层递归逻辑，左节点不为空，则看它的左孩子下面是否有满足条件；
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
     }
 
 
@@ -80,7 +89,7 @@ public class L12_112_hasPathSum {
         node6.right = node9;
 
         int targetSum = 22;
-        boolean res = hasPathSum2(node1, targetSum);
+        boolean res = hasPathSum3(node1, targetSum);
         System.out.println(res);
     }
 }
