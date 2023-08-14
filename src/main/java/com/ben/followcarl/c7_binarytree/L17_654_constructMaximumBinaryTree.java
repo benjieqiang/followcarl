@@ -23,9 +23,9 @@ public class L17_654_constructMaximumBinaryTree {
                 index = i;
             }
         }
-        // 最大值就是根节点
+        // 切割点: 最大值就是根节点
         TreeNode root = new TreeNode(nums[index]);
-        // 递归左右区间,都是左闭右开
+        // 切割: 递归左右区间,都是左闭右开
         root.left = construct(nums, left, index);
         root.right = construct(nums, index + 1, right);
 

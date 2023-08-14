@@ -7,8 +7,8 @@ import org.junit.Test;
  * @CreateTime: 2023-05-08  21:49
  * @Description: BST的搜索；
  * 二叉搜索树是一个有序树：
- * 若它的左子树不空，则左子树上所有结点值均小于中节点
- * 若它的右子树不空，则右子树上所有结点值均大于中节点
+ * 若它的左子树不空，则左子树上所有孩子的值均小于中节点
+ * 若它的右子树不空，则右子树上所有孩子的值均大于中节点
  * 同时：左、右子树也分别为二叉搜索树
  * @Version: 1.0
  */
@@ -16,9 +16,11 @@ public class L19_600_searchBST {
     public TreeNode searchBST(TreeNode root, int val) {
         if (root == null) return root;
         if (root.val == val) return root;
-        if (root.val > val) return searchBST(root.left, val);
-        if (root.val < val) return searchBST(root.right, val);
-        return null;
+        if (root.val > val) {
+            return searchBST(root.left, val);
+        } else {
+            return searchBST(root.right, val);
+        }
     }
 
     //迭代法
