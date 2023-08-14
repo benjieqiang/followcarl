@@ -1,24 +1,23 @@
 package com.ben.followcarl.c7_binarytree;
 
+import org.junit.Test;
+
 import java.util.Deque;
 import java.util.LinkedList;
 
 public class L8_222_CountNodes {
+    // 利用普通二叉树，后序遍历，分别求出一个结点左子树的孩子数，再求出右孩子的数目；求和加上当前结点数（1）；就是该层结点的数目；
     public int countNodes(TreeNode root) {
         if (root == null) return 0;
-        return dfs(root);
-    }
-
-    // 利用普通二叉树，后序遍历，分别求出一个结点左子树的孩子数，再求出右孩子的数目；求和加上当前结点数（1）；就是该层结点的数目；
-    private int dfs(TreeNode root) {
-        if (root == null) return 0;
-        int leftCount = dfs(root.left);
-        int rightCount = dfs(root.right);
+        int leftCount = countNodes(root.left);
+        int rightCount = countNodes(root.right);
         return 1 + leftCount + rightCount;
     }
 
-    // 完全二叉树的性质：
-    // 1. 如果树是一个满二叉树，则结点总数：2^深度-1
+    //对于完全二叉树，其有如下特性：
+    //子树是完全二叉树
+    //左子树和右子树至少有一棵是满二叉树
+    //因此，对于满二叉树，我们知道它的结点数 = 2^(深度)-1，因此只需获取其高度，无需遍历其所有结点
     public int countNodes2(TreeNode root) {
         if(root == null) return 0;
         TreeNode left = root.left;
@@ -36,10 +35,11 @@ public class L8_222_CountNodes {
         if (leftDepth == rightDepth) {
             return (2 << leftDepth) - 1; // 注意(2<<1) 相当于2^2，返回满足满二叉树的子树节点数量
         }
-        // 左中右后序遍历；
+        // 如果两侧高度不一致，则使用后序遍历的方法，
         return countNodes(root.left) + countNodes(root.right) + 1;
     }
 
+    // bfs来遍历求节点个数
     public int countNodes3(TreeNode root) {
         if(root == null) return 0;
         //层序遍历
@@ -58,6 +58,11 @@ public class L8_222_CountNodes {
         return res;
     }
     public static void main(String[] args) {
+
+    }
+
+    @Test
+    public void testCountNodes() {
         TreeNode node1 = new TreeNode(1);
         TreeNode node2 = new TreeNode(2);
         TreeNode node3 = new TreeNode(2);
@@ -67,7 +72,7 @@ public class L8_222_CountNodes {
         node1.right = node3;
         node2.right = node4;
         node3.right = node5;
-        int res = new L8_222_CountNodes().countNodes3(node1);
+        int res = countNodes3(node1);
         System.out.println(res);
     }
 }

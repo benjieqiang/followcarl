@@ -1,5 +1,7 @@
 package com.ben.followcarl.c7_binarytree;
 
+import org.junit.Test;
+
 /**
  * @description: 1.叶子结点的判断：if (root.left == null && root.right == null)
  * 2. debug模式来模拟运算，事半功倍；
@@ -20,23 +22,54 @@ public class L12_112_hasPathSum {
             if (isFind) return true;
         }
         if (root.right != null) {
-           boolean isFind = hasPathSum(root.right, targetSum - root.val);
-           if (isFind) return true;
+            boolean isFind = hasPathSum(root.right, targetSum - root.val);
+            if (isFind) return true;
         }
         return false;
     }
 
-    public static void main(String[] args) {
+
+    public boolean hasPathSum2(TreeNode root, int targetSum) {
+        if (root == null) return false;
+        boolean res = traversal(root, 0, targetSum);
+        return res;
+    }
+
+    private boolean traversal(TreeNode root, int sum, int targetSum) {
+        if (root == null) return false;
+        sum += root.val;
+        if (sum == targetSum && root.left == null && root.right == null) return true;
+        return traversal(root.left, sum, targetSum) || traversal(root.right, sum, targetSum);
+    }
+
+    @Test
+    public void testHasPathSum2() {
+
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(3);
+
+        node1.left = node2;
+        node1.right = node3;
+
+
+        int targetSum = 5;
+        boolean res = hasPathSum2(node1, targetSum);
+        System.out.println(res);
+    }
+
+    @Test
+    public void testHasPathSum() {
 
         TreeNode node1 = new TreeNode(5);
         TreeNode node2 = new TreeNode(4);
         TreeNode node3 = new TreeNode(8);
         TreeNode node4 = new TreeNode(11);
         TreeNode node5 = new TreeNode(13);
-        TreeNode node6= new TreeNode(4);
-        TreeNode node7= new TreeNode(7);
-        TreeNode node8= new TreeNode(2);
-        TreeNode node9= new TreeNode(1);
+        TreeNode node6 = new TreeNode(4);
+        TreeNode node7 = new TreeNode(7);
+        TreeNode node8 = new TreeNode(2);
+        TreeNode node9 = new TreeNode(1);
         node1.left = node2;
         node1.right = node3;
         node2.left = node4;
@@ -47,7 +80,7 @@ public class L12_112_hasPathSum {
         node6.right = node9;
 
         int targetSum = 22;
-        boolean res = new L12_112_hasPathSum().hasPathSum(node1, targetSum);
+        boolean res = hasPathSum2(node1, targetSum);
         System.out.println(res);
     }
 }
