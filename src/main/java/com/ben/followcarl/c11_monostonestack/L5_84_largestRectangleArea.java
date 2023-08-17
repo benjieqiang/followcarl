@@ -26,6 +26,7 @@ public class L5_84_largestRectangleArea {
         for (int i = 0; i < heights.length; i++) {
             int left = i;
             int right = i;
+
             for (; left >= 0; left--) {
                 if (heights[left] < heights[i]) break; // 找到最矮的左柱子；
             }
@@ -39,11 +40,14 @@ public class L5_84_largestRectangleArea {
         return sum;
     }
 
-    /* 双指针法：
-     *
-     *
-     *
-     * */
+    /**
+     * @param heights:
+     * @return int
+     * @description 双指针
+     * 难点在寻找左柱子数组和右柱子数组
+     * @author benjieqiang
+     * @date 2023/8/17 7:57 PM
+     */
     public int largestRectangleArea2(int[] heights) {
         int size = heights.length;
         int[] minLeftIndex = new int[size];
@@ -79,7 +83,7 @@ public class L5_84_largestRectangleArea {
     }
 
     /*
-     *  单调栈：递减的，找到当前元素mid 的左边比它小的柱子left和右边比它小的柱子right；
+     *  单调栈：从栈顶到栈底是单调递减的, 从大到小的顺序 ，找到当前元素mid 的左边比它小的柱子left和右边比它小的柱子right；
      *  末尾加0：比如[2,4,6,8] 一直往栈里面加是这样的[8,6,4,2]，一直结束不了，因为找不到一个数小于当前栈顶的元素
      *  头部加0：比如[8,6,4, 2], 往栈里面加成为[8]，此时heights[1]= 6和栈顶元素比较比它小，那么要开始进行收获结果了，
      *  mid = st.peek(); st.pop(); left应该是栈顶元素，但是此时栈已经为空了，没法给left赋值，所以需要加上0。进行计算。
@@ -98,14 +102,13 @@ public class L5_84_largestRectangleArea {
      *  */
     public int largestRectangleArea3(int[] heights) {
         int res = 0;
-        // 1. 数组首尾加0
+        // 1. 数组首尾加0 来结束栈;
         int[] newHeights = new int[heights.length + 2];
         newHeights[0] = 0;
         newHeights[newHeights.length - 1] = 0;
         for (int i = 0; i < heights.length; i++) {
             newHeights[i + 1] = heights[i];
         }
-//        System.out.println(Arrays.toString(newHeights));
         heights = newHeights;
 
         // 2. 单调递减栈
@@ -114,15 +117,18 @@ public class L5_84_largestRectangleArea {
 
         for (int i = 1; i < heights.length; i++) {
             if (heights[i] >= heights[st.peek()]) {
+                // 只要发现当前柱子比栈顶的柱子要高, 入栈.因为要找下一个矮柱子
                 st.push(i);
             } else {
+                // 发现矮柱子
                 while(!st.isEmpty() && heights[i] < heights[st.peek()]) {
                     int mid = st.peek();
                     st.pop();
                     if (!st.isEmpty()){
                         int left = st.peek();
                         int h = heights[mid];
-                        int w = i - left - 1;
+                        int w = i - left - 1; // 比如以5为基准,左边比5小的数字的下标是1, 右边比5小的下标是4, 那么要求中间的长度是
+                        // 4 - 1 - 1 = 2;
                         res = Math.max(res, h * w);
                     }
                 }
@@ -136,7 +142,7 @@ public class L5_84_largestRectangleArea {
     public void testLarge() {
         int[] nums = {2, 1, 5, 6, 2, 3};
 //        int[] nums = {4,2}; //4
-        System.out.println(largestRectangleArea3(nums));
+        System.out.println(largestRectangleArea(nums));
     }
 
 }
