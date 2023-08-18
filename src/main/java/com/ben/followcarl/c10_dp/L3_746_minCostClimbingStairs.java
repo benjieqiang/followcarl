@@ -16,11 +16,11 @@ import java.util.Arrays;
  *         __10__│
  * __起点__│  0      1      2      3
  *
- * 到达下标i所需的最小花费为dp[i];
- * dp[i] = min(dp[i-1] + cost[i - 1], dp[i-2] + cost[i - 2])
- *
- * dp[0] = 0
- * dp[1] = 0
+ * 1. 到达第i个台阶所需的最小花费为dp[i];
+ * 2. dp[i] = min(dp[i-1] + cost[i - 1], dp[i-2] + cost[i - 2])
+ * 3. 初始化 dp[0] = 0, dp[1] = 0
+ * 4. 遍历顺序, 从2到cost.length
+ * 5. 举例: 返回dp[cost.length], cost.length就是楼顶,
  * @Version: 1.0
  */
 public class L3_746_minCostClimbingStairs {
@@ -31,9 +31,27 @@ public class L3_746_minCostClimbingStairs {
         // 因为要到顶层，所以遍历到比数组长度要大1的位置
         for (int i = 2; i <= cost.length; i++) {
             dp[i] = Math.min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
-            System.out.println(Arrays.toString(dp));
+//            System.out.println(Arrays.toString(dp));
         }
         return dp[cost.length];
+    }
+
+    /**
+     * @param cost:
+     * @return int
+     * @description 优化空间复杂度为O(1)
+     * @author benjieqiang
+     * @date 2023/8/18 10:48 PM
+     */
+    public int minCostClimbingStairs2(int[] cost) {
+        int dp0 = 0;
+        int dp1 = 1;
+        for (int i = 2; i <= cost.length; i++) {
+            int sum = Math.min(dp0 + cost[i - 2], dp1 + cost[i - 1]);
+            dp0 = dp1;
+            dp1 = sum;
+        }
+        return dp1;
     }
 
     @Test
