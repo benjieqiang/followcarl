@@ -35,9 +35,10 @@ public class L33_CountBuildings {
 
     private static void calculateVisibleCounts(int[] heights, int[] visibleCounts) {
         int n = heights.length;
-        Stack<Integer> stack1 = new Stack<>();
-        Stack<Integer> stack2 = new Stack<>();
-
+        Stack<Integer> stack1 = new Stack<>(); // 保存之前遇到楼的高度, 往左看, 栈顶元素比后面元素要高;
+        Stack<Integer> stack2 = new Stack<>(); // 往右看, 栈顶元素比当前遍历的元素要高,
+        // stack1 和 stack2 单调递减栈栈顶元素是栈中的最大元素，栈底元素是栈中的最小元素
+        // 都被用来保存高度递减的建筑物，以确保在计算可见数量时，只有比当前建筑物高的建筑物才会留在栈中，而比当前建筑物矮的建筑物会被弹出。
         for (int i = 0; i < n; i++) {
             visibleCounts[i] += stack1.size();
             while (!stack1.empty() && stack1.peek() <= heights[i]) {
