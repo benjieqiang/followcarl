@@ -33,6 +33,25 @@ public class L1_509_fib {
 
         return dp[n];
     }
+    /**
+     * @param n:
+     * @return int
+     * @description 优化空间复杂度为o1
+     * @author benjieqiang
+     * @date 2023/8/20 10:03 AM
+     */
+    int fib3(int n) {
+        if (n == 0 || n == 1) return n;
+        int dp1 = 0;
+        int dp2 = 1;
+        for (int i = 2; i <= n; i++) {
+            int sum = dp1 + dp2;
+            dp1 = dp2;
+            dp2 = sum;
+        }
+        return dp2;
+    }
+
 
     /**
      * @param n:
