@@ -15,6 +15,7 @@ import org.junit.Test;
  * +1+1+1-1+1 = 3
  * +1+1+1+1-1 = 3
  * 一共有5种方法让最终目标和为3。
+ * sum = 5, target = 3;
  * 把nums分为两部分，left左（正数）集合和right右（负数）集合，他两差是target，和是sum；
  * 从题目给的nums集合中取数，装满容量为left的背包有多少种方法
  * 分成左右两个集合left和right， left的和 = (总和 + target)/2
@@ -31,13 +32,13 @@ import org.junit.Test;
  * 所以target为2时，不能找到一个集合满足能够分割成两份，他们的差是2；
  * 所以left 必须得整除；
  *
- * 给了一个容量为left的背包，问有多少种方式能把背包装满；
+ * 给了一个容量为bagSize为left的背包，问有**多少种方式**能把背包装满；
  * 装满背包有几种方法的递推公式: dp[j] = dp[j] + dp[j - nums[i]]
  * 定义dp[j]:表示有容量为j的背包有dp[j]种方法能填满背包；
  * 再形象一下：从数组nums中取数，问这些数满足和为j的方法有几个；
  * dp[j] = dp[j] + dp[j - nums[i]]
- * dp[j]: 没拿，不选i这个数的话，对原来的方法不影响；
- * dp[j - nums[i]]: 拿了，选i的话，那么剩下的背包j - nums[i]要满足有dp[j - nums[i]]种方法填满背包；
+ * dp[j]: 不拿物品i，只考虑前 i-1 个物品，得到的装满容量为 j 的背包的方法数；
+ * dp[j - nums[i]]: 拿物品i的话, 余的容量为 j - nums[i]，这种情况下需要考虑前 i-1 个物品，得到的装满剩余容量的背包的方法数。
  *
  * @Version: 1.0
  */
@@ -57,6 +58,33 @@ public class L11_494_findTargetSumWays {
             }
         }
         return dp[size];
+    }
+
+    /**
+     * @param nums:
+     * @param target:
+     * @return int
+     * @description
+     * @author benjieqiang
+     * @date 2023/8/20 6:20 PM
+     */
+    public int findTargetSumWays2(int[] nums, int target) {
+        int length = nums.length;
+        int sum = 0;
+        for (int num : nums) sum += num;
+        int left = (sum + target) / 2;
+        if (sum + target < 0) return 0;
+        if ((sum + target) % 2 != 0) return 0;
+
+        int[] dp = new int[left + 1];
+        dp[0] = 1;
+        for (int i = 0; i < length; i++) {
+            for (int j = left; j >= nums[i]; j--) {
+                dp[j] += dp[j - nums[i]];
+            }
+        }
+
+        return dp[left];
     }
 
     @Test

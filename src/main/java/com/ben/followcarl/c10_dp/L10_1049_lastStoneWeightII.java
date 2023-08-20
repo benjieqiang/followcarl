@@ -2,10 +2,12 @@ package com.ben.followcarl.c10_dp;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-13  08:49
- * @Description:
+ * @Description:  这道题是01背包问题,往背包容量为sum/2的背包想装多少装多少;
  * 有一堆石头，每块石头的重量都是正整数。（划重点）
  * 每一回合，从中选出任意两块石头，然后将它们一起粉碎。假设石头的重量分别为 x 和 y，且 x <= y。那么粉碎的可能结果如下：
  * 如果 x == y，那么两块石头都会被完全粉碎；
@@ -41,17 +43,32 @@ public class L10_1049_lastStoneWeightII {
 
         int[] dp = new int[bagSize + 1];
 
-        for (int i = 0; i < stones.length; i++) {
-            for (int j = bagSize; j >= stones[i]; j--) {
+        for (int i = 0; i < stones.length; i++) { // 从石头数组里面选石头,
+            for (int j = bagSize; j >= stones[i]; j--) { // 放入背包容量为j的背包里, j要从bagSize起步到当前背包只能装stones[i]重量的石头为止;
                 dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i]);
             }
         }
         return sum - dp[bagSize] - dp[bagSize];
     }
 
+    public int lastStoneWeightII2(int[] stones) {
+        int sum = 0;
+        for (int num : stones) sum += num;
+        int bagSize = sum / 2;
+
+        int[] dp = new int[bagSize + 1];
+        for (int i = 0; i < stones.length; i++) {
+            for (int j = bagSize; j >= stones[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i]);
+            }
+            System.out.println(Arrays.toString(dp));
+        }
+        return sum - dp[bagSize] * 2;
+    }
+
     @Test
     public void testStones() {
         int[] stones = {2,7,4,1,8,1};
-        System.out.println(lastStoneWeightII(stones));
+        System.out.println(lastStoneWeightII2(stones));
     }
 }

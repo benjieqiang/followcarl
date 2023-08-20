@@ -26,12 +26,16 @@ public class L8_BagProblem {
      *      物品i重量已经超过背包重量j，放不进去，所以此时最大价值应该是和前面相同，直接覆盖过来；
      *  2.2 放物品i：在0-i-1的物品中选出物品放入背包容量减去物品i的重量所得到的最大价值 + 物品i的价值
      * 3. 初始化首行和首列
-     * 首行的意思：拿物品0依次放入0，1，2...bagSize这么大的背包中得到的最大价值；
+     * 首行的意思：拿物品0依次放入0，1，2...bagSize这么大的背包中得到的最大价值；只要背包能装下物品0,则最大价值就是物品0的价值;
      * 物品0的重量weight[0]需要和背包容量(从0到bagSize)比较大小，不超过就放如物品0的价值，如果超过了放不下就是0；
-        那么很明显当 j < weight[0]的时候，dp[0][j] 应该是 0，因为背包容量比编号0的物品重量还小。
-        当j >= weight[0]时，dp[0][j] 应该是value[0]，因为背包容量放足够放编号0物品。
+        那么很明显当 j < weight[0]的时候，dp[0][j] 应该是 0，因为背包放不下物品0;
+        当j >= weight[0]时，dp[0][j] 应该是value[0]，因为背包容量能放下物品0的重量
      * 首列：背包容量为0的背包能放的物品当然是0,因为数组已经全部初始化为0，所以首列不需要初始化了；
      * 4. 遍历，for一层物品，for一层背包，确定起始都是1
+     *  先遍历物品还是先遍历背包呢?
+     *  都可以, 默认都是先物品后背包;
+     * 画图来看:
+     *
      * 5. 打印dp数组
      * @author benjieqiang
      * @date 2023/6/12 8:42 PM
@@ -43,6 +47,7 @@ public class L8_BagProblem {
         // 比如，最后的结果要想在最右下角进行收获，那意味着得有goods-1行，列需要bagSize+1
         // 不然会越界
 
+        // 只有j大于等于物品0的背包重量,才能放下物品0, 所以从weight[0]开始, 得到的最大价值就是物品0的价值value[0]
         for (int j = weight[0]; j <= bagSize; j++) {
             dp[0][j] = value[0];
         }
@@ -64,12 +69,34 @@ public class L8_BagProblem {
         return dp[goods - 1][bagSize];
     }
 
+    public int test2WeiBagProblem2(int[] weight, int[] value, int bagSize) {
+        int[][] dp = new int[weight.length][bagSize + 1];
+
+        for (int j = weight[0]; j <= bagSize; j++) {
+            dp[0][j] = value[0];
+        }
+
+        // i [1,weight.length-1]
+        // j [1,bagSize]
+        for (int i = 1; i < weight.length; i++) {
+            for (int j = 1; j <= bagSize; j++) {
+                if (j < weight[i]) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);
+                }
+            }
+        }
+
+        return dp[weight.length - 1][bagSize];
+    }
+
     @Test
     public void test2WeiBagProblem() {
         int[] weight = {1, 3, 4};
         int[] value = {15, 20, 30};
         int bagSize = 4;
-        int maxValue = test2WeiBagProblem(weight, value, bagSize);
+        int maxValue = test2WeiBagProblem2(weight, value, bagSize); //35
         System.out.println(maxValue);
     }
 
@@ -78,8 +105,8 @@ public class L8_BagProblem {
      * @param value:
      * @param bagSize:
      * @return void
-     * @description 一维数组，滚动数组，用二维数组最上面一层来依次覆盖下一层
-     * 当前层是从上一层直接拷贝过来的
+     * @description 一维数组，滚动数组，用二维数组上面一层来覆盖下一层
+     * 当前层是从上一层直接拷贝过来的,每一次更新这一行的数据,降维成一维数组;
      *         重量   价值
      *   物品0  1    15
      *   物品1  3    20
@@ -111,8 +138,8 @@ public class L8_BagProblem {
         // 从0开始遍历物品，dp[4] = max(dp[4],dp[4-weight[0]] + value[0]) = max(dp[4],dp[3]+15) = 15
         // 物品1，dp[4] = max(dp[4], dp[1]+20) = 20
         // 物品2，dp[4] = max(dp[4], dp[0]+30) = 30
-        // 也就是说4号背包只能放入物品2，此时最大价值是30，但是实际上背包4的最大价值是35，也就是放入物品0和物品1
-//        for (int j = bagSize; j > weight[1]; j--){
+        // 也就是按照先背包后物品的顺序, 4号背包放入物品2得到的最大价值是30，但是实际上背包4的最大价值是35，也就是放入物品0和物品1
+//        for (int j = bagSize; j >= weight[0]; j--){
 //            for (int i = 0; i < weight.length; i++){
 //                dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
 //            }
@@ -121,11 +148,25 @@ public class L8_BagProblem {
         System.out.println(Arrays.toString(dp));
     }
 
+    public int test1WeiBagProblem2(int[] weight, int[] value, int bagSize){
+        int[] dp = new int[bagSize + 1];
+        dp[0] = 0;
+
+        for (int i = 0; i < weight.length; i++) {
+            for (int j = bagSize; j >= weight[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
+            }
+        }
+
+        return dp[bagSize];
+    }
+
+
     @Test
     public void test1WeiBagProblem() {
         int[] weight = {1, 3, 4};
         int[] value = {15, 20, 30};
         int bagSize = 4;
-        test1weiBagProblem(weight, value, bagSize);
+        System.out.println(test1WeiBagProblem2(weight, value, bagSize));
     }
 }
