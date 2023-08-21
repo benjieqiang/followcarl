@@ -129,7 +129,7 @@ public class L8_BagProblem {
         // 最大价值只能是15，这样就矛盾了，所以是倒序遍历。
         // 倒序遍历：dp[2] = dp[2 - weight[0]] + value[0] = dp[1] + 15 = 15;
         for (int i = 0; i < goods; i++){
-            for (int j = bagSize; j >= weight[i]; j--){
+            for (int j = bagSize; j >= weight[i]; j--){ // 只有j的背包容量大于物品i的重量,才能装下物品i
                 dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
             }
         }

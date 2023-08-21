@@ -5,7 +5,8 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-13  11:40
- * @Description: todo：未搞懂2023.06.28
+ * @Description: 未搞懂2023.06.28
+ * 2023.8.20搞懂了;
  *输入：nums: [1, 1, 1, 1, 1], S: 3
  * 输出：5
  * 解释：
