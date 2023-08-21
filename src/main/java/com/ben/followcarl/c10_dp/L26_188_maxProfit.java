@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-17  16:38
- * @Description: 股票只能买卖两次；
+ * @Description: 股票买卖k次； hard
  * @Version: 1.0
  */
 public class L26_188_maxProfit {
@@ -29,6 +29,9 @@ public class L26_188_maxProfit {
       dp[0][2] = 0; 第一天买入立马卖出；
       dp[0][3] = -prices[0]; 第一天第二次持有的意思，买卖一次再买入花了prices[0]的钱；
       dp[0][4] = 0; 买卖两次
+
+      发现规律:
+      第一天可以买卖多次, 卖的时候, j为偶数卖出,最大利润为0, 奇数买入,最大利润为-prices[0]
      */
     public int maxProfit(int k, int[] prices) {
         if (prices == null || prices.length == 0) return 0;
@@ -40,7 +43,6 @@ public class L26_188_maxProfit {
             for (int i = 1; i < prices.length; i++) {
                 dp[i][j + 1] = Math.max(dp[i - 1][j + 1], dp[i - 1][j] - prices[i]);
                 dp[i][j + 2] = Math.max(dp[i - 1][j + 2], dp[i - 1][j + 1] + prices[i]);
-
             }
         }
 
