@@ -10,28 +10,19 @@ import java.util.Arrays;
  * @Description: 回文子串
  * 1、dp[i][j]表示区间[i,j]的子串是否是回文子串，是true，否false
  * 2、递推公式的推导：看s[i]和s[j]的关系
- * 2、1 s[i] ！= s[j] 一定不是回文子串
- * 2、2 s[i] == s[j]
- * i和j下标相等，比如a，肯定是
- * i和j的下标相差1，比如aa，肯定也是
- * i和j的下标相差大于1，比如cabac，此时i指向首c，j指向尾c，还得看一下dp[i + 1][j - 1]是不是true，
- * if (s[i] == s[j]) {
- * if (j - i <= 1) {
- * res++;
- * dp[i][j] = true;
- * } else (dp[i+1][j - 1]){
- * res++;
- * dp[i][j] = true;
- * }
- * }
- * <p>
+ *      - s[i] ！= s[j] 一定不是回文子串
+ *      - s[i] == s[j]
+ *          i和j下标相等，比如a，肯定是
+ *          i和j的下标相差1，比如aa，肯定也是
+ *          i和j的下标相差大于1，比如cabac，此时i指向首c，j指向尾c，还得看一下dp[i + 1][j - 1]是不是true，
+ *
  * 3、初始化都为false，dp[i][j]
  * 4、遍历顺序
- * *                dp[i][j]
- * dp[i + 1][j - 1]          *
- * dp[i][j]从左下角推出来，那么遍历的时候由下到上，从左到右
- * i从s.length() - 1到0，j是大于等于i的，所以从i开始到s.length()结束
- * 5、
+ *      *                dp[i][j]
+ *      dp[i + 1][j - 1]     *
+ *          dp[i][j]从左下角推出来，那么遍历的时候由下到上，从左到右
+ *          i从s.length() - 1到0，j是大于等于i的，所以从i开始到s.length()结束
+ * 5、举例:
  * @Version: 1.0
  */
 public class L39_647_countSubstrings {
@@ -43,10 +34,8 @@ public class L39_647_countSubstrings {
 //        System.out.println("初始化结束");
         int res = 0;
         for (int i = s.length() - 1; i >= 0; i--) {
-            char ch1 = s.charAt(i);
             for (int j = i; j < s.length(); j++) {
-                char ch2 = s.charAt(j);
-                if (ch1 == ch2) {
+                if (s.charAt(i) == s.charAt(j)) {
                     if (j - i <= 1) {
                         res++;
                         dp[i][j] = true;
@@ -80,6 +69,13 @@ public class L39_647_countSubstrings {
         }
         return res;
     }
+    /**
+     * @param s:
+     * @return int
+     * @description 双指针法
+     * @author benjieqiang
+     * @date 2023/8/22 10:13 PM
+     */
     public int countSubstrings2(String s) {
         int res = 0;
         for (int i = 0; i < s.length(); i++) {

@@ -7,9 +7,12 @@ import java.util.Arrays;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-19  10:36
- * @Description:
+ * @Description: 连续的最长子序列
  * dp[i]以下标i结尾的最长连续子序列长度；连续的，因此只需要一层for循环。
  * dp[i] = Math.max(dp[i], dp[i- 1] + 1);
+ * 如果 nums[i] > nums[i - 1]，那么以 i 为结尾的连续递增的子序列长度 一定等于 以i - 1为结尾的连续递增的子序列长度 + 1;
+ * 即：dp[i] = dp[i - 1] + 1;
+ *
  * @Version: 1.0
  */
 public class L30_674_findLengthOfLCIS {
@@ -22,14 +25,20 @@ public class L30_674_findLengthOfLCIS {
             if (nums[i] > nums[i - 1]) {
                 dp[i] = Math.max(dp[i - 1] + 1, dp[i]);
             }
-            if (dp[i] > res) res = dp[i];
+            res = Math.max(res, dp[i]);
         }
         return res;
     }
 
+    /**
+     * @param nums:
+     * @return int
+     * @description 贪心算法
+     * @author benjieqiang
+     * @date 2023/8/21 6:34 PM
+     */
     public int findLengthOfLCIS2(int[] nums) {
         if (nums.length <= 1) return nums.length;
-        // 贪心算法
         int count = 1;
         int res = 0;
         for (int i = 1; i < nums.length; i++) {
