@@ -3,6 +3,7 @@ package com.ben.followcarl.c9_greedy;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * @Author: benjieqiang
@@ -10,6 +11,7 @@ import java.util.Arrays;
  * @Description: 给你一个数组 points ，返回引爆所有气球所必须射出的 最小 弓箭数 。
  * points[i][0]：第i个气球的左边界值
  * points[i - 1][1]：第i-1个气球的右边界值
+ * 注意排序:
  *
  * @Version: 1.0
  */
@@ -18,6 +20,13 @@ public class L12_452_findMinArrowShots {
         if (points.length == 0) return 0;
         // 二维数组按照左边界进行升序排序，然后看右边界有无重合的部分
         Arrays.sort(points, (a, b) -> Integer.compare(a[0], b[0])); // 利用a - b会溢出
+        // 匿名内部类
+//        Arrays.sort(points, new Comparator<int[]>() {
+//            @Override
+//            public int compare(int[] a, int[] b) {
+//                return Integer.compare(a[0], b[0]);
+//            }
+//        });
         int res = 1; //至少需要一个弓箭
         // i从1开始，因为是比较i-1=0位置的气球，从0开始会出现负数；
         for (int i = 1; i < points.length; i++) {

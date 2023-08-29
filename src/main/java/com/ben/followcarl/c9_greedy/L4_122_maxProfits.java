@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-01  09:48
- * @Description: TODO
+ * @Description: 股票买卖多次取正值相加就是所求;
  * @Version: 1.0
  */
 public class L4_122_maxProfits {

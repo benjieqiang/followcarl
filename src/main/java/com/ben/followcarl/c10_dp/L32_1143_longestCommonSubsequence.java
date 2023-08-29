@@ -52,7 +52,6 @@ public class L32_1143_longestCommonSubsequence {
         int len2 = text2.length();
 
         int[][] dp = new int[len1 + 1][len2 + 1];
-//        int res = 0;
         for (int i = 1; i <= len1; i++) {
             for (int j = 1; j <= len2; j++) {
                 if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
@@ -60,7 +59,6 @@ public class L32_1143_longestCommonSubsequence {
                 } else {
                     dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]);
                 }
-//                res = Math.max(res, dp[i][j]);
             }
         }
         return dp[len1][len2]; // 最后的末尾就是放最大子序列长度的地方;
@@ -69,6 +67,6 @@ public class L32_1143_longestCommonSubsequence {
     @Test
     public void testLongestSubString() {
         String text1 = "abcde", text2 = "ace";
-        System.out.println(longestCommonSubsequence2(text1, text2));
+        System.out.println(longestCommonSubsequence(text1, text2));
     }
 }

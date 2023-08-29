@@ -6,7 +6,7 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-21  20:17
- * @Description: 最大子序列之和
+ * @Description: 最大子序列之和 连续的.
  * 贪心算法见L3_53_maxSubArray
  * dp[i] 以nums[i]结尾的最大子序列和；
  * 1. dp[i] = Math.max(dp[i-1] + nums[i], nums[i])

@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-17  16:38
- * @Description: 股票卖出有手续费，求最大利润
+ * @Description: 买卖多次, 股票卖出有手续费，求最大利润
  * @Version: 1.0
  */
 public class L28_714_maxProfit {
@@ -25,6 +25,7 @@ public class L28_714_maxProfit {
             dp[0][0] = -prices[0];
             dp[0][1] = 0;  一买一卖没赚钱;//一笔交易指买入持有并卖出股票的整个过程，每笔交易你只需要为支付一次手续费。
          4. 遍历顺序:
+            i => [1,len)
      * */
     public int maxProfit(int[] prices, int fee) {
         if (prices == null || prices.length == 0) return 0;

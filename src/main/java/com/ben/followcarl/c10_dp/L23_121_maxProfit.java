@@ -26,11 +26,11 @@ public class L23_121_maxProfit {
                 res = Math.max(res, prices[j] - prices[i]);
             }
         }
-        return res;
+        return res == Integer.MIN_VALUE ? 0 : res;
     }
 
     // 贪心算法：
-    // 局部最优：从左到右开始，找到最小的那个数买，买到之后再找能让第i天卖出去的价格-low最大就是所求；
+    // 局部最优：从左到右开始遍历数组, 最后的结果集是最大的那个res; 找到最小价格那天买，最大价格那天卖出, 最大利润就是: max-low放入res中;
     public int maxProfit(int[] prices) {
         if (prices == null || prices.length == 0) return 0;
         int res = 0;
@@ -49,7 +49,8 @@ public class L23_121_maxProfit {
       股票，那么说明在0-i-1这几天里啥也没动，一直放着，手上现金一直为0；买入股票就会花-prices[i];
       1.2 dp[i][1] 不持股票最大金额：表示在[0,i]这个范围内，任意一天把卖股票，可以在第i天卖这个股票，
       也可以在i天之前就卖了，那么一直保持这个卖之后的手上现金的状态。
-        结果就是dp[len - 1][1]中最大值, 最后一天不持有该股票手上所拥有的现金.
+
+      结果在dp[len - 1][1]中最大值, 表示的是最后一天不持有该股票手上所拥有的现金.
       2. 确定递推公式:
       dp[i][0] = max(dp[i-1][0], -prices[i])
        - dp[i-1][0]表示在第i天不买股票，那就维持前一天手上所持有的金额
@@ -58,9 +59,12 @@ public class L23_121_maxProfit {
        - dp[i-1][1] 第i天不卖股票继续维持前一天状态，那么肯定在0-i-1这个区间把股票已经卖了；
        - dp[i-1][0] + prices[i] 在前i-1天持有股票, 到第i天卖赚了prices[i];
 
-      3. 初始化:
+      3. 初始化: 看递推公式从哪里推出来;
       dp[0][0] = -prices[0]; // 第0天持有这个股票，买的话得花-prices[0]的钱，
       dp[0][1] = 0；// 第0天卖股票，还没买股票怎么能卖呢？所以是0；
+      4. 遍历顺序:
+      i => [0, len]
+
      */
     public int maxProfit2(int[] prices) {
         if (prices == null || prices.length == 0) return 0;
@@ -71,8 +75,8 @@ public class L23_121_maxProfit {
         dp[0][0] = -prices[0];
         dp[0][1] = 0;
         for (int i = 1; i < length; i++) {
-            dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);
-            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
+            dp[i][0] = Math.max(dp[i - 1][0], -prices[i]); // 前i-1天持有维持到第i天 + 第i天才买入;
+            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]); // 前i-1天不持有持续到第i天 + 前i-1天一直持有直到第i天卖出
         }
         return dp[length - 1][1];
     }
