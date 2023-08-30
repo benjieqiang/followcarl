@@ -69,16 +69,24 @@ public class L11_406_reconstructQueue {
             return b[0] - a[0];
         });
 
+//        for (int[] num : people) {
+//            System.out.println(Arrays.toString(num));
+//        }
         LinkedList<int[]> res = new LinkedList<>();
         for (int[] num : people) {
             res.add(num[1], num);
+            for (int[] re : res) {
+                System.out.print(Arrays.toString(re));
+            }
+            System.out.println(", ");
         }
         return res.toArray(new int[people.length][2]);
     }
     @Test
     public void testRes() {
         int[][] people = {{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}};
-        int[][] res = reconstructQueue(people);
+        int[][] res = reconstructQueue2(people);
+        System.out.println("**** ");
         for (int[] num : res) {
             System.out.println(Arrays.toString(num));
         }

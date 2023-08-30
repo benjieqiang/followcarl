@@ -5,7 +5,8 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-01  11:08
- * @Description: 跳到终点: 最少跳几步. 每个元素代表能跳几步;
+ * @Description: todo: 8.30
+ * 跳到终点: 最少跳几步. 每个元素代表能跳几步;
  *
  * 给定一个长度为 n 的 0 索引整数数组 nums。初始位置为 nums[0]。
  * 每个元素 nums[i] 表示从索引 i 向前跳转的最大长度。换句话说，如果你在 nums[i] 处，你可以跳转到任意 nums[i + j] 处:

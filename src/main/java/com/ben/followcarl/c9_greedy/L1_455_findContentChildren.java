@@ -7,7 +7,8 @@ import java.util.Arrays;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-05-31  11:01
- * @Description: 贪心算法：局部最优推出全局最优
+ * @Description:
+ *
  * @Version: 1.0
  */
 public class L1_455_findContentChildren {

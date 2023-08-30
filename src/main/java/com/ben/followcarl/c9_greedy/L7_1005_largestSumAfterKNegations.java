@@ -43,6 +43,9 @@ public class L7_1005_largestSumAfterKNegations {
      * @param k:
      * @return int
      * @description
+     * 时间复杂度: O(nlogn)
+     * 空间复杂度: O(1)
+     *
      *              如果不知道如何写装箱的排序方法, 那么就先排序, 从小到大先把小数给转成正数, 把里面的负数先转成正数;
      *              如果剩下的k为偶数就不需要翻转, 如果为奇数, 先排序最后翻转最小值;
      *              求数组和;

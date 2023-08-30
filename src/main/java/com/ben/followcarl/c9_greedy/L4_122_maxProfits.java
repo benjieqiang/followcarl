@@ -15,9 +15,10 @@ public class L4_122_maxProfits {
     public int maxProfit(int[] prices) {
         int res = 0;
         for (int i = 1; i < prices.length; i++) {
-            if (prices[i] - prices[i - 1] > 0) {
-                res = res + prices[i] - prices[i - 1];
-            }
+//            if (prices[i] - prices[i - 1] > 0) {
+//                res = res + prices[i] - prices[i - 1];
+//            }
+            res = Math.max(prices[i] - prices[i - 1], 0);
         }
         return res;
     }

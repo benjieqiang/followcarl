@@ -13,7 +13,9 @@ public class L2_376_wiggleMaxLength {
     /**
      * @param nums:
      * @return int
-     * @description 三种情况：利用当前元素的前一个坡度 和 当前元素的后一个坡度进行比较;
+     * @description
+     * 贪心算法：局部最优: 删除单调坡度的结点,得到两个峰值 =》 全局最优: 最多的峰值
+     * 三种情况：利用当前元素的前一个坡度 和 当前元素的后一个坡度进行比较;
      *  prediff = nums[i] - nums[i - 1]
      *  curdiff = nums[i + 1] - nums[i]
      *
@@ -40,7 +42,7 @@ public class L2_376_wiggleMaxLength {
         int res = 1; // 默认序列最右边是有一个峰值; 这样两个元素时,结果就是2;
         int preDiff = 0; // 前一对差值
         int curDiff = 0; // 后一对差值
-        for (int i = 0; i < length - 1; i++) { // 注意只能遍历到nums.length - 1, 因为后面有i+1
+        for (int i = 0; i < length - 1; i++) { // 注意只能遍历到nums.length - 2, 因为后面有i+1
             curDiff = nums[i + 1] - nums[i];
             if ((preDiff >= 0 && curDiff < 0) || (preDiff <= 0 && curDiff > 0)) {
                 res++;

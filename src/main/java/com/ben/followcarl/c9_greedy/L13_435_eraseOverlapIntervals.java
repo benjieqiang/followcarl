@@ -48,6 +48,7 @@ public class L13_435_eraseOverlapIntervals {
 
         int res = 0;
         for (int i = 1; i < intervals.length; i++) {
+            // 只要重叠就要记录最小右边界;
             if (intervals[i][0] < intervals[i - 1][1]) {
                 res++;
                 intervals[i][1] = Math.min(intervals[i][1], intervals[i - 1][1]);

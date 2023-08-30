@@ -14,7 +14,16 @@ import org.junit.Test;
  * @Version: 1.0
  */
 public class L16_738_monotoneIncreasingDigits {
-    // 暴力解法: O(n * m) m为n的长度;
+    /**
+     * @param n:
+     * @return int
+     * @description
+     *  暴力解法:
+     *     时间复杂度：O(n × m) m为n的数字长度
+     *     空间复杂度：O(1)
+     * @author benjieqiang
+     * @date 2023/8/30 12:18 PM
+     */
     public int monotoneIncreasingDigits1(int n) {
         for (int i = n; i > 0; i--) {
             if (check(i)) return i;
@@ -54,7 +63,7 @@ public class L16_738_monotoneIncreasingDigits {
     @Test
     public void testMonotoneIncreasingDigits() {
 //        int n = 1000;
-        int n = 4321;
+        int n = 1000;
         System.out.println(monotoneIncreasingDigits1(n));
         System.out.println(monotoneIncreasingDigits(n));
     }
