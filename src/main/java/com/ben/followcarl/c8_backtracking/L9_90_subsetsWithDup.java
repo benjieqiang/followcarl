@@ -8,7 +8,11 @@ import java.util.List;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-05-30  20:20
- * @Description: 树枝不去重，树层去重，利用used数组来记录取过的元素。
+ * @Description: 这种去重题目, 得先排序数组, 树枝不去重，树层去重，利用used数组来记录取过的元素。
+ * 树层去重的判断: 首先i必须大于0, 并且当前元素与上一个元素值相等,并且上一个元素已经取过了
+ *              i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false
+ * 时间复杂度: O(n * 2^n)
+ * 空间复杂度: O(n)
  * @Version: 1.0
  */
 public class L9_90_subsetsWithDup {

@@ -8,7 +8,29 @@ import java.util.List;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-05-31  00:07
- * @Description: TODO
+ * @Description:
+ * 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+ *
+ *
+ *
+ * 示例 1：
+ *
+ * 输入：nums = [1,1,2]
+ * 输出：
+ * [[1,1,2],
+ *  [1,2,1],
+ *  [2,1,1]]
+ * 示例 2：
+ *
+ * 输入：nums = [1,2,3]
+ * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+ *
+ * 有重复数字, 排列问题, 去重
+ * 1. 排列问题,肯定不能有for循环从index开始, 即backtracking函数只需要传一个参数nums
+ * 2. 排列问题, 如果没有重复元素, 去重逻辑是使用used数组, 每次当前i位置的used[i]是否是true, 为true, 则说明用过,需要跳过;
+ * 3. 有重复数字,去重, 首先需要排序数组,
+ *    然后 判断树层去重逻辑: i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false
+ *
  * @Version: 1.0
  */
 public class L12_47_permuteUnique {

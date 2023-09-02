@@ -9,7 +9,18 @@ import java.util.List;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-05-30  23:42
- * @Description: TODO
+ * @Description:
+ * 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+ *
+ *
+ *
+ * 示例 1：
+ *
+ * 输入：nums = [1,2,3]
+ * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+ *
+ * 首先是全排列问题, 不需要index来控制每一层从哪开始, for循环直接就从0开始, 使用used数组来判断是否包含该元素,
+ * 如果used[i] = true, 说明从0开始到i这里,nums[i]这个元素已经在上一次for循环中使用了,不能再用,跳过;
  * @Version: 1.0
  */
 public class L11_46_permute {

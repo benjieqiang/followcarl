@@ -25,7 +25,7 @@ public class L8_78_subsets {
      * @param nums: 数组
      * @param startIndex: 决定了本层递归从数组的哪个位置开始，下一层只能从它的下一个位置去取，因为不能重复取startIndex位置的元素
      * @return void
-     * @description TODO
+     * @description path = {}是在一开始就加入了;
      * @author benjieqiang
      * @date 2023/5/30 8:04 PM
      */
