@@ -25,18 +25,14 @@ import java.util.LinkedList;
  */
 public class L6_1020_numEnclaves {
     class Solution {
-        int count;
-        int[][] nums = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        int[][] dir = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
         private void dfs(int[][] grid, int i, int j) {
-            if (grid[i][j] == 0) return;
-
             grid[i][j] = 0;
-            count++;
             for (int k = 0; k < 4; k++) {
-                int x = i + nums[k][0];
-                int y = j + nums[k][1];
-
-                if (x < 0 || x == grid.length || y < 0 || y == grid[0].length) continue;
+                int x = i + dir[k][0];
+                int y = j + dir[k][1];
+                if (x < 0 || x == grid.length || y < 0 || y == grid[0].length || grid[x][y] == 0)
+                    continue;
                 dfs(grid, x, y);
             }
         }
@@ -44,72 +40,68 @@ public class L6_1020_numEnclaves {
         public int numEnclaves(int[][] grid) {
             int m = grid.length;
             int n = grid[0].length;
+            // left -> right
             for (int i = 0; i < m; i++) {
                 if (grid[i][0] == 1) dfs(grid, i, 0);
                 if (grid[i][n - 1] == 1) dfs(grid, i, n - 1);
             }
-            for (int i = 0; i < n; i++) {
-                if (grid[0][i] == 1) dfs(grid, 0, i);
-                if (grid[m - 1][i] == 1) dfs(grid, m - 1, i);
+            // up -> down
+            for (int j = 0; j < n; j++) {
+                if (grid[0][j] == 1) dfs(grid, 0, j);
+                if (grid[m - 1][j] == 1) dfs(grid, m - 1, j);
             }
-            count = 0;
+            // 如果此时还有为1的岛屿,说明就是没有连通
+            int res = 0;
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (grid[i][j] == 1) dfs(grid, i, j);
+                    if (grid[i][j] == 1) res++;
                 }
             }
-            return count;
+            return res;
         }
     }
 
     class Solution2 {
-        int count = 0; // count必须在主函数里进行初始化,直接定义成int count = 0;结果变成4
-        int[][] nums = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        int[][] dir = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
         private void bfs(int[][] grid, int i, int j) {
             Deque<int[]> queue = new LinkedList<>();
             queue.add(new int[]{i, j});
             grid[i][j] = 0;
-            count++;
-            System.out.println("queue size: " + queue.size());
             while (!queue.isEmpty()) {
                 int[] tmp = queue.remove();
                 int x = tmp[0];
                 int y = tmp[1];
                 for (int k = 0; k < 4; k++) {
-                    int nextX = x + nums[k][0];
-                    int nextY = y + nums[k][1];
-                    if (nextX < 0 || nextX == grid.length || nextY < 0 || nextY == grid[0].length)
+                    int nextX = x + dir[k][0];
+                    int nextY = y + dir[k][1];
+                    if (nextX < 0 || nextX == grid.length || nextY < 0 || nextY == grid[0].length || grid[nextX][nextY] == 0)
                         continue;
-                    if (grid[nextX][nextY] == 0) continue;
                     queue.add(new int[]{nextX, nextY});
-                    count++;
                     grid[nextX][nextY] = 0;
-                    System.out.println("queue size: " + queue.size());
-                    System.out.println("add (" + nextX +","+ nextY + ") in queue");
                 }
             }
         }
+
         public int numEnclaves(int[][] grid) {
             int m = grid.length;
             int n = grid[0].length;
-
-            // 左侧边 -》 右侧边
+            // left -> right
             for (int i = 0; i < m; i++) {
                 if (grid[i][0] == 1) bfs(grid, i, 0);
                 if (grid[i][n - 1] == 1) bfs(grid, i, n - 1);
             }
-            // 上侧边 -》 下侧边
+            // up -> down
             for (int j = 0; j < n; j++) {
                 if (grid[0][j] == 1) bfs(grid, 0, j);
                 if (grid[m - 1][j] == 1) bfs(grid, m - 1, j);
             }
-//            count = 0;
+            int res = 0;
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (grid[i][j] == 1) bfs(grid, i, j);
+                    if (grid[i][j] == 1) res++;
                 }
             }
-            return count;
+            return res;
         }
     }
     @Test

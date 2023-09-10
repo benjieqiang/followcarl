@@ -28,6 +28,19 @@ package com.ben.followcarl.acm;
  * 输出
  * 输出为一行，k个整数，代表每次 addLand 后地图中岛屿的个数，整数之间用一个空格隔开，最后一个整数后没有空格
  * 1 1 2 3
+ *
+ * 测试用例如下：
+ * 4
+ * 4
+ * 7
+ * 0 0
+ * 1 1
+ * 1 2
+ * 2 3
+ * 0 1
+ * 3 2
+ * 3 3
+ * 预期输出：1 2 2 3 2 3 2
  * @Version: 1.0
  */
 
@@ -44,11 +57,13 @@ package com.ben.followcarl.acm;
 // 检查完上下左右以后, 我们得到新的ans
 // 然后利用dfs把与当前我们操作的岛屿连通的所有岛屿都编号为ans
 
+import org.junit.Test;
+
 import java.util.*;
 
 public class L41_islandsNum {
     private static int[][] dir = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; // 表示方向
-
+    private static ArrayList<Integer> list = new ArrayList<>();
     private static void dfs(int[][] grid, boolean[][] visited, int x, int y, int num) {
         // 遍历四个方向
         for (int i = 0; i < 4; ++i) {
@@ -66,33 +81,6 @@ public class L41_islandsNum {
         }
     }
 
-    private static void solve(int[][] grid, int x, int y, int res) {
-        Set<Integer> st = new HashSet<>(); // 用来储存不同的岛屿
-        // 遍历四个方向
-        for (int i = 0; i < 4; ++i) {
-            int nx = x + dir[i][0];
-            int ny = y + dir[i][1];
-            // 跳过越界的情况和海洋
-            if (nx < 0 || nx >= grid.length || ny < 0 || ny >= grid[0].length || grid[nx][ny] == 0) {
-                continue;
-            }
-            // 看4个方向有没有新的岛屿, 有的话,就说明这个岛屿与我们要操作的地方构成连通
-            // 岛屿数量 - 1 并且将新岛屿加入set
-            if (!st.contains(grid[nx][ny])) {
-                st.add(grid[nx][ny]);
-                res--;
-            }
-        }
-        boolean[][] visited = new boolean[grid.length][grid[0].length]; // 储存访问情况
-        // 标记为已经访问
-        visited[x][y] = true;
-        // 将编号改为我们新得到的ans
-        grid[x][y] = res;
-        // 将所有与当前操作的岛屿连通的岛屿都编号为我们新得到的ans
-        dfs(grid, visited, x, y, res);
-        // 输出答案
-        System.out.println(res + " ");
-    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -101,7 +89,8 @@ public class L41_islandsNum {
             int n = scanner.nextInt();
             int count = scanner.nextInt();
             int[][] grid = new int[m][n]; // 地图
-            int res = 0;
+            Integer res = 0;
+            Set<Integer> st = new HashSet<>(); // 用来储存不同的岛屿
             while (count-- > 0) {
                 int i = scanner.nextInt();
                 int j = scanner.nextInt();
@@ -114,9 +103,44 @@ public class L41_islandsNum {
                 res++;
                 // 将新岛屿编号
                 grid[i][j] = res;
-                solve(grid, i, j, res);
+                // 遍历四个方向
+                for (int k = 0; k < 4; ++k) {
+                    int nx = i + dir[k][0];
+                    int ny = j + dir[k][1];
+                    // 跳过越界的情况和海洋
+                    if (nx < 0 || nx >= grid.length || ny < 0 || ny >= grid[0].length || grid[nx][ny] == 0) {
+                        continue;
+                    }
+                    // 看4个方向有没有新的岛屿, 有的话,就说明这个岛屿与我们要操作的地方构成连通
+                    // 岛屿数量 - 1 并且将新岛屿加入set
+                    if (!st.contains(grid[nx][ny])) {
+                        st.add(grid[nx][ny]);
+                        res--;
+                    }
+                }
+                boolean[][] visited = new boolean[grid.length][grid[0].length]; // 储存访问情况
+                visited[i][j] = true; // 标记为已经访问
+                grid[i][j] = res;  // 将编号改为我们新得到的ans
+                dfs(grid, visited, i, j, res); // 将所有与当前操作的岛屿连通的岛屿都编号为我们新得到的ans
+                list.add(res);
             }
-            System.out.println();
+
+            for (int i = 0; i < list.size(); i++) {
+                if (i == list.size() - 1) System.out.println(list.get(i));
+                else System.out.print(list.get(i) + " ");
+            }
         }
+
+    }
+
+
+    public void resFinal(Integer res) {
+        res--;
+    }
+    @Test
+    public void testRes() {
+        Integer res = 5;
+        resFinal(res);
+        System.out.println(res);
     }
 }

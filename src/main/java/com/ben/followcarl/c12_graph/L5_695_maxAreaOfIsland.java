@@ -15,6 +15,9 @@ import java.util.LinkedList;
  * 岛屿的面积是岛上值为 1 的单元格的数目。
  * <p>
  * 计算并返回 grid 中最大的岛屿面积。如果没有岛屿，则返回面积为 0
+ *
+ * 思路:
+ * dfs/bfs
  * @Version: 1.0
  */
 public class L5_695_maxAreaOfIsland {
@@ -26,7 +29,13 @@ public class L5_695_maxAreaOfIsland {
     };
     int count;
 
-    // dfs思路: 主函数遇到陆地 计数为0，也就是不计数，陆地数量都去dfs里做计算。最后用res收获结果;
+    // dfs思路: 主函数遇到陆地 计数为0，也就是不计数，所有的岛屿数统计都放到dfs中去统计
+    // 进去不符合递归终止条件就count++, for循环只判断边界, 判断逻辑放到递归终止条件上。最后用res收获结果;
+    // count = dfs中的count数;
+    // 还有一种思路: count分为两部分: 一个是主函数的岛屿数, 一个是符合上下左右的岛屿数;
+    // dfs只处理下一个节点，即在主函数遇到岛屿就计数为1，dfs处理接下来的相邻陆地, 在遍历上下左右时把count++;
+    // count =  主函数的1个岛屿 + 上下左右符合条件的count数;
+
     public int maxAreaOfIsland(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;

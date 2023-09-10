@@ -57,7 +57,7 @@ public class L8_417_pacificAtlantic {
         }
 
         public List<List<Integer>> pacificAtlantic(int[][] heights) {
-            List<List<Integer>> result = new ArrayList<>();
+            List<List<Integer>> res = new ArrayList<>();
             int m = heights.length; // 行数
             int n = heights[0].length; // 列数
 
@@ -83,15 +83,15 @@ public class L8_417_pacificAtlantic {
                 for (int j = 0; j < n; j++) {
                     // 如果这个节点，从太平洋和大西洋出发都遍历过，就是结果
                     if (pacific[i][j] && atlantic[i][j]) {
-                        List<Integer> coordinates = new ArrayList<>();
-                        coordinates.add(i);
-                        coordinates.add(j);
-                        result.add(coordinates);
+                        List<Integer> inner = new ArrayList<>();
+                        inner.add(i);
+                        inner.add(j);
+                        res.add(inner);
                     }
                 }
             }
 
-            return result;
+            return res;
         }
     }
 
