@@ -15,6 +15,7 @@ import java.util.Arrays;
  * 排序后，数组变为 [0,1,9,16,100]
  *
  * 二刷：left<=right， 还要看清题意，是升序还是降序排列；
+ * 三刷: left <= right: 因为能取到left和right相等的情况;
  * @Version: 1.0
  */
 public class L3_977_sortedSquares {
@@ -35,9 +36,32 @@ public class L3_977_sortedSquares {
         return res;
     }
 
+    class Solution {
+        public int[] sortedSquares(int[] nums) {
+            int left = 0;
+            int right = nums.length - 1;
+            int[] res = new int[nums.length];
+            int index = nums.length - 1;
+            while (left <= right) {
+                int lval = nums[left] * nums[left];
+                int rval = nums[right] * nums[right];
+
+                if (lval > rval) {
+                    res[index] = lval;
+                    left++;
+                } else {
+                    res[index] = rval;
+                    right--;
+                }
+                index--;
+            }
+
+            return res;
+        }
+    }
     @Test
     public void testSortedSquares() {
         int[] nums = {-7,-3,2,3,11};
-        System.out.println(Arrays.toString(sortedSquares(nums)));
+        System.out.println(Arrays.toString(new Solution().sortedSquares(nums)));
     }
 }

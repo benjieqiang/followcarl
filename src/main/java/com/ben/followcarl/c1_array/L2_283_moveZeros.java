@@ -21,7 +21,6 @@ import java.util.Arrays;
  */
 public class L2_283_moveZeros {
     public void moveZeroes(int[] nums) {
-        System.out.println(Arrays.toString(nums));
         int slow = 0; //slow指向新数组的下标
         // fast用来寻找新数组的元素，遇到0，就要进行交互slow和fast位置的元素
         for (int fast = 0; fast < nums.length; fast++) {
@@ -31,13 +30,42 @@ public class L2_283_moveZeros {
                 nums[fast] = tmp;
                 slow++;
             }
+            System.out.println(Arrays.toString(nums));
         }
-        System.out.println(Arrays.toString(nums));
+    }
+
+    /**
+     * @param nums:
+     * @return void
+     * @description 暴力解法: 遍历数组把非零元素移动到数组前面, 用index记录非0的终止位置;
+     * 最后从index出发到n结束,给赋值成0;
+     * @author benjieqiang
+     * @date 2023/9/14 6:25 PM
+     */
+    public void moveZeroes2(int[] nums) {
+        int n = nums.length;
+
+        // 遍历数组，将非零元素移到数组的前面
+        int index = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != 0) {
+                nums[index] = nums[i];
+                index++;
+            }
+        }
+
+        // 将剩余位置补0
+        while (index < n) {
+            nums[index] = 0;
+            index++;
+        }
     }
 
     @Test
     public void testMove0() {
         int[] nums = {0,1,0,3,12};
         moveZeroes(nums);
+        int[] nums2 = {0,1,0,3,12};
+        moveZeroes2(nums2);
     }
 }

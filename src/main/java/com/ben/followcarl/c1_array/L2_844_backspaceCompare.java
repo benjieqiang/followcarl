@@ -19,8 +19,8 @@ import org.junit.Test;
  */
 public class L2_844_backspaceCompare {
     public boolean backspaceCompare(String s, String t) {
-        String sb = getString2(s);
-        String st = getString2(t);
+        String sb = getString(s);
+        String st = getString(t);
         return sb.equals(st);
     }
 
@@ -30,10 +30,8 @@ public class L2_844_backspaceCompare {
             if (s.charAt(i) != '#') {
                 sb.append(s.charAt(i));
             } else {
-                // 每次删除最后一个元素，需要判断当前字符串是否为空。
-                if (sb.length() > 0) {
-                    sb.deleteCharAt(sb.length() - 1);
-                }
+                // 只有sb长度大于0,才能删除末尾元素, 比如来了一个字符串"#a#b",sb长度还是0.
+                if (sb.length() > 0) sb.deleteCharAt(sb.length() - 1);
             }
         }
         return sb.toString();

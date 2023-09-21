@@ -43,7 +43,7 @@ public class L4_209_minSubArrayLen {
      * @param target:
      * @param nums:
      * @return int
-     * @description 滑动窗口， 最短的窗口
+     * @description 滑动窗口，最短窗口
      * 1、窗口里放的是：sum值大于或等于target的最小连续子序列
      * 2、窗口的起始位置如何移动：当窗口里面的和大于或等于target就需要移动起始位置
      * 3、窗口的终止位置如何移动：for循环中遍历；
