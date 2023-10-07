@@ -18,11 +18,11 @@ import java.util.Arrays;
  *                   /      \
  *                  1        2
  *
- * n = 3时，以数字1为节点有两个 1     1
- *                           \     \
- *                            2     3
- *                             \    /
- *                              3  2
+ * n = 3时，有三种情况: 以数字1为节点有两个 1     1
+ *                                     \     \
+ *                                      2     3
+ *                                      \    /
+ *                                      3  2
  *                             从形状上来看，1为节点的二叉树数量 = 左子树有0个元素的bst数量(1)* 右子树有2个元素的bst数量(2)
  * 以数字2为节点的bst有1个   2
  *                      /  \
@@ -50,11 +50,10 @@ public class L7_96_numTrees {
         int[] dp = new int[n + 1];
         dp[0] = 1;
         for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= i; j++) {
-                // 第j个元素左子树有j - 1个元素，右子树有i - j个元素
+            for (int j = 1; j <= i; j++) { //j从0遍历到i;能取到i;
+                // 一共有i个元素, 去除根结点一个元素, 剩下第j个元素左子树有j - 1个元素，右子树有i - j个元素
                 // (j - 1) + j + (i - j) = i
                 dp[i] += dp[j - 1] * dp[i - j];
-                System.out.println(Arrays.toString(dp));
             }
         }
         return dp[n];

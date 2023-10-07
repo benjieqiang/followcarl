@@ -19,7 +19,7 @@ import java.util.List;
  * <p>
  * 示例 2: 输入: k = 3, n = 9 输出: [[1,2,6], [1,3,5], [2,3,4]]
  * <p>
- * #
+ *
  * @Version: 1.0
  */
 public class L2_216_combinationSum3 {

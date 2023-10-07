@@ -20,13 +20,12 @@ public class L5_63_uniquePathsWithObstacles {
         int[][] dp = new int[m][n];
         // 2. 初始化还是首行和首列，只不过遇到障碍物，后面就不走了初始化为0；
         for (int i = 0; i < m && obstacleGrid[i][0] == 0; i++) dp[i][0] = 1; //首列
-        for (int j = 1; j < n && obstacleGrid[0][j] == 0; j++) dp[0][j] = 1; //首行
+        for (int j = 0; j < n && obstacleGrid[0][j] == 0; j++) dp[0][j] = 1; //首行
 
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
-                if (obstacleGrid[i][j] == 0) {
-                    dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
-                }
+                if (obstacleGrid[i][j] == 1) continue;
+                dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
             }
         }
         return dp[m - 1][n - 1];

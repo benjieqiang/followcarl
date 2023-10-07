@@ -22,7 +22,7 @@ public class L2_26_removeDuplicates {
                 nums[++slow] = nums[fast];
             }
         }
-//        System.out.println(Arrays.toString(nums));
+        System.out.println(Arrays.toString(nums));
         return slow + 1; // slow始终指向的最后一个元素的下标位置,求数组长度得加1
     }
 

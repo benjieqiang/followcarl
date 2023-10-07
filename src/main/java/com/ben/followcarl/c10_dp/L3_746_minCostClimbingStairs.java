@@ -16,7 +16,7 @@ import java.util.Arrays;
  *         __10__│
  * __起点__│  0      1      2      3
  *
- * 1. 到达第i个台阶所需的最小花费为dp[i];
+ * 1. dp数组的含义: 到达第i个台阶所需的最小花费为dp[i];
  * 2. dp[i] = min(dp[i-1] + cost[i - 1], dp[i-2] + cost[i - 2])
  * 3. 初始化 dp[0] = 0, dp[1] = 0
  * 4. 遍历顺序, 从2到cost.length

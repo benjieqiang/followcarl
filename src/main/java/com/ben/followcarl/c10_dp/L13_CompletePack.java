@@ -17,7 +17,7 @@ import java.util.Arrays;
  *
  * 先遍历背包再遍历物品, 先遍历物品再遍历背包
  * 两种都可以.
- * dp[j] = Math.max(dp[j], dp[j - weigh[i]] + value[i])
+ * dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i])
  * dp[j]: 不放物品i,即0-i-1的物品中取物品放入容量为j的背包得到的最大价值
  * dp[j - weigh[i]] + value[i]: 放物品i. 剩余背包容量得到的最大价值加上物品i的价值;
  * 代码和01背包区别的地方是:背包的遍历顺序成为了正序,这样能用到上一次的的结果;
