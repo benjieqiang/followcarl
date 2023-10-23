@@ -19,35 +19,15 @@ import java.util.LinkedList;
  * 队列：
  * Deque<Integer> queue = new LinkedList<>();
  * addFirst removeLast getFirst
+ * add/remove/get
+
  * </>
  * * @author benjieqiang
  * @date 2023/7/26 9:40 PM
  */
 public class L3_20_IsValid {
-    public boolean isValid(String s) {
-        Deque<Character> st = new LinkedList<>();
-        for (int i = 0; i < s.length(); i++) {
-            System.out.println(st.size());
-            char ch = s.charAt(i);
-            // 1. 遇到左括号一律往栈里面放对应右括号
-            if (ch == '(') {
-                st.push(')');
-            } else if (ch == '{') {
-                st.addFirst('}');
-            } else if (ch == '[') {
-                st.addFirst(']');
-            } else if (st.isEmpty() || st.peekFirst() != ch) {
-                // 2. 经过上面的if条件，有左括号存在，栈一定不为空，如果为空那么说明遇到右括号，栈空的情况，比如")]","]", "(){}}{"
-                return false;
-            } else {
-                // 右括号匹配到了
-                st.removeFirst();
-            }
-        }
-        return st.isEmpty();
-    }
 
-    public boolean isValid2(String s) {
+    public boolean isValid(String s) {
         if (s.length() % 2 != 0) return false; //剪枝，肯定为偶数；一一对应
         Deque<Character> st = new LinkedList<>();
         for (char ch : s.toCharArray()) {
@@ -57,7 +37,8 @@ public class L3_20_IsValid {
                 st.push(']');
             } else if (ch == '{') {
                 st.push('}');
-            } else if (st.isEmpty() || st.peek() != ch) {
+                // 2. 经过上面的if条件，有左括号存在，栈一定不为空，如果为空那么说明遇到右括号，栈空的情况，比如")]","]", "(){}}{"
+            } else if (st.isEmpty() || st.peek() != ch) { // isEmpty()放到peek前面；
                 return false;
             } else {
                 st.pop();
@@ -71,6 +52,6 @@ public class L3_20_IsValid {
     public void testIsValid() {
 //        String s = "()[]{}";
         String s = "(]";
-        System.out.println(isValid2(s));
+        System.out.println(isValid(s));
     }
 }

@@ -47,7 +47,7 @@ public class L4_1047_removeDuplicates {
      * @param s:
      * @return String
      * @description 不使用栈，使用sb字符串的性质
-     * top指向新字符串的下标；
+     * top指向新字符串的最后一个元素下标位置；
      * 如果栈顶的元素和当前遍历的字符不同，直接append入sb
      * 如果相同，弹出
      *
@@ -68,6 +68,20 @@ public class L4_1047_removeDuplicates {
             } else {
                 sb.deleteCharAt(top);
                 top--;
+            }
+        }
+        return sb.toString();
+    }
+
+    public String removeDuplicates4(String s) {
+        if (s == null || s.length() == 0) return s;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (sb.length() == 0 || ch != sb.charAt(sb.length() - 1)) {
+                sb.append(ch);
+            } else {
+                sb.deleteCharAt(sb.length() - 1);
             }
         }
         return sb.toString();

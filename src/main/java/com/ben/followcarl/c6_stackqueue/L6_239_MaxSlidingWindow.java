@@ -80,17 +80,19 @@ public class L6_239_MaxSlidingWindow {
      * 窗口向右滑动时，把最左边的元素删除，在右边再填一个新元素进来，这种是双端队列，
      * 得到的窗口要找到队列里的最大值；
      * <p>
-     * 维护一个单调递减的队列，
+     * 维护一个单调递减的队列，单调队列存放的值是下标，它是单调自增的，但是对应的值是单调递减的。
      * <p>
      * deque:
      * isEmpty;
      * add
      * @author benjieqiang
      * @date 2023/7/26 11:10 PM
+     * 2023.10.23
      */
     public int[] maxSlidingWindow2(int[] nums, int k) {
         // 原数组为空或者只有一组元素，直接返回
         if (nums == null || nums.length == 1) return nums;
+
         Deque<Integer> deque = new LinkedList<>();
         int[] res = new int[nums.length - k + 1];
         //举例说明：比如[1,2,3,4]， k = 3， 此时res ={3,4}, res的长度为2
@@ -101,7 +103,7 @@ public class L6_239_MaxSlidingWindow {
             while (!deque.isEmpty() && nums[right] > nums[deque.getLast()]) {
                 deque.removeLast();
             }
-            deque.addLast(right);
+            deque.addLast(right); // 存放的是当前元素的下标；
             // 左窗口
             int left = right - k + 1;
             // 队首元素下标小于窗口的left时，队首元素不在窗口内，删除；
@@ -124,4 +126,14 @@ public class L6_239_MaxSlidingWindow {
         int[] ints = maxSlidingWindow2(nums, k);
         System.out.println(Arrays.toString(ints));
     }
+
+    /*
+    {1, 3, -1, -3, 5, 3, 6, 7}
+    right => [0, nums.length - 1];
+    双端队列，单调递减，代码里面存放下标, 解释过程存放实际的值；
+    1. right = 0, nums[0] = 1, 队列为空，入队，得到{1},
+    2. right = 1, nums[1] = 3, 队列不为空，队尾元素1 < 3,弹出队尾值1，3入队, {3}
+    3. right = 2, nums[2] = -1, 队尾值3 > -1， 入队得到 {3,-1}, 窗口l = 0， r = 2，res = [3];
+    4. right = 3, nums[3] = -3, 队尾-1 > -3, 入队{3,-1,-3}, 窗口l = 1, r = 3, res = [3,3]
+     */
 }
