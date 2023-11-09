@@ -1,5 +1,7 @@
 package com.ben.followcarl.c4_string;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 
 /**
@@ -22,7 +24,9 @@ import java.util.Arrays;
  * 输出："bacd"
  *
  * 解法：
- * 遍历字符串，每2k个去反转字符串，看剩下的字符串的长度与k相比，如果小于则全部反转，如果
+ * 遍历字符串，每2k个去反转字符串，看剩下的字符串的长度与k相比
+ * length - 1 - left 与k
+ *
  * @Version: 1.0
  */
 public class L2_541_reverseStr {
@@ -30,11 +34,11 @@ public class L2_541_reverseStr {
         public String reverseStr(String s, int k) {
             char[] cs = s.toCharArray();
             int length = s.length();
-            for (int left = 0; left < length; left = left + 2 * k) {
+            for (int left = 0; left < length; left += 2 * k) {
                 // 每2k个翻转前k个，剩余字符判断够不够k个来解决，如果是right = length-1说明剩下的字符串长度小于k，不足k则需要反转；
                 // 如果是left + k - 1说明是剩下的字符串长度大于k个，只反转前k个
                 int start = left;
-                int right = Math.min(length - 1, left + k - 1);
+                int right = Math.min(length - 1, start + k - 1);
                 while (start < right) {
                     char temp = cs[start];
                     cs[start] = cs[right];
@@ -72,4 +76,13 @@ public class L2_541_reverseStr {
             return new String(cs);
         }
     }
+
+    @Test
+    public void testStr() {
+        String s = "abcdefg";
+        int k = 2;
+
+        System.out.println(new Solution().reverseStr(s, k));
+    }
+
 }

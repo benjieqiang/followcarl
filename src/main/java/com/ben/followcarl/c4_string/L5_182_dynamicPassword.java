@@ -22,7 +22,8 @@ package com.ben.followcarl.c4_string;
  * @Version: 1.0
  */
 public class L5_182_dynamicPassword {
-    // 方法1，借助string的substring性质；
+    // 方法1，借助string的substring性质；时间复杂度 O(N)O(N)O(N) ： 其中 NNN 为字符串 password 的长度，字符串切片函数为线性时间复杂度（参考资料）。
+    //空间复杂度 O(N)O(N)O(N) ： 两个字符串切片的总长度为 NNN 。
     public String dynamicPassword(String password, int target) {
         if (password == null || password.length() == 0) return password;
         return password.substring(target, password.length()) + password.substring(0, target);
