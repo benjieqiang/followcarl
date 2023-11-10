@@ -7,8 +7,8 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-public class L3_107_LevelOrderBottom {
-    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+public class L3_107_LevelOrder {
+    public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) return res;
 
@@ -28,6 +28,23 @@ public class L3_107_LevelOrderBottom {
         return res;
     }
 
+    // dfs
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> res = new LinkedList<>();
+        if (root == null) return res;
+        dfs(root, res, 0); //0:depth
+        return res;
+    }
+
+    private void dfs(TreeNode node, List<List<Integer>> res, int depth) {
+        if (node == null) return;
+        if (res.size() == depth) res.add(new LinkedList<>());
+
+        res.get(depth).add(node.val);
+        dfs(node.left, res, depth + 1);
+        dfs(node.right, res, depth + 1);
+    }
+
 
     @Test
     public void testLevelOrderTraversal() {
@@ -42,7 +59,7 @@ public class L3_107_LevelOrderBottom {
         node2.right = node5;
 
 
-        List<List<Integer>> res = levelOrderBottom(node1);
+        List<List<Integer>> res = levelOrder(node1);
         System.out.println(res);
     }
 }
