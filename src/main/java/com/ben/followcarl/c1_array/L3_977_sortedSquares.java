@@ -20,6 +20,7 @@ import java.util.Arrays;
  */
 public class L3_977_sortedSquares {
     public int[] sortedSquares(int[] nums) {
+        if (nums == null || nums.length == 0) return new int[0];
         int[] res = new int[nums.length];
         int right = nums.length - 1;
         int i = nums.length - 1;
@@ -61,7 +62,7 @@ public class L3_977_sortedSquares {
     }
     @Test
     public void testSortedSquares() {
-        int[] nums = {-7,-3,2,3,11};
-        System.out.println(Arrays.toString(new Solution().sortedSquares(nums)));
+        int[] nums = null;
+        System.out.println(Arrays.toString(sortedSquares(nums)));
     }
 }

@@ -44,7 +44,7 @@ public class L4_226_InvertTree {
         root.right = tmp;
     }
 
-    // dfs 迭代
+    // bfs 迭代
     public TreeNode invertTree2(TreeNode root) {
         if (root == null) return root;
         Deque<TreeNode> stack = new LinkedList<>();

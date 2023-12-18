@@ -7,23 +7,24 @@ import java.util.Arrays;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-07-05  19:22
- * @Description: 删除升序数组中的重复项
+ * @Description: 删除升序数组中的重复项。为啥slow+1,假设数组只有一个元素，数组的长度应该是slow+1=1,而不是0；
  * slow, fast一前一后，
- * 如果发现两指针指向的元素相等，则fast后移一位；
- * 如果fast指向的元素比slow指向的元素大，则slow需要先前进一位，则需要把fast的元素覆盖slow指向的当前位置的元素。
+ * fast：去寻找数组中下一个不同的元素。
+ * - 如果是等于，fast继续加；
+ * - 如果fast指向的元素比slow指向的元素大，找到了这个不同元素，则需要把fast的元素放到上一个不同元素的右边，也就是slow加1的位置；
  * @Version: 1.0
  */
 public class L2_26_removeDuplicates {
     public int removeDuplicates(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
         int slow = 0;
-        for (int fast = 1; fast < nums.length; fast++) {
+        for (int fast = 0; fast < nums.length; fast++) {
             if (nums[fast] > nums[slow]) {
                 nums[++slow] = nums[fast];
             }
         }
         System.out.println(Arrays.toString(nums));
-        return slow + 1; // slow始终指向的最后一个元素的下标位置,求数组长度得加1
+        return slow + 1; // slow始终指向的最后一个元素的下标位置,所以：slow + 1才是数组长度；
     }
 
     @Test

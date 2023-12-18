@@ -24,14 +24,15 @@ public class L5_101_IsSymmetric {
             // 弹出右和左节点；
             TreeNode rightNode = stack.pop();
             TreeNode leftNode = stack.pop();
-            // 如果左右孩子都为空，跳过这次循环；比如[2,3,3,4,5,5,null]，当栈为[5,5,null,4]时，此时弹出两个5，因为他们值相同，所以
-            // 继续往栈礼放他们的左右孩子（实际是空的），如果在这里返回true是错误的，得跳过。
+            // 如果左右孩子都为空，跳过这次循环；比如[2,3,3,4,5,5,null]，先入左右孩子3，3，之后弹出，入4，null,5,5.
+            // 当栈为[4,null,5,5]时，此时弹出两个5，因为他们值相同，所以继续往栈放他们的左右孩子（实际是空的）
+            // 放了两个空的null进去，直接跳过这次循环。
             if (rightNode == null && leftNode == null) continue;
             // 有一个为空则不对称, 或值不等不对称.
             if ((rightNode != null && leftNode == null) || (rightNode == null && leftNode != null) || (rightNode.val != leftNode.val)) {
                 return false;
             }
-            // 栈每次入栈是：左结点的右孩子+右节点的左孩子，左结点的左孩子+右节点的右孩子+；
+            // 栈每次入栈是：右外及内。左结点的左孩子+右节点的右孩子， 左结点的右孩子+右节点的左孩子，
             stack.push(leftNode.left);
             stack.push(rightNode.right);
             stack.push(leftNode.right);

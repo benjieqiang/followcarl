@@ -23,10 +23,9 @@ public class L4_209_minSubArrayLen {
      */
     public int minSubArrayLen(int target, int[] nums) {
         int res = Integer.MAX_VALUE;
-        int sum = 0;
         int subLength = 0;
         for (int i = 0; i < nums.length; i++) {
-            sum = 0;
+            int sum = 0;
             for (int j = i; j < nums.length; j++) {
                 sum += nums[j];
                 if (sum >= target) {

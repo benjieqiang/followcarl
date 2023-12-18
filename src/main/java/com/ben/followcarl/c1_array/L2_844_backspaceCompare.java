@@ -19,11 +19,18 @@ import org.junit.Test;
  */
 public class L2_844_backspaceCompare {
     public boolean backspaceCompare(String s, String t) {
-        String sb = getString(s);
-        String st = getString(t);
+        String sb = getString2(s);
+        String st = getString2(t);
         return sb.equals(st);
     }
 
+    /**
+     * @param s:
+     * @return String
+     * @description 遍历字符串，遇到#则后退一步，把sb的末尾元素删了。
+     * @author benjieqiang
+     * @date 2023/12/16 8:22 PM
+     */
     private static String getString(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {

@@ -35,6 +35,7 @@ public class L4_904_totalFruit {
             // 往篮子中放某种类型的水果。map中有某个水果，在原有数目上加1，没有某个水果的话加1
             hashMap.put(fruits[j], hashMap.getOrDefault(fruits[j], 0) + 1);
             while (hashMap.size() > 2) {
+                // 当篮子放的水果种类大于2，则说明需要缩小窗口，移除左边的篮子
                 hashMap.put(fruits[i], hashMap.get(fruits[i]) - 1);
                 if (hashMap.get(fruits[i]) == 0) {
                     hashMap.remove(fruits[i]);
@@ -70,6 +71,6 @@ public class L4_904_totalFruit {
     @Test
     public void testFruits() {
         int[] fruits = {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4};
-        System.out.println(totalFruit2(fruits));
+        System.out.println(totalFruit(fruits));
     }
 }

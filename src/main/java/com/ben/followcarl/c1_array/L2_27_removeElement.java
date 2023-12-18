@@ -33,7 +33,7 @@ public class L2_27_removeElement {
     public int removeElement(int[] nums, int val) {
         int length = nums.length;
         for (int i = 0; i < length; i++) {
-            if (nums[i] == val) {
+            if (nums[i] == val) { // 数组集体向前移动一位；
                 for (int j = i + 1; j < length; j++) {
                     nums[j - 1] = nums[j];
                 }
@@ -50,13 +50,13 @@ public class L2_27_removeElement {
      * @param val:
      * @return int
      * @description 双指针:
-     * fast用来遍历整个数组
+     * fast用来遍历整个数组，寻找新元素
      * slow指向新数组的指针
      * fast当前指向和目标元素不等,则替换成当前元素.slow+1
      * 直到fast遍历完;
      *
-     * 原地移除和val值相等的元素. 定义两个指针,slow指向移除元素后的新数组的位置, fast用来寻找和val是否相等的数.
-     * 利用一个for循环遍历整个数组,fast如果指向的元素和val不等,则说明找到,此时吧slow指向的元素更新成fast指向的元素, slow也前进一步;
+     * 原地移除和val值相等的元素. 定义两个指针,slow指向移除元素后的新数组的位置, fast用来寻找新元素。
+     * 利用一个for循环遍历整个数组,fast如果指向的元素和val不等,则说明找到,此时slow指向的元素更新成fast指向的元素, slow也前进一步;
      * 直至遍历完数组. 最后返回slow
      * @author benjieqiang
      * @date 2023/7/2 8:55 PM
