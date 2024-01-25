@@ -8,9 +8,9 @@ import java.util.HashMap;
  * @Author: benjieqiang
  * @CreateTime: 2023-07-11  20:38
  * @Description: 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
- *
+ * <p>
  * 注意：若s 和 t中每个字符出现的次数都相同，则称s 和 t互为字母异位词。
- *  输入: s = "anagram", t = "nagaram"
+ * 输入: s = "anagram", t = "nagaram"
  * 输出: true
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode.cn/problems/valid-anagram
@@ -42,15 +42,16 @@ public class L2_242_isAnagram {
 
     public boolean isAnagram2(String s, String t) {
         if (s.length() != t.length()) return false;
-        int[] res = new int[26];
+        int[] map = new int[128];
         for (char ch : s.toCharArray()) {
-            res[ch - 'a']++;
+            map[ch]++;
         }
         for (char ch : t.toCharArray()) {
-            res[ch - 'a']--;
+            map[ch]--;
         }
-        for (int count : res) {
-            if (count > 0) return false;
+
+        for (int i : map) {
+            if (i > 0) return false;
         }
 
         return true;
@@ -59,7 +60,7 @@ public class L2_242_isAnagram {
 
     @Test
     public void testIsAnagram() {
-       String s = "anagram", t = "nagaram";
+        String s = "anagram", t = "nagaram";
 
         System.out.println(isAnagram2(s, t));
 

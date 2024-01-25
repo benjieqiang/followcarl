@@ -5,7 +5,9 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-07-11  17:38
- * @Description: TODO
+ * @Description:
+ * 思路：定义两个指针，slow，fast
+ * fast先走n+1步。然后fast，slow同时出发，直至fast为null，slow此时指向的位置是待删节点的上一个节点，让他指向待删节点的下一个节点即可。
  * @Version: 1.0
  */
 public class L5_19_removeNthFromEnd {
@@ -35,20 +37,20 @@ public class L5_19_removeNthFromEnd {
     public ListNode removeNthFromEnd2(ListNode head, int n) {
         if (head == null) return head;
         ListNode dummyHead = new ListNode(0, head);
-        ListNode left = dummyHead;
-        ListNode right = dummyHead;
+        ListNode slow = dummyHead;
+        ListNode fast = dummyHead;
         // right 走n+1步， 为了让left指向待删节点的前一个节点
         while (n-- > 0) {
-            right = right.next;
+            fast = fast.next;
         }
-        right = right.next;
+        fast = fast.next;
 
         // 让left去删
-        while (right != null) {
-            left = left.next;
-            right = right.next;
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
         }
-        left.next = left.next.next;
+        slow.next = slow.next.next;
         return dummyHead.next; // [1,2]， n = 2。则需要删除1，所以是dummyHead.next;
     }
 

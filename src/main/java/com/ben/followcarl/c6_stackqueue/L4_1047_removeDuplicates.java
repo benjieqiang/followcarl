@@ -76,9 +76,8 @@ public class L4_1047_removeDuplicates {
     public String removeDuplicates4(String s) {
         if (s == null || s.length() == 0) return s;
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (sb.length() == 0 || ch != sb.charAt(sb.length() - 1)) {
+        for (char ch : s.toCharArray()) {
+            if (sb.length() == 0 || sb.charAt(sb.length() - 1) != ch) {
                 sb.append(ch);
             } else {
                 sb.deleteCharAt(sb.length() - 1);

@@ -17,7 +17,7 @@ class EvalRPNTest {
         }
         System.out.println("strings = " + Arrays.toString(strings));
 
-        System.out.println(new L5_150_EvalRPN().evalRPN(strings));
+        System.out.println(new L5_150_EvalRPN().evalRPN2(strings));
     }
 }
 /**
@@ -25,32 +25,11 @@ class EvalRPNTest {
  * 卡壳：
  * 1. 使用equals比较字符串
  * 2. 字符串转int Integer.valueOf(str);
+ * 3. stack中存的数据类型是Integer类型；
  * @author benjieqiang
  * @date 2023/7/26 10:33 PM
  */
 public class L5_150_EvalRPN {
-    public int evalRPN(String[] tokens) {
-        Deque<Integer> st = new LinkedList<>();
-        for (int i = 0; i < tokens.length; i++) { //也可以用增强for循环，判断时需要用equals，-和/需要特殊处理。
-            String str = tokens[i];
-            if (str.equals("+")) {
-                st.addFirst(st.removeFirst() + st.removeFirst());
-            } else if (str.equals("-")) {
-                st.addFirst(-st.removeFirst() + st.removeFirst());
-            } else if (str.equals("*")) {
-                st.addFirst(st.removeFirst() * st.removeFirst());
-            } else if (str.equals("/")) {
-                int tmp1 = st.removeFirst();
-                int tmp2 = st.removeFirst();
-                st.addFirst(tmp2 / tmp1);
-            } else {
-                st.addFirst(Integer.valueOf(str));
-            }
-        }
-
-        return st.removeFirst();
-    }
-
     public int evalRPN2(String[] tokens) {
         Deque<Integer> st = new LinkedList<>();
         for (String str : tokens) {
@@ -71,6 +50,30 @@ public class L5_150_EvalRPN {
             }
         }
         return st.pop();
+    }
+
+    public int evalRPN(String[] tokens) {
+        if (tokens == null || tokens.length == 0) return 0;
+        // stack
+        Deque<Integer> stack = new LinkedList<>();
+        // +,-,*,/
+        for (String str : tokens) {
+            if (str.equals("+")) {
+                stack.push(stack.pop() + stack.pop());
+            } else if (str.equals("-")) {
+                stack.push(-stack.pop() + stack.pop());
+            } else if (str.equals("*")) {
+                stack.push(stack.pop() * stack.pop());
+            } else if (str.equals("/")) {
+                int num1 = stack.pop();
+                int num2 = stack.pop();
+                stack.push(num2 / num1);
+            } else {
+                stack.push(Integer.valueOf(str));
+            }
+        }
+        // stack.pop()
+        return stack.pop();
     }
 
     @Test

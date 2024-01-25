@@ -17,15 +17,16 @@ package com.ben.followcarl.c2_linkedlist;
 public class L3_206_reverseList {
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) return head;
-        ListNode left = null;
-        ListNode right = head;
-        while (right != null) {
-            ListNode tmp = right.next;
-            right.next = left;
-            left = right;
-            right = tmp;
+        ListNode slow = null;
+        ListNode fast = head;
+        while (fast != null) {
+            ListNode node = fast.next;
+            fast.next = slow;
+            slow = fast;
+            fast = node;
         }
-        return left;
+
+        return slow;
     }
 
     /**

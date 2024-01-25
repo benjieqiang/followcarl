@@ -19,10 +19,17 @@ import java.util.HashMap;
  * map
  * 果种类为键
  * 果数目为值
- *
+ * <p>
  * 1. 窗口: map形成的数组,key是水果种类,键是水果的出现的次数;
  * 2. 窗口起始位置如何移动: 当发现窗口里的水果种类数大于2个,则不断的去减少左边的元素,直至满足2个;
  * 3. 窗口终止位置如何移动: for循环遍历整个数组;while循环遍历整个数组;
+ *
+ *
+ * 时间复杂度：O(n)O(n)O(n)，其中 nnn 是数组 fruits\textit{fruits}fruits 的长度。
+ *
+ * 空间复杂度：O(1)O(1)O(1)。哈希表中最多会有三个键值对，可以看成使用了常数级别的空间。
+ *
+ *
  * @Version: 1.0
  */
 public class L4_904_totalFruit {
@@ -35,12 +42,12 @@ public class L4_904_totalFruit {
             // 往篮子中放某种类型的水果。map中有某个水果，在原有数目上加1，没有某个水果的话加1
             hashMap.put(fruits[j], hashMap.getOrDefault(fruits[j], 0) + 1);
             while (hashMap.size() > 2) {
-                // 当篮子放的水果种类大于2，则说明需要缩小窗口，移除左边的篮子
+                // 当篮子放的水果种类大于2，不满足只能装2种水果的条件，所以需要在while循环内不断缩小窗口，移除左边的篮子
                 hashMap.put(fruits[i], hashMap.get(fruits[i]) - 1);
                 if (hashMap.get(fruits[i]) == 0) {
                     hashMap.remove(fruits[i]);
                 }
-                i++;
+                i++; // left右移
             }
             sub = Math.max(j - i + 1, sub);
         }
@@ -57,7 +64,7 @@ public class L4_904_totalFruit {
             // 最长的子序列，不满足要求的时候，移除left对应元素，left右移
             while (hashMap.size() > 2) {
                 hashMap.put(fruits[left], hashMap.get(fruits[left]) - 1);
-                if (hashMap.get(fruits[left]) == 0) {
+                if (hashMap.get(fruits[left]) == 0) { // 水果都没有了，不能还继续占着map的位置，所以得删除掉；
                     hashMap.remove(fruits[left]);
                 }
                 left++;
@@ -67,10 +74,46 @@ public class L4_904_totalFruit {
         }
         return res;
     }
+    /**
+     * @param fruits:
+     * @return int
+     * @description 这次是真看样例，都理解不了是啥题意：其实就是从任意位置开始，同时使用两个篮子采集，一旦选择后不能修改篮子所装的水果种类，当所有树处理完或遇到第一棵种类不同的树则停止。
+     *
+     * 滑动窗口模拟题：使用 j 和 i 分别代表滑动窗口的两端，窗口种类不超过 222 种为合法。
+     *
+     * 作者：宫水三叶
+     * 链接：https://leetcode.cn/problems/fruit-into-baskets/solutions/1437444/shen-du-jie-xi-zhe-dao-ti-he-by-linzeyin-6crr/
+     * 来源：力扣（LeetCode）
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     * @author benjieqiang
+     * @date 2023/12/18 6:17 PM
+     */
+    public int totalFruit3(int[] fruits) {
+        int res = 0;
+        int left = 0;
+        int right = 0;
+        int n = fruits.length;
+        int[] cnts = new int[n + 1];
+        int count = 0;
+
+        while (right < n) {
+            if (++cnts[fruits[right]] == 1) count++;
+            while (count > 2) {
+                if (--cnts[fruits[left]] == 0) count--;
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+            right++;
+        }
+
+        return res;
+    }
 
     @Test
     public void testFruits() {
-        int[] fruits = {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4};
+//        int[] fruits = {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4};
+        int[] fruits = {1, 2, 3, 2, 2};
+//        int[] fruits = {1, 2, 1};
         System.out.println(totalFruit(fruits));
     }
 }

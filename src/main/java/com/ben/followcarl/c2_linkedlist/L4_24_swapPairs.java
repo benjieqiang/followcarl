@@ -29,6 +29,21 @@ public class L4_24_swapPairs {
         return dummy.next;
     }
 
+    public ListNode swapPairs2(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode dummyHead = new ListNode(0, head);
+        ListNode cur = dummyHead; // 引入dummyHead,这样头节点不用单独处理；cur始终指向slow节点的前一个节点；
+        while (cur.next != null && cur.next.next != null) {
+            ListNode slow = cur.next;
+            ListNode fast = cur.next.next;
+            cur.next = fast; // 先让cur指向第二个节点；
+            slow.next = fast.next; // 断开slow和fast的连接，即让slow的下一个节点指向第三个节点；
+            fast.next = slow; // fast的下一个节点指向slow节点；
+            cur = slow; // slow此时处于第二个节点的位置。cur -> fast -> slow -> 第三个节点；
+        }
+
+        return dummyHead.next;
+    }
     @Test
     public void testSwapPairs() {
         ListNode node1 = new ListNode(1);
@@ -39,6 +54,6 @@ public class L4_24_swapPairs {
         node2.next = node3;
         node3.next = node4;
 
-        swapPairs(node2);
+        swapPairs2(node2);
     }
 }

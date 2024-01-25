@@ -76,15 +76,10 @@ public class L6_239_MaxSlidingWindow {
     /**
      * @description 思路：
      * 1. 单调队列：所有队列的元素按照递增或递减顺序的队列，队列头是最小或最大的元素。
-     * <p>
      * 窗口向右滑动时，把最左边的元素删除，在右边再填一个新元素进来，这种是双端队列，
      * 得到的窗口要找到队列里的最大值；
-     * <p>
-     * 维护一个单调递减的队列，单调队列存放的值是下标，它是单调自增的，但是对应的值是单调递减的。
-     * <p>
-     * deque:
-     * isEmpty;
-     * add
+     * 思路：维护一个单调递减的队列，单调队列存放的值是下标，下标是单调自增的，但是对应的值是单调递减的。队列头是最大值的下标；
+     * deque： isEmpty; add
      * @author benjieqiang
      * @date 2023/7/26 11:10 PM
      * 2023.10.23
@@ -95,23 +90,24 @@ public class L6_239_MaxSlidingWindow {
 
         Deque<Integer> deque = new LinkedList<>();
         int[] res = new int[nums.length - k + 1];
-        //举例说明：比如[1,2,3,4]， k = 3， 此时res ={3,4}, res的长度为2
+        //举例说明：比如[1], k = 1, 结果是[1]; 所以要加1；
 
         for (int right = 0; right < nums.length; right++) {
 
             // 如果队列不为空，且当前元素大于等于队尾元素，则移除队尾元素，小弟都撤走，直到遇到新的老大停下来或队列都空了停止；
+            // nums[right]: 当前元素，nums[deque.getLast()]: 队尾元素
             while (!deque.isEmpty() && nums[right] > nums[deque.getLast()]) {
                 deque.removeLast();
             }
-            deque.addLast(right); // 存放的是当前元素的下标；
-            // 左窗口
+            deque.addLast(right); // 队列存入当前元素（最大元素）的下标；
+
+            // 判断队首元素是否在窗口内；队首元素下标小于窗口的left时，队首元素不在窗口内，删除队首元素；
             int left = right - k + 1;
-            // 队首元素下标小于窗口的left时，队首元素不在窗口内，删除；
             if (deque.getFirst() < left) {
                 deque.removeFirst();
             }
 
-            // 当窗口右边界right + 1大于等于窗口大小k时，窗口形成了，此时队首元素就是该窗口最大值，加入结果集；
+            // 窗口形成，收获结果：当窗口右边界right + 1大于等于窗口长度（k）时，此时队首元素就是该窗口最大值，加入结果集；
             if (right + 1 >= k) {
                 res[left] = nums[deque.getFirst()];
             }

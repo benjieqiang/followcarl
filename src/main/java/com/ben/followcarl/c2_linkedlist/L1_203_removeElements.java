@@ -8,6 +8,9 @@ import java.util.List;
  * @Author: benjieqiang
  * @CreateTime: 2023-07-07  17:14
  * @Description: 给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
+ *
+ * 使用一个虚拟头节点，从虚拟头节点位置开始遍历，
+ * 如果cur的next是目标节点，则让cur.next指向目标节点的next节点；
  * @Version: 1.0
  */
 public class L1_203_removeElements {
