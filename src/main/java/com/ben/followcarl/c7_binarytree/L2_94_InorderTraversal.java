@@ -15,22 +15,25 @@ import java.util.Deque;
  */
 public class L2_94_InorderTraversal {
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        if (root == null) return list;
-        Deque<TreeNode> stack = new LinkedList<>();
-        TreeNode cur = root;
+        List<Integer> list = new ArrayList<>(); // 用于存放中序遍历结果的列表
+        if (root == null) return list; // 如果根节点为空，则返回空列表
+
+        Deque<TreeNode> stack = new LinkedList<>(); // 使用栈来辅助遍历
+        TreeNode cur = root; // 当前节点初始化为根节点
+
         while (cur != null || !stack.isEmpty()) {
-            if (cur != null) { // 从根节点开始一路向左，斜边入栈，直至为null
-                stack.push(cur);
-                cur = cur.left;//步骤一，遍历左子树
-            } else { // 当遇到叶子节点之后，弹出来第一个元素，加入结果集，然后遍历右孩子
-                cur = stack.pop();
-                list.add(cur.val);////步骤二，取根结点的值
-                cur = cur.right;//步骤三，遍历右子树
+            if (cur != null) { // 如果当前节点不为空，将当前节点以及其左子树的所有左孩子节点压入栈中
+                stack.push(cur); // 当前节点入栈
+                cur = cur.left; // 移动到左子树
+            } else { // 如果当前节点为空，则表示左子树已经遍历完毕，需要处理栈顶元素
+                cur = stack.pop(); // 弹出栈顶元素
+                list.add(cur.val); // 将栈顶元素的值加入结果集
+                cur = cur.right; // 移动到右子树
             }
         }
-        return list;
+        return list; // 返回中序遍历结果列表
     }
+
 
     @Test
     public void testInorder() {

@@ -8,6 +8,9 @@ import java.util.List;
  * @Author: benjieqiang
  * @CreateTime: 2023-11-10  20:10
  * @Description: N层二叉树遍历；
+ * 注意点：
+ * 1. 是Node不是TreeNode;
+ * 2. 每个节点下面是一个list，需要遍历这个list依次加入到队列中；所以需要知道该队列长度，只要列表中的节点不为空，则放到队列中；
  * @Version: 1.0
  */
 public class L3_429_NBinaryLevelOrder {

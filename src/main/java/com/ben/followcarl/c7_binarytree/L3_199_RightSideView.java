@@ -9,6 +9,7 @@ import java.util.List;
  * @CreateTime: 2023-11-10  19:53
  * @Description: 给定一个二叉树的 根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
  *
+ * 使用层序遍历，并只保留每层最后一个节点的值，即i == size - 1时收获结果集；
  * @Version: 1.0
  */
 public class L3_199_RightSideView {

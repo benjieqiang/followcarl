@@ -10,6 +10,13 @@ import java.util.LinkedList;
  * @Version: 1.0
  */
 public class L7_111_minDepth {
+    /**
+     * @param root:
+     * @return int
+     * @description dfs思路：最小深度是指，根节点到最近的叶子节点。如果左子树为空或右子树为空，此时，最近的叶子节点在他们相反的子树处出现；
+     * @author benjieqiang
+     * @date 2024/2/18 1:10 PM
+     */
     public int minDepth(TreeNode root) {
         if (root == null) return 0;
         if (root.left == null && root.right != null) {
@@ -24,7 +31,7 @@ public class L7_111_minDepth {
     }
 
     /**
-     * 迭代法，层序遍历
+     * 迭代法，层序遍历，只要左右孩子为空，则就找到第一个叶子节点，直接返回当前的depth；
      */
     public int minDepth2(TreeNode root) {
         if (root == null) {

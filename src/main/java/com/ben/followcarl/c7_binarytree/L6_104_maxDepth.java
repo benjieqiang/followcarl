@@ -13,12 +13,12 @@ import java.util.LinkedList;
  */
 public class L6_104_maxDepth {
 
-    // dfs。 采用后序遍历，因为二叉树的最大深度就是根节点的高度，
+    // dfs。 采用后序遍历，因为二叉树的最大深度就是根节点的高度，高度用后序遍历求；
     public int maxDepth2(TreeNode root) {
         if (root == null) return 0;
         int left = maxDepth(root.left); // 左
         int right = maxDepth(root.right); // 右
-        return 1 + Math.max(left, right); // 中
+        return 1 + Math.max(left, right); // 中 // +1是为了算上当前根节点；
     }
 
     // bfs

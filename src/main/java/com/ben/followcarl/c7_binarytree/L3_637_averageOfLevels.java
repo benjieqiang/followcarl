@@ -3,7 +3,8 @@ import java.util.*;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-11-10  19:59
- * @Description: TODO
+ * @Description:
+ * 层序遍历，每层计算出sum，sum需要定义成double类型；
  * @Version: 1.0
  */
 public class L3_637_averageOfLevels {

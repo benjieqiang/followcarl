@@ -18,21 +18,21 @@ import java.util.List;
  */
 public class L2_107_levelOrderBottom {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        LinkedList<List<Integer>> res = new LinkedList<>();
+        LinkedList<List<Integer>> res = new LinkedList<>(); // 注意点：定义成LinkedList
         if (root == null) return res;
 
         Deque<TreeNode> queue = new LinkedList<>();
-        queue.addLast(root);
+        queue.add(root);
         while (!queue.isEmpty()) {
             int size = queue.size();
             LinkedList<Integer> list = new LinkedList<>();
             for (int i = 0; i < size; i++) {
-                TreeNode node = queue.removeFirst();
+                TreeNode node = queue.remove();
                 list.add(node.val);
-                if (node.left != null) queue.addLast(node.left);
-                if (node.right != null) queue.addLast(node.right);
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
             }
-            res.push(list); //借助addFirst方法，每次都往头加元素，这样就可以完成从底向上遍历。
+            res.addFirst(list); //借助addFirst方法，每次都往头加元素，这样就可以完成从底向上遍历。
         }
         return res;
     }
@@ -45,7 +45,7 @@ public class L2_107_levelOrderBottom {
 
         dfs(root, res, 0);
 
-        Collections.reverse(res);
+        Collections.reverse(res); // 与层序遍历不同的地方，得到的结果需要反转一下；
         return res;
     }
 
@@ -57,12 +57,7 @@ public class L2_107_levelOrderBottom {
         dfs(root.left, res, depth + 1);
         dfs(root.right, res, depth + 1);
     }
-    /*
-递归到新节点要把该节点放入 level 对应列表的末尾。
 
-当遍历到一个新的深度 level，而最终结果 res 中还没有创建 level 对应的列表时，应该在 res 中新建一个列表用来保存该 level 的所有节点。
-
-     */
 
     @Test
     public void testLevelOrderTraversal() {

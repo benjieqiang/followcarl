@@ -13,15 +13,15 @@ public class L3_107_LevelOrder {
         if (root == null) return res;
 
         Deque<TreeNode> queue = new LinkedList<>();
-        queue.addLast(root);
+        queue.add(root);
         while (!queue.isEmpty()) {
             int size = queue.size();
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < size; i++) {
-                TreeNode node = queue.removeFirst();
+                TreeNode node = queue.remove();
                 list.add(node.val);
-                if (node.left != null) queue.addLast(node.left);
-                if (node.right != null) queue.addLast(node.right);
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
             }
             res.add(list);
         }
@@ -44,7 +44,12 @@ public class L3_107_LevelOrder {
         dfs(node.left, res, depth + 1);
         dfs(node.right, res, depth + 1);
     }
-
+    /*
+    前序遍历：
+        从根节点开始，遍历左子树，再遍历右子树。
+        在遍历过程中，利用 depth 参数记录当前节点所在的深度，然后将节点值添加到对应深度的列表中。
+        如果当前深度对应的列表不存在，则创建一个新的列表。最终返回层序遍历结果列表 res。
+     */
 
     @Test
     public void testLevelOrderTraversal() {
@@ -59,7 +64,7 @@ public class L3_107_LevelOrder {
         node2.right = node5;
 
 
-        List<List<Integer>> res = levelOrder(node1);
+        List<List<Integer>> res = levelOrder2(node1);
         System.out.println(res);
     }
 }

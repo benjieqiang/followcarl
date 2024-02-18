@@ -9,6 +9,11 @@ import java.util.List;
  * @CreateTime: 2023-08-10  18:13
  * @Description: N叉树的最大深度
  * 基本思路还是和二叉树一样，只是在while循环里面，直接把n叉树的下一层整个子树节点加入到队列中；addAll方法；
+ *
+ * dfs思路：
+ * 1. 递归终止条件：当前节点为空则返回0；
+ * 2. 单层逻辑：遍历children，每次求最大的depth。
+ * 3. 返回1 + depth；因为要算上当前节点；
  * @Version: 1.0
  */
 public class L6_559_maxDepth {
