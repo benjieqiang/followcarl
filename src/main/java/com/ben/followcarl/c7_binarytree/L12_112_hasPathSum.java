@@ -2,30 +2,69 @@ package com.ben.followcarl.c7_binarytree;
 
 import org.junit.Test;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
- * @description: 1.叶子结点的判断：if (root.left == null && root.right == null)
+ * @description:
+ * 1.叶子结点的判断：if (root.left == null && root.right == null)
  * 2. debug模式来模拟运算，事半功倍；
  * @author: benjieqiang
  * @date: 2023/5/6 9:31 PM
  * @version: 1.0
  */
 public class L12_112_hasPathSum {
+
+    class Solution {
+        /**
+         * @param root:
+         * @param targetSum:
+         * @return boolean
+         * @description 利用栈，迭代遍历；
+         * @author benjieqiang
+         * @date 2024/2/19 4:02 PM
+         */
+        public boolean hasPathSum(TreeNode root, int targetSum) {
+            if (root == null) return false;
+            Deque<Object> stack = new LinkedList<>();
+            stack.push(root);
+            stack.push(root.val);
+            while (!stack.isEmpty()) {
+                int val = (int)stack.pop();
+                TreeNode node = (TreeNode)stack.pop();
+                // 只有当叶子节点时，当前值等于目标值，则说明找到了；
+                if (node.left == null && node.right == null && targetSum == val) {
+                    return true;
+                }
+                if (node.left != null) {
+                    stack.push(node.left);
+                    stack.push(val + node.left.val);
+                }
+                if (node.right != null) {
+                    stack.push(node.right);
+                    stack.push(val + node.right.val);
+                }
+            }
+            // 遍历结束，都没找到满足条件，返回false;
+            return false;
+        }
+    }
+
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) return false;
         // 叶子结点且targetSum为root.val说明找到了，
         if (root.left == null && root.right == null) return targetSum == root.val;
 
+        // 为啥要定义临时变量， 因为不想让迭代返回false终止当前遍历流程，而是只有满足最后的叶子结点的值为targetSum才会返回；
+        boolean leftFlag = false, rightFlag = false;
         // 单层递归逻辑，左节点不为空，则看它的左孩子下面是否有满足条件；
         if (root.left != null) {
-            // 为啥要定义临时变量isFind， 因为不想让迭代返回false终止当前遍历流程，而是只有满足最后的叶子结点的值为targetSum才会返回；
-            boolean isFind = hasPathSum(root.left, targetSum - root.val);
-            if (isFind) return true;
+            leftFlag  = hasPathSum(root.left, targetSum - root.val);
         }
         if (root.right != null) {
-            boolean isFind = hasPathSum(root.right, targetSum - root.val);
-            if (isFind) return true;
+            rightFlag = hasPathSum(root.right, targetSum - root.val);
         }
-        return false;
+        return leftFlag || rightFlag;
     }
 
     public boolean hasPathSum3(TreeNode root, int targetSum) {
@@ -34,7 +73,7 @@ public class L12_112_hasPathSum {
         if (root.left == null && root.right == null && targetSum == root.val) return true;
 
         // 单层递归逻辑，左节点不为空，则看它的左孩子下面是否有满足条件；
-        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+        return hasPathSum3(root.left, targetSum - root.val) || hasPathSum3(root.right, targetSum - root.val);
     }
 
 

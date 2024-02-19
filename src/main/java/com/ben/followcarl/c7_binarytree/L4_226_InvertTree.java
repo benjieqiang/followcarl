@@ -52,6 +52,7 @@ public class L4_226_InvertTree {
         while(!stack.isEmpty()) {
             TreeNode node = stack.pop();
             swap(node);
+            // 这里，左右孩子顺序没有区别，无论是谁，都是以它为根节点交换它的左右孩子。
             if (node.right != null) stack.push(node.right);
             if (node.left != null) stack.push(node.left);
         }
@@ -67,7 +68,7 @@ public class L4_226_InvertTree {
             int size = queue.size();
             while (size-- > 0) {
                 TreeNode node = queue.remove();
-                swap(node); // 此时已经把root的左右孩子交换了，所以下一步node.left.val = 原来的右孩子的值；
+                swap(node); // 交换当前节点的左右孩子；
                 if (node.left != null) queue.add(node.left);
                 if (node.right != null) queue.add(node.right);
             }

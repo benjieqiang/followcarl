@@ -5,6 +5,13 @@ import org.junit.Test;
 import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * @return null
+ * @description 完全二叉树的节点数目统计：
+ *
+ * @author benjieqiang
+ * @date 2024/2/19 1:43 PM
+ */
 public class L8_222_CountNodes {
     // 利用普通二叉树，后序遍历，分别求出一个结点左子树的孩子数，再求出右孩子的数目；求和加上当前结点数（1）；就是该层结点的数目；
     public int countNodes(TreeNode root) {
@@ -33,13 +40,13 @@ public class L8_222_CountNodes {
             rightDepth++;
         }
         if (leftDepth == rightDepth) {
-            return (2 << leftDepth) - 1; // 注意(2<<1) 相当于2^2，返回满足满二叉树的子树节点数量
+            return (2 << leftDepth) - 1; // 注意一定要带括号：(2<<1) 相当于2^2，返回满足满二叉树的子树节点数量
         }
         // 如果两侧高度不一致，则使用后序遍历的方法，
-        return countNodes(root.left) + countNodes(root.right) + 1;
+        return countNodes2(root.left) + countNodes2(root.right) + 1;
     }
 
-    // bfs来遍历求节点个数
+    // bfs来遍历求节点个数，bfs的模板，不需要返回结果集，直接res++；
     public int countNodes3(TreeNode root) {
         if(root == null) return 0;
         //层序遍历

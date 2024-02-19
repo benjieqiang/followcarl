@@ -2,6 +2,7 @@ package com.ben.followcarl.c7_binarytree;
 
 import org.junit.Test;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +14,9 @@ import java.util.List;
  * <p>
  * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
  * 输出：[[5,4,11,2],[5,8,4,5]]
+ *
+ * 迭代法的注意点：
+ *
  * @Version: 1.0
  */
 public class L12_113_pathSum {
@@ -28,7 +32,7 @@ public class L12_113_pathSum {
     private void traversal(TreeNode root, int count) {
         inner.add(root.val);
         if (root.left == null && root.right == null && count == root.val) {
-            // 收集结果
+            // 收集结果，add一个集合，就是把这个集合中的元素复制到res中；
             res.add(new LinkedList<>(inner));
         }
         // 空节点不遍历
@@ -40,6 +44,57 @@ public class L12_113_pathSum {
         if (root.right != null) {
             traversal(root.right, count - root.val);
             inner.removeLast();
+        }
+    }
+
+    /**
+     * @return null
+     * @description 迭代解法，太麻烦了；
+     * @author benjieqiang
+     * @date 2024/2/19 4:27 PM
+     */
+    class Solution {
+        public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+            List<List<Integer>> res = new LinkedList<>(); // 结果集
+            if (root == null) return res;
+
+            Deque<Object> stack = new LinkedList<>(); // 存放当前节点和节点值
+            Deque<List<Integer>> stackList = new LinkedList<>(); // 存放符合条件的list集合；
+            // 加入root节点，root节点值，stackList加入第一个集合；
+            stack.push(root);
+            stack.push(root.val);
+            List<Integer> list = new LinkedList<>();
+            list.add(root.val);
+            stackList.push(list);
+
+            while (!stack.isEmpty()) {
+                int val = (int)stack.pop();
+                TreeNode node = (TreeNode)stack.pop();
+                List<Integer> tmpList = stackList.pop();
+                // 叶子节点，且targetSum是val值，收获结果；
+                if (node.left == null && node.right == null && targetSum == val) {
+                    res.add(tmpList);
+                }
+                // 先加入右子树
+                if (node.right != null) {
+                    stack.push(node.right);
+                    stack.push(node.right.val + val);
+                    tmpList.add(node.right.val);
+                    stackList.push(new LinkedList<>(tmpList));
+                    tmpList.remove(tmpList.size() - 1);
+                }
+
+                // 加入左子树
+                if (node.left != null) {
+                    stack.push(node.left);
+                    stack.push(node.left.val + val);
+                    tmpList.add(node.left.val);
+                    stackList.push(new LinkedList<>(tmpList));
+                    tmpList.remove(tmpList.size() - 1);
+                }
+
+            }
+            return res;
         }
     }
 

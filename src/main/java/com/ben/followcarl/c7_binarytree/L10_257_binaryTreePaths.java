@@ -31,7 +31,7 @@ public class L10_257_binaryTreePaths {
         stack.push(root);
         stack.push(root.val + "");
         while (!stack.isEmpty()) {
-            String path = (String)stack.pop(); //弹出"1"
+            String path = (String)stack.pop(); //弹出字符串，栈顶节点值"1"
             TreeNode node = (TreeNode)stack.pop(); // 弹出当前节点
 
             // 收集结果的，中

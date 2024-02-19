@@ -59,4 +59,28 @@ public class L7_111_minDepth {
         }
         return depth;
     }
+
+    class Solution {
+        /**
+         * @param root:
+         * @return int
+         * @description dfs解法： 最小深度是从根节点到最近**叶子节点**的最短路径上的节点数量
+         * 多了判断；
+         * @author benjieqiang
+         * @date 2024/2/19 11:04 AM
+         */
+        public int minDepth(TreeNode root) {
+            if (root == null) return 0;
+            int leftDepth = minDepth(root.left); // 左子树深度
+            int rightDepth = minDepth(root.right); // 右子树深度
+            if (root.left == null) {
+                return rightDepth + 1;
+            }
+            if (root.right == null) {
+                return leftDepth + 1;
+            }
+            // 左右结点都不为null
+            return Math.min(leftDepth, rightDepth) + 1;
+        }
+    }
 }

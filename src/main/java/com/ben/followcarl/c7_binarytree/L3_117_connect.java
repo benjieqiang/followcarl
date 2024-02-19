@@ -62,7 +62,7 @@ public class L3_117_connect {
             Node cur = root; // cur每一层的链表头节点；
             while (cur != null) { // 开始遍历cur所在当前层；
                 Node dummy = new Node(0); // dummy节点来方便操作；
-                Node pre = dummy; // pre节点从dummy节点出发
+                Node pre = dummy; // pre节点从dummy节点出发，表示下一层的第一个节点的前一个节点。
                 while (cur != null) { // 分别把当前层的左右孩子串起来，不断移动pre到最右边；
                     if (cur.left != null) {
                         pre.next = cur.left;

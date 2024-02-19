@@ -82,14 +82,6 @@ public class L5_101_IsSymmetric {
         if (root == null) return false;
         return compare(root.left, root.right);
     }
-    /**
-     * @param left:
-     * @param right:
-     * @return boolean
-     * @description 递归函数；
-     * @author benjieqiang
-     * @date 2023/8/9 9:53 PM
-     */
     private boolean compare(TreeNode left, TreeNode right) {
         // 左右孩子有一个为空，则不对称；
         if (left != null && right == null) return false;
