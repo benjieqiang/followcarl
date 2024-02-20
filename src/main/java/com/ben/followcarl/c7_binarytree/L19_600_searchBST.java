@@ -13,6 +13,24 @@ import org.junit.Test;
  * @Version: 1.0
  */
 public class L19_600_searchBST {
+
+    class Solution {
+        /**
+         * @param root:
+         * @param val:
+         * @return TreeNode
+         * @description 后序遍历，
+         * @author benjieqiang
+         * @date 2024/2/20 10:00 AM
+         */
+        public TreeNode searchBST(TreeNode root, int val) {
+            if (root == null) return null;
+            if (val > root.val) return searchBST(root.right, val);
+            if (val < root.val) return searchBST(root.left, val);
+            return root;
+        }
+    }
+
     public TreeNode searchBST(TreeNode root, int val) {
         if (root == null) return root;
         if (root.val == val) return root;

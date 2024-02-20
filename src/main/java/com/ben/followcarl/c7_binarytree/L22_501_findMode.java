@@ -27,10 +27,10 @@ public class L22_501_findMode {
     int maxValue = 0;
 
     public int[] findMode(TreeNode root) {
-        HashMap<Integer, Integer> map = new HashMap<>();
+        HashMap<Integer, Integer> map = new HashMap<>(); //key是节点值,val是出现次数;
         List<Integer> res = new ArrayList<>();
         if (root == null) return null;
-        // 1. 利用中序遍历得到map,key是节点值,val是出现次数;
+        // 1. 利用中序遍历得到map,
         traversal(root, map);
 
 
@@ -47,7 +47,7 @@ public class L22_501_findMode {
     private void traversal(TreeNode root, HashMap<Integer, Integer> map) {
         if (root == null) return;
         map.put(root.val, map.getOrDefault(root.val, 0) + 1);
-        maxValue = Math.max(maxValue, map.get(root.val));
+        maxValue = Math.max(maxValue, map.get(root.val)); // 更新最大值是key出现最多次对应的value值；
         traversal(root.left, map);
         traversal(root.right, map);
     }
@@ -66,13 +66,20 @@ public class L22_501_findMode {
     public int[] findMode2(TreeNode root) {
         if (root == null) return null;
         dfs(root);
-        return resList.stream().mapToInt(Integer::intValue).toArray();
+        // 不知道如何使用API的话
+        int[] res = new int[resList.size()];
+        //把集合list转化为数组
+        for (int i = 0; i < resList.size(); i++) {
+            res[i] = resList.get(i);
+        }
+        return res;
+//        return resList.stream().mapToInt(Integer::intValue).toArray();
     }
 
     /**
      * @param root:
      * @return void
-     * @description 中序遍历
+     * @description bst中序遍历，有序数组；
      * @author benjieqiang
      * @date 2023/8/14 4:09 PM
      */

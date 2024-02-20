@@ -9,6 +9,7 @@ import java.util.LinkedList;
  * @Author: benjieqiang
  * @CreateTime: 2023-05-08  22:10
  * @Description: BST的中序遍历是有序的，所以每次找到中节点看它是否
+ * BFS 中序遍历模板题；
  * @Version: 1.0
  */
 public class L20_98_isValidBST {

@@ -10,10 +10,10 @@ import org.junit.Test;
  * 五种情况进行讨论: 递归函数的值表示删完节点后的指向节点;
  * 1. 未找到,返回null
  * 2. 找到待删节点,有四种情况
- *      1. 左右孩子为空,直接删,返回null
+ *      1. 左右孩子为空,直接删,返回null。情况1
  *      2. 左右孩子有一个为空, 返回不为空的孩子;(2种情况)
  *      3. 左右孩子都不为空, 先找右孩子的最左节点, 再把待删节点的左孩子挂到右孩子最左节点的左边;
- * 3. 递归去看左右孩子是否需要删除, key和左右孩子的值比较,
+ * 3. 递归去看左右孩子是否需要删除,比较key与当前节点值，来决定走左子树还是右子树；
  * @Version: 1.0
  */
 public class L26_450_deleteNode {
@@ -45,7 +45,33 @@ public class L26_450_deleteNode {
         if (root.val < key) root.right = deleteNode(root.right, key);
         return root;
     }
+    class Solution {
+        public TreeNode deleteNode(TreeNode root, int key) {
+            if (root == null) return root;
+            if (root.val == key) {
+                // 1. 无左右孩子
+                if (root.left == null && root.right == null) return null;
+                // 2. 有左孩子或右孩子.
+                if (root.left != null && root.right == null) {
+                    return root.left;
+                } else if (root.left == null && root.right != null){
+                    return root.right;
+                }
+                // 3. 左右孩子都有，先找右孩子的最左节点，把当前的左孩子挂到最左节点上；
+                TreeNode cur = root.right;
+                while (cur.left != null) {
+                    cur = cur.left;
+                }
+                //2.把root待删节点的左子节点挂到cur的左子节点上
+                cur.left = root.left;
+                return root.right;
+            }
 
+            if (root.val > key) root.left = deleteNode(root.left, key);
+            if (root.val < key) root.right = deleteNode(root.right, key);
+            return root;
+        }
+    }
     @Test
     public void testDelNode() {
 //        [5,3,6,2,4,null,7]

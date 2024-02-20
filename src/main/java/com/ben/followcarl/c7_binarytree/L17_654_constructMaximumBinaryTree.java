@@ -10,6 +10,8 @@ import org.junit.Test;
  * 每次通过下标来找左子树和右子树;
  *
  * 分割的是同一个数组,105和106是分割两个数组
+ * 思路基本一致，先找到最大值下标，然后分割第一个数组；
+ * 递归的终止条件：left>=right;
  * @Version: 1.0
  */
 public class L17_654_constructMaximumBinaryTree {

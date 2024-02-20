@@ -23,8 +23,8 @@ public class L30_538_convertBST {
     private void traversal(TreeNode root) {
         if (root == null) return;
         traversal(root.right);
-        root.val += pre;
-        pre = root.val;
+        root.val += pre; // 累加上一个节点值；
+        pre = root.val; // 更新pre
         traversal(root.left);
     }
 }

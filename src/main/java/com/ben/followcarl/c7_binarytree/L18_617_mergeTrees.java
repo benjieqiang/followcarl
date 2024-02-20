@@ -45,11 +45,13 @@ public class L18_617_mergeTrees {
                 q2.add(node2.left);
             }
 
+            // 树1和树2右节点都不为空
             if (node1.right != null && node2.right != null) {
                 q1.add(node1.right);
                 q2.add(node2.right);
             }
 
+            // 修改node1的左节点值和右节点值；
             // 树1左节点为空, 树2左节点不为空, 直接拷过去
             if (node1.left == null && node2.left != null) {
                 node1.left = node2.left;
@@ -60,7 +62,26 @@ public class L18_617_mergeTrees {
                 node1.right = node2.right;
             }
         }
+        // 返回树1的根节点；
         return root1;
+    }
+
+    /**
+     * @param root1:
+     * @param root2:
+     * @return TreeNode
+     * @description 不修改原来的树的递归做法；前序遍历；
+     * @author benjieqiang
+     * @date 2024/2/20 9:56 AM
+     */
+    public TreeNode mergeTrees3(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null) return null;
+        if (root1 == null && root2 != null) return root2;
+        if (root1 != null && root2 == null) return root1;
+        TreeNode node = new TreeNode(root1.val + root2.val);
+        node.left = mergeTrees3(root1.left, root2.left);
+        node.right = mergeTrees3(root1.right, root2.right);
+        return node;
     }
 
 

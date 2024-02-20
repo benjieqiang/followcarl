@@ -20,6 +20,7 @@ public class L28_108_sortedArrayToBST {
     private TreeNode construct(int[] nums, int left, int right) {
         if (left >= right) return null;
         int mid = left + (right - left) / 2;
+        //         int mid = left + ((right - left) >> 1); 一定要加括号，不然就挂了；
         TreeNode node = new TreeNode(nums[mid]);
         // left, mid
         node.left = construct(nums, left, mid);

@@ -19,7 +19,7 @@ public class L2_94_InorderTraversal {
         if (root == null) return list; // 如果根节点为空，则返回空列表
 
         Deque<TreeNode> stack = new LinkedList<>(); // 使用栈来辅助遍历
-        TreeNode cur = root; // 当前节点初始化为根节点
+        TreeNode cur = root; // 当前节点初始化为根节点，不用把root节点先加入到栈中；
 
         while (cur != null || !stack.isEmpty()) {
             if (cur != null) { // 如果当前节点不为空，将当前节点以及其左子树的所有左孩子节点压入栈中
@@ -54,9 +54,9 @@ public class L2_94_InorderTraversal {
 
 /*
  * 1. 往栈中把左孩子全压入，stack = [5，4，1]，栈顶是1，由于无左孩子，所以走else逻辑，
- * 2. 先拿出栈顶元素1， 把1放入res中，stack = [5, 4], res = [1];
- * 3. 看一下结点1的右边孩子有没有，发现为空，继续进入while循环，走else分支，弹出栈顶元素4，  stack = [5], res = [1, 4]
- * 4. 看一下结点4有没有右孩子，发现有，则把右孩子2放入栈中，stack = [5,2], res = [1,4]
+ * 2. 先拿出栈顶元素1， 把1放入结果集res中，stack = [5, 4], res = [1]，移动到当前元素的右节点；
+ * 3. 结点1的右边孩子为空，但是栈不为空，继续进入while循环，走else分支，弹出栈顶元素4，stack = [5], res = [1, 4]，cur指向右孩子2；
+ * 4. 结点4的右孩子2放入栈中，stack = [5,2], res = [1,4]，cur此时指2的左孩子为空；所以走判断stack不为空的逻辑；
  * 5. 2出栈，入res，stack = [5], res = [1,4,2]
  * 6. 2无右孩子，所以继续出栈，5出栈，stack = []. res = [1,4,2,5]
  * 7. 由于5有右孩子6，所以6入栈 stack = [6], res = [1,4,2,5]

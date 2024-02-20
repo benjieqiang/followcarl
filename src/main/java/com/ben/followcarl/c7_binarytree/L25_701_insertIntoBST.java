@@ -15,6 +15,15 @@ package com.ben.followcarl.c7_binarytree;
 public class L25_701_insertIntoBST {
 
     // 递归法
+    /**
+     * @param root:
+     * @param val:
+     * @return TreeNode
+     * @description 有返回值的话，可以利用返回值完成新加入的节点与其父节点的赋值操作。
+     * 注意的是：当root为空，则返回new的节点；
+     * @author benjieqiang
+     * @date 2024/2/20 1:49 PM
+     */
     public TreeNode insertIntoBST(TreeNode root, int val) {
         if (root == null) {
             // 找到了要插入的位置
@@ -30,16 +39,16 @@ public class L25_701_insertIntoBST {
 
     // 迭代法
     public TreeNode insertIntoBST2(TreeNode root, int val) {
-        if (root == null) {
-            return new TreeNode(val);
-        }
+        if (root == null) return new TreeNode(val); //当root为空，则返回new的节点；
         TreeNode cur = root;
         TreeNode pre = root; // 记录上一个节点
+        // 找到要插入的节点位置，pre
         while (cur != null) { // 用来不断寻找要插入节点的位置
             pre = cur;
             if (cur.val > val) cur = cur.left;
             else cur = cur.right;
         }
+        // 插入所给节点，挂左边还是挂右边。
         TreeNode node = new TreeNode(val);
         if (pre.val > val) pre.left = node;
         else pre.right = node;

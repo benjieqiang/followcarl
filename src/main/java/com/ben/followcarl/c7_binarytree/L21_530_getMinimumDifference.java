@@ -43,30 +43,34 @@ public class L21_530_getMinimumDifference {
     }
 
 
-
-    int res = Integer.MAX_VALUE;
-    TreeNode pre = null; // 递归的时候,利用pre来记录当前节点的上一个节点
-    /**
-     * @param root:
-     * @return void
-     * @description 递归的时候,利用pre来记录当前节点的上一个节点
-     * @author benjieqiang
-     * @date 2023/8/14 3:32 PM
-     */
-    void traversal2(TreeNode root) {
-        if (root == null) return;
-        traversal(root.left); // 左
-        if (pre != null) { //中
-            // 求最小值
-            res = Math.min(root.val - pre.val, res);
+    class Solution {
+        int res = Integer.MAX_VALUE;
+        TreeNode pre = null;
+        /**
+         * @param root:
+         * @return void
+         * @description 递归的时候,利用pre来记录当前节点的上一个节点
+         * cur 指向当前节点；
+         *
+         * 左中右的递归；
+         * @author benjieqiang
+         * @date 2023/8/14 3:32 PM
+         */
+        public int getMinimumDifference(TreeNode root) {
+            if (root == null) return 0;
+            traversal(root);
+            return res;
         }
-        pre = root;
-        traversal(root.right); //右
-    }
-    public int getMinimumDifference2(TreeNode root) {
-        if(root == null) return 0;
-        traversal(root);
-        return res;
+
+        private void traversal(TreeNode cur) {
+            if (cur == null) return;
+            traversal(cur.left);
+            if (pre != null) {
+                res = Math.min(res, cur.val - pre.val);
+            }
+            pre = cur;
+            traversal(cur.right);
+        }
     }
     @Test
     void testGetMinimumDifference2() {
