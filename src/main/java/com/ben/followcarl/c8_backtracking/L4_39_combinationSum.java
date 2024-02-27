@@ -35,13 +35,23 @@ public class L4_39_combinationSum {
     LinkedList<Integer> path = new LinkedList<>();
     int sum = 0;
 
+    /**
+     * @param candidates:
+     * @param target:
+     * @param startIndex: 用来保证回溯到下一层的时候，从第几个元素开始，77题是每次到下一层，不能重复取，所以是传入i+1，
+     *                  这里能重复取，所以下一层继续从i开始取，
+     * @return void
+     * @description TODO
+     * @author benjieqiang
+     * @date 2024/2/22 2:07 PM
+     */
     private void backtracking(int[] candidates, int target, int startIndex) {
         if (sum > target) return;
         if (sum == target) {
             res.add(new ArrayList<>(path));
             return;
         }
-        // for循环体现了树的宽度；
+        // for循环体现了树的宽度；树的宽度是所给集合的长度；
         for (int i = startIndex; i < candidates.length; i++) {
             path.add(candidates[i]);
             sum += candidates[i];

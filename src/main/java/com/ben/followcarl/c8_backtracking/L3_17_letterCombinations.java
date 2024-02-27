@@ -14,13 +14,18 @@ import java.util.Scanner;
  *
  * 输入：digits = "23"
  * 输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
- *
- * 1. 难点: 1. 确定树的宽度是》每个数字,比如2对应的值是“abc", 那它的宽度是“abc".length();
- *      树的高度是递归的层级, 从0开始到digits.length()结束;
+ * 这道题，细节太多了。
+ * 知识点：
+ * 1. 从字符串里面取元素，str.charAt(下标）
+ * 2. String增删，利用StringBuilder来实现， sb.append() sb.deleteCharAt(sb.length() - 1);
+ * 3. 取出来的字符串转换成整数，再用这个整数去map数组中找对应的字符串；
+ * 4. StringBuilder转String, sb.toString();
+ * 难点: 1. 确定树的宽度是》每个数字对应的字符串的长度,比如2对应的值是“abc", 那它的宽度是“abc".length();
+ *      树的高度是递归的层级, 从0开始到digits.length()结束; 使用index来控制；
  *      2. 单层遍历的逻辑:
  *          2.1. 先根据index取digits中去取数字, 得把"2"转成数字2, 所以是“2” - ’0‘;
  *          2.2. 拿到2之后得用map数组找到2对应的字符串: “abc"
- *          2.3. “abc"的宽度就作为树的宽度
+ *          2.3. “abc"的长度就作为树的宽度
  *          2.4. 遍历树, 先把结果集加入到sb中, 下一层递归时, 需要用index+1来控制访问的是digits的下一个字符“3”,
  *       3. 递归结束条件: 如果index加到了digits的length长度. 则收获结果;
  * @Version: 1.0
@@ -39,7 +44,7 @@ public class L3_17_letterCombinations {
      * 这里绕了一下, 取到2之后还得转成数字,再去map表中找对应的字符串, 单层递归遍历的是该字符串, 从0开始去依次匹配;
      * @author benjieqiang
      *
-     * 时间复杂度: O(3^m * 4^n)，其中 m 是对应四个字母的数字个数，n 是对应三个字母的数字个数
+     * 时间复杂度: O(3^m * 4^n)，不同的字母组合3^m * 4^n。 是其中 m 是对应三个字母的数字个数，n 是对应四个字母的数字个数
      * 空间复杂度: O(m+n)除了返回值以外，空间复杂度主要取决于哈希表以及回溯过程中的递归调用层数，哈希表的大小与输入无关，
      * 可以看成常数，递归调用层数最大为 m+n。
      * @date 2023/5/19 12:50 AM
@@ -54,9 +59,9 @@ public class L3_17_letterCombinations {
         // 从映射中找对应的字符串；
         String letters = numString[num];
         // 首先sb里存了a，然后继续回溯，传入的应该是index的下一位即index+1位置的字符串letters = "def",
-        for(int i = 0; i < letters.length(); i++) {
+        for(int i = 0; i < letters.length(); i++) { // i在这里表示的遍历letters字符串；
             sb.append(letters.charAt(i));
-            backtracking(digits, index + 1);
+            backtracking(digits, index + 1); //index表示下一层从哪里开始，对于字符串"23", 第一层是从2开始，第二层就得从3开始，
             sb.deleteCharAt(sb.length() - 1);
         }
     }

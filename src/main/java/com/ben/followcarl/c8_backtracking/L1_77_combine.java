@@ -28,10 +28,10 @@ public class L1_77_combine {
     void backtracking(int n, int k, int startIndex) {
         if (path.size() == k) {
             res.add(new LinkedList<>(path)); // 往res中加入一个新集合,内容是path;
-            return;
+            return; //返回到上一层；
         }
         // 单层递归逻辑,树的宽度由n来决定,树的高度由k来决定；
-        // 剪枝：n - (k - path.size()) + 1
+        // 剪枝：i <= n - (k - path.size()) + 1
         for (int i = startIndex; i <= n; i++) {
             path.add(i);
             backtracking(n, k, i + 1); // 已经取出来一个数字i之后，下一层从i+1的位置继续取数，比如已经取了1, 下一层需要从2开始,直到path的长度为k
@@ -48,6 +48,9 @@ public class L1_77_combine {
         * */
     }
     public List<List<Integer>> combine(int n, int k) {
+        if (n <= 0 || k <= 0 || n < k) {
+            return null;
+        }
         backtracking(n, k, 1);
         return res;
     }

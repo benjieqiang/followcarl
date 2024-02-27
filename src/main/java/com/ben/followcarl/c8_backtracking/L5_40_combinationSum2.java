@@ -33,7 +33,7 @@ import java.util.List;
  *   [1,2,2],
  *   [5]
  * ]
- * #
+ *
  * @Version: 1.0
  */
 public class L5_40_combinationSum2 {
@@ -70,7 +70,7 @@ public class L5_40_combinationSum2 {
     }
 
     /**
-     * @description 首先写出一份不去重的代码,发现树枝去重已经使用index去控制了，
+     * @description 首先写出一份不去重的代码,发现树枝去重已经使用index去控制了，即index + 1；
      * 树层去重如何去控制呢?
      * 1. 树层去重先排序;
      * 2. 使用used数组控制同一层不再访问;
@@ -78,7 +78,10 @@ public class L5_40_combinationSum2 {
      *
      * 如果candidates[i] == candidates[i - 1] 并且 used[i - 1] == false，就说明：前一个树枝，使用了candidates[i - 1]，
      * 也就是说同一树层使用过candidates[i - 1]。
-     *
+     * 比如1，1，2
+     * 1. 先取1，之后candidates[0] = 1, used[0] = 1，紧接着回溯到第二层，此时i从0+1的位置开始（树枝去重用index控制）。。。
+     *  之后会把used[0]变成false
+     * 2. 第二个取1的时候，因为上一个used[0]=false 且 当前元素和上一个元素相同，则说明是重复元素，跳过；
      * @author benjieqiang
      * @date 2023/8/31 11:47 AM
      */
