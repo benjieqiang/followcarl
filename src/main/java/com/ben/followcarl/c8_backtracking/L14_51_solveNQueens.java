@@ -25,11 +25,8 @@ import java.util.List;
  * 树形结构: 树的宽度就是n; 树的深度也是n,也就是说,当我们遍历到n的时候,如果符合条件就收获结果;
  * <p>
  * 回溯三部曲:
- * 1. 返回值和入参: 不需要返回值, 入参: int n; //这一层for循环得n次
- * row: 表示第几行;
- * <p>
+ * 1. 返回值和入参: 不需要返回值, 入参: int n; //这一层for循环得n次  row: 表示第几行;
  * 2. 终止条件: row == n; 往棋盘里面加入结果集;当然在单层回溯的时候就需要判断是否符合条件;
- * <p>
  * 3. 单层回溯逻辑:
  * for循环从0开始到n-1结束;
  * 判断此时是否符合条件;
@@ -66,7 +63,7 @@ public class L14_51_solveNQueens {
         if (row == n) { // 表示成功放置了所有的皇后，然后将当前棋盘状态加入到结果中
             List list = new ArrayList<>();
             for (char[] ch : chessboard) {
-                list.add(new String(ch));
+                list.add(new String(ch)); // 每一行转成字符串后，放到list中；
             }
             res.add(list);
         }
@@ -85,7 +82,8 @@ public class L14_51_solveNQueens {
      * @param col:
      * @param n:
      * @return boolean
-     * @description 皇后不能同列, 不能同行, 不能同斜线(45和135)
+     * @description 皇后不能同列, 不能同行, 不能同斜线(45和135).
+     * 没有同行的原因：因为在单层搜索的过程中，每一层递归，只会选for循环（也就是同一行）里的一个元素，所以不用去重了。
      * @author benjieqiang
      * @date 2023/9/3 9:37 PM
      */
@@ -95,12 +93,12 @@ public class L14_51_solveNQueens {
             if (board[i][col] == 'Q') return false;
         }
 
-        // 检查45度对角线, 左上方遍历;
+        // 检查45度对角线, 左上方遍历;从（row - 1, col - 1）到（0，0）
         for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
             if (board[i][j] == 'Q') return false;
         }
 
-        // 检查135度对角线, 右上方遍历
+        // 检查135度对角线, 右上方遍历，从(row - 1, col + 1)到(0，n-1)
         for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
             if (board[i][j] == 'Q') return false;
         }

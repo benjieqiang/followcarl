@@ -31,6 +31,11 @@ import java.util.List;
  * 3. 有重复数字,去重, 首先需要排序数组,
  *    然后 判断树层去重逻辑: i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false
  *
+ *
+ * 重复数组里面抽元素，全排列问题，
+ * 1. 需要重新排序；
+ * 2. 去重逻辑：
+ *
  * @Version: 1.0
  */
 public class L12_47_permuteUnique {

@@ -23,7 +23,7 @@ class MyQueue {
     }
 
     public int pop() {
-        // 如果out栈为空，则我们把in栈的数据压入
+        // 如果out栈为空，则我们把in栈的数据压入out栈中。栈顶元素就是队首元素。
         if(stOut.isEmpty()) {
             while (!stIn.isEmpty()) {
                 stOut.push(stIn.pop());
