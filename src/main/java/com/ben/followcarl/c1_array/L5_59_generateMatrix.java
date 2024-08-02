@@ -58,6 +58,38 @@ public class L5_59_generateMatrix {
         print(ints);
     }
 
+    public int[][] generateMatrix3(int n) {
+        int[][] res = new int[n][n];
+        int left = 0;
+        int right = n - 1;
+        int top = 0;
+        int bottom = n - 1;
+        int count = 1;
+        while (count <= n * n) {
+            //left,top > right,top
+            for (int i = left; i <= right; i++) {
+                res[top][i] = count++;
+            }
+            top++;
+            // right,top > right,bottom
+            for (int j = top; j <= bottom; j++) {
+                res[j][right] = count++;
+            }
+            right--;
+            // right, bottom > left, bottom
+            for (int i = right; i >= left; i--) {
+                res[bottom][i] = count++;
+            }
+            bottom--;
+            // left,bottom > left, top
+            for (int j = bottom; j >= top; j--) {
+                res[j][left] = count++;
+            }
+            left++;
+        }
+        return res;
+    }
+
     private int[][] generateMatrix2(int n) {
         int[][] res = new int[n][n];
 

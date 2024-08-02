@@ -24,6 +24,7 @@ import java.util.Map;
  */
 public class L4_3_lengthOfLongestSubstring {
     public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) return 0;
         int[] window = new int[128];
         int left = 0;
         int right = 0;
