@@ -25,19 +25,26 @@ public class L2_383_canConstruct {
     }
 
     public boolean canConstruct2(String ransomNote, String magazine) {
+        // If the ransom note is longer than the magazine, it's impossible to construct it
         if (ransomNote.length() > magazine.length()) return false;
-        int[] map = new int[128];
+
+        // Array to count how many times each character appears in the magazine
+        int[] count = new int[128];
+
+        // Count characters in the magazine
         for (char ch : magazine.toCharArray()) {
-            map[ch]++;
+            count[ch]++;
         }
 
+        // Check if we can find enough of each character in the ransom note
         for (char ch : ransomNote.toCharArray()) {
-            map[ch]--;
+            count[ch]--;
+            // If the count goes below zero, we don't have enough of this character
+            if (count[ch] < 0) return false;
         }
 
-        for (int count : map) {
-            if (count < 0) return false;
-        }
+        // All characters were found in sufficient quantity
         return true;
     }
+
 }

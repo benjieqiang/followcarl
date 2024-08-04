@@ -28,15 +28,16 @@ import java.util.HashMap;
  */
 public class L5_454_fourSumCount {
     public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
-        //key：nums1中的任一元素和nums2中任一元素之和，value：两数之和的次数，该和肯定由不止一种格式构成；
-        //比如：nums1 = [-1,-1] nums2=[-1,1]
-        // map中最终{0=2,-2=2};和为0由两种构成形式
+        //key：nums1中的任一元素和nums2中任一元素之和，value：两两之和的次数
+        //比如：nums1 = [-1,-1] nums2=[-1,1] ，map中最终{0=2,-2=2};和为0由两种构成形式
         HashMap<Integer, Integer> hmap = new HashMap<>();
         for (int num1 : nums1) {
             for (int num2 : nums2) {
                 hmap.put(num1 + num2, hmap.getOrDefault(num1 + num2, 0) + 1);
             }
         }
+        // num1 + num2 = - (num3 + num4)
+        // nums3, nums4, 求key： -（num3 + num4）在map中出现的次数，出现则加上num1+num2出现的次数，否则就是0；
         int count = 0;
         for (int num3 : nums3) {
             for (int num4 : nums4) {

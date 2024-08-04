@@ -12,6 +12,7 @@ import java.util.HashMap;
  *  什么时候使用哈希法，当我们需要查询一个元素是否出现过，或者一个元素是否在集合里的时候，就要第一时间想到哈希法。
  * map：元素为key，下标为value;
  * 遍历数组，如果发现target - nums[i]该元素在map中出现，说明找到了和为target的下标：i和map.get(target-nums[i]);
+ * 无论找没找到，都得更新map，key是nums[i], value是index;
  * 赋值数组；
  * 返回数组；
  *             // 遍历数组，第一个元素先进map，{3:0}
@@ -36,6 +37,8 @@ public class L4_1_twoSum {
 
         return res;
     }
+
+
 
     @Test
     public void testTwoSum() {

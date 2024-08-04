@@ -24,7 +24,7 @@ public class L1_hashMapTest {
     }
 
     @Test
-    public void testMap() {
+    public void testSubstring() {
         String s1 = "ate";
         String s2 = "eat";
         System.out.println(s1.substring(0, 2)); // 左闭右开
