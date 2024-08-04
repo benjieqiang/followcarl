@@ -35,4 +35,36 @@ public class L7_142_detectCycle {
         }
         return null;
     }
+
+    public ListNode detectCycle2(ListNode head) {
+        if (head == null) return null;
+
+        ListNode slow = head;  // Slow pointer starts at the head
+        ListNode fast = head;  // Fast pointer starts at the head
+
+        // Phase 1: Detect if a cycle exists
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;  // Move fast pointer two steps
+            slow = slow.next;       // Move slow pointer one step
+
+            // Check if the two pointers meet
+            if (fast == slow) {
+                // Phase 2: Find the start of the cycle
+                ListNode index1 = head; // Start from the head
+                ListNode index2 = fast; // Start from the meeting point
+
+                // Move both pointers one step at a time until they meet
+                while (index1 != index2) {
+                    index1 = index1.next; // Move index1 one step
+                    index2 = index2.next; // Move index2 one step
+                }
+
+                // Return the starting node of the cycle
+                return index1;
+            }
+        }
+
+        // No cycle detected
+        return null;
+    }
 }

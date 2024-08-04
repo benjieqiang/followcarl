@@ -1,5 +1,7 @@
 package com.ben.followcarl.c2_linkedlist;
 
+import org.junit.Test;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-07-11  20:05
@@ -7,7 +9,9 @@ package com.ben.followcarl.c2_linkedlist;
  * @Version: 1.0
  */
 public class L6_160_getIntersectionNode {
-    //若相交，链表A： a+c, 链表B : b+c. a+c+b+c = b+c+a+c 。则会在公共处c起点相遇。若不相交，a +b = b+a 。因此相遇处是NULL
+    // A length: a+c, B length: b+c. c: the length of intersection segment.
+    // if intersect, a+c+b+c = b+c+a+c, the result is the intersection node;
+    // if not，a + b = b+a, a,b will be null
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         ListNode A = headA;
         ListNode B = headB;
@@ -16,5 +20,28 @@ public class L6_160_getIntersectionNode {
             B = B != null ? B.next : headA;
         }
         return A;
+    }
+
+    @Test
+    public void test_notIntersect() {
+        // Create List A: 1 -> 2 -> 3 -> 4
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(4);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+
+        // Create List B: 5 -> 6 -> 7
+        ListNode node5 = new ListNode(5);
+        ListNode node6 = new ListNode(6);
+        ListNode node7 = new ListNode(7);
+        node5.next = node6;
+        node6.next = node7;
+
+        // Check for intersection
+        ListNode intersection = getIntersectionNode(node1, node5);
+        System.out.println(intersection);
     }
 }

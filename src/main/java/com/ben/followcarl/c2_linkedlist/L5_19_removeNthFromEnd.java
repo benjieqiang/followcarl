@@ -54,6 +54,30 @@ public class L5_19_removeNthFromEnd {
         return dummyHead.next; // [1,2]， n = 2。则需要删除1，所以是dummyHead.next;
     }
 
+    public ListNode removeNthFromEnd4(ListNode head, int n) {
+        // Create a dummy node to handle edge cases like removing the head node
+        ListNode dummyHead = new ListNode(0, head);
+        ListNode slow = dummyHead;
+        ListNode fast = dummyHead;
+
+        // Move fast pointer to the (n+1)-th position ahead of slow
+        for (int i = 0; i <= n; i++) {
+            fast = fast.next;
+        }
+
+        // Move both pointers until fast reaches the end
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        // Remove the nth node from the end
+        slow.next = slow.next.next;
+
+        // Return the new head of the list
+        return dummyHead.next;
+    }
+
     @Test
     public void testRemove() {
         ListNode node1 = new ListNode(1);
@@ -73,7 +97,7 @@ public class L5_19_removeNthFromEnd {
         ListNode n1 = new ListNode(1);
         ListNode n2 = new ListNode(2);
         n1.next = n2;
-        removeNthFromEnd2(n1, 2);
+        ListUtils.printListNode(removeNthFromEnd(node1, 2));
     }
 
 }

@@ -1,16 +1,17 @@
 package com.ben.followcarl.c2_linkedlist;
 
+import org.junit.Test;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-07-07  19:35
  * @Description: 设计链表
  * get和deleteAtIndex不能越界；
  * addAtIndex时，可以从<0或等于size的位置加上节点；
- *
  * @Version: 1.0
  */
 public class L2_707_MyLinkedList {
-    static class MyLinkedList {
+    class MyLinkedList {
         class ListNode {
             int val;
             ListNode next;
@@ -38,6 +39,7 @@ public class L2_707_MyLinkedList {
         public int get(int index) {
             if (index >= size || index < 0) return -1;
             ListNode cur = dummyHead.next;
+            // 真实头节点开始遍历，找cur位置；
             while (index-- > 0) {
                 cur = cur.next;
             }
@@ -46,7 +48,7 @@ public class L2_707_MyLinkedList {
         }
 
 
-        // 虚拟头节点的下一个节点指向新节点，新节点的下一个节点指向原来虚拟头节点指向的节点。
+        //新节点的下一个节点指向原来虚拟头节点指向的头节点。 虚拟头节点的下一个节点指向新节点，
         public void addAtHead(int val) {
             ListNode node = new ListNode(val, dummyHead.next);
             dummyHead.next = node;
@@ -55,9 +57,17 @@ public class L2_707_MyLinkedList {
 
         // 末尾加节点，先遍历整个链表到最后一个节点，从dummyHead开始遍历让他指向新节点。
         public void addAtTail(int val) {
+//            ListNode node = new ListNode(val);
+//            ListNode cur = dummyHead;
+//            while (cur.next != null) { // 如果cur.next为空，说明cur是最后一个节点
+//                cur = cur.next;
+//            }
+//            cur.next = node;
+//            size++;
             ListNode node = new ListNode(val);
             ListNode cur = dummyHead;
-            while (cur.next != null) { // 如果cur.next为空，说明cur是最后一个节点
+            // Iterate up to size steps to reach the last node
+            for (int i = 0; i < size; i++) {
                 cur = cur.next;
             }
             cur.next = node;
@@ -69,12 +79,13 @@ public class L2_707_MyLinkedList {
         public void addAtIndex(int index, int val) {
             if (index > size) return;
             if (index < 0) index = 0;
-            ListNode node = new ListNode(val);
+            ListNode node = new ListNode(val); // 新节点
+            // 遍历到index-1的节点，所以从dummyHead出发开始遍历的；
             ListNode cur = dummyHead;
-            // 遍历到index-1的节点
             while (index-- > 0) {
                 cur = cur.next;
             }
+            // 先断开，再续上
             node.next = cur.next;
             cur.next = node;
             size++;
@@ -101,24 +112,63 @@ public class L2_707_MyLinkedList {
 
      */
 
-    private static void test1() {
+    @Test
+    public void test1() {
         MyLinkedList list = new MyLinkedList();
         list.addAtHead(2);
+        printListNode(list.dummyHead);
         list.deleteAtIndex(1);
+        printListNode(list.dummyHead);
         list.addAtHead(1);
         list.addAtHead(2);
         list.addAtHead(7);
         list.addAtHead(3);
         list.addAtHead(2);
+        printListNode(list.dummyHead);
+
         list.addAtTail(5);
+        printListNode(list.dummyHead);
+
         list.get(5);
         list.deleteAtIndex(6);
-        list.deleteAtIndex(4);
+        printListNode(list.dummyHead);
 
-        System.out.println(list);
+        list.deleteAtIndex(4);
+        printListNode(list.dummyHead);
     }
 
-    private static void test2() {
+    /**
+     * 0 2
+     *
+     * 0 2
+     *
+     * 0 2 3 7 2 1 2
+     *
+     * 0 2 3 7 2 1 5
+     *
+     * 0 2 3 7 2 1 5
+     *
+     * 0 2 3 7 2 1 5
+     *
+     *
+     *
+     * 0 2
+     *
+     * 0 2
+     *
+     * 0 2 3 7 2 1 2
+     *
+     * 0 2 3 7 2 1 2 5
+     *
+     * 0 2 3 7 2 1 2
+     *
+     * 0 2 3 7 2 2
+     *
+     *
+     *
+     */
+    @Test
+    public void test2() {
         MyLinkedList list = new MyLinkedList();
         list.addAtHead(2);
         list.addAtHead(1);
@@ -127,8 +177,12 @@ public class L2_707_MyLinkedList {
         System.out.println(list.size);
         System.out.println(list.get(3));
     }
-    public static void main(String[] args) {
-//        test1();
-        test2();
+
+    private void printListNode(MyLinkedList.ListNode node) {
+        while (node != null) {
+            System.out.print(node.val + " ");
+            node = node.next;
+        }
+        System.out.println("\n");
     }
 }

@@ -44,6 +44,27 @@ public class L4_24_swapPairs {
 
         return dummyHead.next;
     }
+    public ListNode swapPairs4(ListNode head) {
+        // Base case: if the list is empty or has only one node, return head
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // Nodes to be swapped
+        ListNode firstNode = head;
+        ListNode secondNode = head.next;
+
+        // Recursively swap the remaining pairs
+        firstNode.next = swapPairs4(secondNode.next);
+
+        // Swap the first two nodes
+        secondNode.next = firstNode;
+
+        // Return the new head of the swapped pair
+        return secondNode;
+    }
+
+
     @Test
     public void testSwapPairs() {
         ListNode node1 = new ListNode(1);
@@ -54,6 +75,7 @@ public class L4_24_swapPairs {
         node2.next = node3;
         node3.next = node4;
 
-        swapPairs2(node2);
+        ListUtils.printListNode(swapPairs2(node1));
+        ListUtils.printListNode(swapPairs4(node1));
     }
 }
