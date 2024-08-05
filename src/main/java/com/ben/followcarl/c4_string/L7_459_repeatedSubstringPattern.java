@@ -1,13 +1,7 @@
 package com.ben.followcarl.c4_string;
 
-class RepeatedSubstringPatternTest {
-    public static void main(String[] args) {
-//        String str = "abababab";
+import org.junit.Test;
 
-        String str = "ababac";
-        new L7_459_repeatedSubstringPattern().repeatedSubstringPattern(str);
-    }
-}
 public class L7_459_repeatedSubstringPattern {
     public boolean repeatedSubstringPattern(String s) {
         int n = s.length();
@@ -18,6 +12,7 @@ public class L7_459_repeatedSubstringPattern {
         }
         return false;
     }
+
     private void getNext(int[] next, String s) {
         int j = 0;
         next[0] = 0;
@@ -30,5 +25,12 @@ public class L7_459_repeatedSubstringPattern {
             }
             next[i] = j;
         }
+    }
+
+    @Test
+    public void test_repeatedSubstringPattern() {
+
+        String str = "ababac";
+        repeatedSubstringPattern(str);
     }
 }

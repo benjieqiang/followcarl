@@ -26,7 +26,7 @@ import java.util.Arrays;
  * 解法：
  * 遍历字符串，每2k个去反转字符串，看剩下的字符串的长度与k相比
  * length - 1 - left 与k
- *
+ * 得先转成字符数组，再交换元素，最后new String(数组)
  * @Version: 1.0
  */
 public class L2_541_reverseStr {

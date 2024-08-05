@@ -81,7 +81,41 @@ public class L3_lcr122_pathEncryption {
             return new String(chars);
         }
 
+        public String pathEncryption3(String path) {
+            if (path == null || path.length() == 0) return path;
 
+            // Count the number of '.' characters in the original path
+            int dotCount = 0;
+            for (char ch : path.toCharArray()) {
+                if (ch == '.') {
+                    dotCount++;
+                }
+            }
+
+            // If no dots are found, return the original path
+            if (dotCount == 0) return path;
+
+            // Calculate the new length of the array
+            int newLength = path.length() + dotCount * 2;
+            char[] chars = new char[newLength];
+
+            // Fill the array from right to left
+            int left = path.length() - 1;
+            int right = newLength - 1;
+
+            while (left >= 0) {
+                if (path.charAt(left) == '.') {
+                    chars[right--] = '0';
+                    chars[right--] = '2';
+                    chars[right--] = '%';
+                } else {
+                    chars[right--] = path.charAt(left);
+                }
+                left--;
+            }
+
+            return new String(chars);
+        }
     }
 
     @Test
