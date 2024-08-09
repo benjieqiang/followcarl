@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.*;
 
 class L6_239_MaxSlidingWindowTest {
+    // 接收终端挨个输入的数字，放到数组里；
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         // 1,3,-1,-3,5,3,6,7
@@ -89,11 +90,11 @@ public class L6_239_MaxSlidingWindow {
         if (nums == null || nums.length == 1) return nums;
 
         Deque<Integer> deque = new LinkedList<>();
+        // 最终存放结果的数组：长度举例说明：比如[1], k = 1, 结果是[1]; 所以要加1；
         int[] res = new int[nums.length - k + 1];
-        //举例说明：比如[1], k = 1, 结果是[1]; 所以要加1；
+
 
         for (int right = 0; right < nums.length; right++) {
-
             // 如果队列不为空，且当前元素大于等于队尾元素，则移除队尾元素，小弟都撤走，直到遇到新的老大停下来或队列都空了停止；
             // nums[right]: 当前元素，nums[deque.getLast()]: 队尾元素
             while (!deque.isEmpty() && nums[right] > nums[deque.getLast()]) {

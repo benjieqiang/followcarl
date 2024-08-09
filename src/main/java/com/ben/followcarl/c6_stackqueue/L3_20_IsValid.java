@@ -39,12 +39,34 @@ public class L3_20_IsValid {
                 st.push('}');
                 // 3. 右括号多：经过上面的if条件，有左括号存在，栈一定不为空，如果栈为空那么说明遇到右括号，栈空的情况，比如")]","]", "(){}}{"
                 // 2. 括号数目一样多，但是类型不一致，即栈顶元素不等于当前遍历的字符；
-            } else if (st.isEmpty() || st.peek() != ch) { // isEmpty()放到peek前面；
+            } else if (st.isEmpty() || st.pop() != ch) { // isEmpty()放到peek前面；
                 return false;
             } else {
                 st.pop();
             }
         }
+        //if (s == null || s.length() == 0) return false;
+        //       int length = s.length();
+        //       if (length % 2 != 0) return false;
+        //
+        //       char[] chars = s.toCharArray();
+        //       Deque<Character> st = new LinkedList<>();
+        //       for (char ch : chars) {
+        //            if (ch == '(') {
+        //                st.push(')');
+        //            } else if (ch == '[') {
+        //                st.push(']');
+        //            } else if (ch == '{') {
+        //                st.push('}');
+        //            } else {
+        //                if (st.isEmpty()) return false;
+        //                if (ch != st.pop()) {
+        //                    return false;
+        //                }
+        //            }
+        //       }
+        //
+        //       return st.isEmpty();
 
         // 1. false: 左括号多，遍历完了，栈不为空，说明没有相匹配数目的右括号匹配左括号;true: 完全匹配；
         return st.isEmpty();

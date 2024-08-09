@@ -36,7 +36,7 @@ public class L4_1047_removeDuplicates {
         }
         // 栈是[a,c]，栈顶元素是a，所以先把a输出，再输出时c+a;
         String res = "";
-        while(!st.isEmpty()) {
+        while (!st.isEmpty()) {
             res = st.pop() + res;
         }
 
@@ -46,11 +46,12 @@ public class L4_1047_removeDuplicates {
     /**
      * @param s:
      * @return String
-     * @description 不使用栈，使用sb字符串的性质
+     * @description
+     * 不使用栈，使用sb字符串的性质
      * top指向新字符串的最后一个元素下标位置；
      * 如果栈顶的元素和当前遍历的字符不同，直接append入sb
      * 如果相同，弹出
-     *
+     * <p>
      * sb.append()
      * sb.deleteCharAt(index)
      * sb.charAt(index)
@@ -86,10 +87,27 @@ public class L4_1047_removeDuplicates {
         return sb.toString();
     }
 
+    public String removeDuplicates5(String s) {
+        if (s == null || s.length() == 0) return s;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (sb.length() == 0) {
+                sb.append(ch);
+            } else if (sb.charAt(sb.length() - 1) == ch) {
+                sb.deleteCharAt(sb.length() - 1);
+            } else {
+                sb.append(ch);
+            }
+        }
+
+        return sb.toString();
+    }
+
     @Test
     public void testRemoveDuplicates() {
 
-        System.out.println(removeDuplicates("abbaca"));
+        System.out.println(removeDuplicates5("abbaca"));
     }
 }
 
