@@ -56,26 +56,39 @@ public class L3_117_connect {
 
             return root;
         }
-        // BFS + 链表；
+        // BFS + 链表；不引入queue的做法。
         public Node connect2(Node root) {
             if (root == null) return root;
-            Node cur = root; // cur每一层的链表头节点；
-            while (cur != null) { // 开始遍历cur所在当前层；
-                Node dummy = new Node(0); // dummy节点来方便操作；
-                Node pre = dummy; // pre节点从dummy节点出发，表示下一层的第一个节点的前一个节点。
-                while (cur != null) { // 分别把当前层的左右孩子串起来，不断移动pre到最右边；
-                    if (cur.left != null) {
-                        pre.next = cur.left;
-                        pre = pre.next;
+            Node cur = root;  // 当前处理的层的最左节点
+            // 遍历每一层。使用dummy始终指向下一层的第一个节点，prev用来连接下一层的每一个节点
+            while (cur != null) {
+                Node dummy = new Node(0);  // 用于构建下一层的节点链表
+                Node prev = dummy;  // prev 用于连接下一层的节点
+                Node temp = cur;  // 当前层的遍历指针
+
+                // 遍历当前层的每个节点， temp此时指向当前层；
+                while (temp != null) {
+                    // 有左孩子，让prev下一个指针指向左孩子，prev右移；
+                    if (temp.left != null) {
+                        prev.next = temp.left;
+                        prev = prev.next;
                     }
-                    if (cur.right != null) {
-                        pre.next = cur.right;
-                        pre = pre.next;
+                    // 有右孩子，让prev下一个指针指向右孩子，prev右移
+                    if (temp.right != null) {
+                        prev.next = temp.right;
+                        prev = prev.next;
                     }
-                    cur = cur.next; // 访问当前层的下一个节点；
+                    // 移动到当前层的下一个节点
+                    temp = temp.next;
                 }
-                cur = dummy.next; // dummy此时指向的是下一层，把dummy.next给cur，就是从下一层的头节点开始继续遍历；
+
+                // 移动到下一层的最左节点，dummy.next依靠temp的移动来指向了下一层最左节点；
+                // 在普通二叉树中，cur = cur.left 不能保证我们移动到下一层的最左节点，
+                // 这是因为普通二叉树并不像完美二叉树那样每个节点都有左右子节点。
+                // 假设某一层的某些节点没有左孩子或者右孩子，那么 cur.left 可能为空，导致无法正确遍历到下一层的最左节点。
+                cur = dummy.next;
             }
+
             return root;
         }
         class Solution2 {

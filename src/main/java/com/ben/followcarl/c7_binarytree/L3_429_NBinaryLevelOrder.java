@@ -28,7 +28,8 @@ public class L3_429_NBinaryLevelOrder {
                     Node node = queue.remove();
                     inner.add(node.val);
                     List<Node> childList = node.children;
-                    if (childList == null) continue;
+//                    if (childList == null) continue;
+                    if (childList == null || childList.size() == 0) continue;
 
                     for (int j = 0; j < childList.size(); j++) {
                         if (childList.get(j) != null) {

@@ -20,7 +20,7 @@ public class L7_111_minDepth {
     public int minDepth(TreeNode root) {
         if (root == null) return 0;
         if (root.left == null && root.right != null) {
-            // 只有右子树
+            // 只有右子树。 如果当前节点的左子树为空，说明最近的叶子节点只能在右子树中
             return 1 + minDepth(root.right);
         }
         if (root.left != null && root.right == null) {
@@ -79,7 +79,7 @@ public class L7_111_minDepth {
             if (root.right == null) {
                 return leftDepth + 1;
             }
-            // 左右结点都不为null
+            // 如果左右子树都不为空，递归计算左右子树的最小深度，取最小值
             return Math.min(leftDepth, rightDepth) + 1;
         }
     }

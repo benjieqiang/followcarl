@@ -9,20 +9,6 @@ import java.util.List;
 
 public class L2_145_PostorderTraversal {
     public List<Integer> postorderTraversal(TreeNode root) {
-//        Deque<TreeNode> stack = new LinkedList<>();
-//        LinkedList<Integer> res = new LinkedList<>();
-//        if (root == null) return res;
-//        stack.push(root);
-//
-//        while (!stack.isEmpty()) {
-//            TreeNode node = stack.pop();
-//            res.push(node.val);
-//
-//            if (node.left != null) stack.push(node.left);
-//            if (node.right != null) stack.push(node.right);
-//        }
-//
-//        return res;
         LinkedList<Integer> res = new LinkedList<>();
         if (root == null) return res;
         Deque<TreeNode> st = new LinkedList<>();

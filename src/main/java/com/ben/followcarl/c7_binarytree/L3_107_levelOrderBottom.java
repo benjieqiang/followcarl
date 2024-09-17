@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @Version: 1.0
  */
-public class L2_107_levelOrderBottom {
+public class L3_107_levelOrderBottom {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         LinkedList<List<Integer>> res = new LinkedList<>(); // 注意点：定义成LinkedList
         if (root == null) return res;
