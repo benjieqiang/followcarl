@@ -32,8 +32,8 @@ public class L11_513_findBottomLeftValue {
         return res;
     }
 
-    // 递归如何解决?
-    // 最大深度的叶子节点,
+    // 递归如何解决
+    // 最后一行肯定是：最大深度的叶子节点。如何找最后一行，最大深度，想到前序。
     // 左中右，前序遍历，在求二叉树的最大深度加上判断，如果深度大于最大深度且没有左右孩子节点，即到达最底层叶子节点，就收集结果。并更新最大深度；
     int maxDepth = Integer.MIN_VALUE; // 记录叶子节点的最大深度
     int res = 0;
@@ -45,6 +45,7 @@ public class L11_513_findBottomLeftValue {
     }
 
     private void traversal(TreeNode root, int depth) {
+        // 只会在找到更深层的节点时更新 res
         if (depth > maxDepth && root.left == null && root.right == null) {
             // 收集结果
             maxDepth = depth;

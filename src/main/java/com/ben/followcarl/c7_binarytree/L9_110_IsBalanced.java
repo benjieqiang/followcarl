@@ -45,7 +45,7 @@ public class L9_110_IsBalanced {
         int left = getHeight2(root.left);
         int right = getHeight2(root.right);
 
-        return Math.max(left, right);
+        return Math.max(left, right) + 1;
     }
     @Test
     public void testIsBalanced() {

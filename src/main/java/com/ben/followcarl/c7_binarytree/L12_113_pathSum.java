@@ -49,7 +49,9 @@ public class L12_113_pathSum {
 
     /**
      * @return null
-     * @description 迭代解法，太麻烦了；
+     * @description 迭代:整体上还112一样，只不过这里需要引入一个存放整体队列的栈，用来存放符合条件的list集合；
+     * inner是从栈中弹出的临时list，加入当前节点值，使用add(new LinkedList<inner>)之后加入stackList之后，再移除加入的节点值，
+     * 保证了根节点，如果左右孩子都在，inner先存左节点，加入stackList之后，再移除左节点，之后再加入右节点，加入stackList之后，再移除右孩子。
      * @author benjieqiang
      * @date 2024/2/19 4:27 PM
      */

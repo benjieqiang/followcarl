@@ -14,6 +14,10 @@ import java.util.List;
  * 1. 递归终止条件：当前节点为空则返回0；
  * 2. 单层逻辑：遍历children，每次求最大的depth。
  * 3. 返回1 + depth；因为要算上当前节点；
+ *
+ * 时间复杂度：O(n)，其中 n 为 N 叉树节点的个数。每个节点在递归中只被遍历一次。
+ *
+ * 空间复杂度：O(height)，其中 height 表示 N 叉树的高度。递归函数需要栈空间，而栈空间取决于递归的深度，因此空间复杂度等价于 N 叉树的高度。
  * @Version: 1.0
  */
 public class L6_559_maxDepth {
@@ -43,6 +47,26 @@ public class L6_559_maxDepth {
                 }
             }
         }
+        return res;
+    }
+    public int maxDepth3(Node root) {
+        if (root == null) return 0;
+        Deque<Node> queue = new LinkedList<>();
+        queue.add(root);
+        int res = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            res++;
+            for (int i = 0; i < size; i++) {
+                Node node = queue.remove(); // 在for循环里面依次remove该层元素。
+                List<Node> children = node.children;
+                if (children == null) continue;
+                for (Node child : children) {
+                    if (child != null) queue.add(child);
+                }
+            }
+        }
+
         return res;
     }
 
