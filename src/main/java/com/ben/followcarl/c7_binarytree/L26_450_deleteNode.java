@@ -26,20 +26,20 @@ public class L26_450_deleteNode {
                 return null;
             }
             //2.左右孩子有一个为空, 谁为空, 不为空的补位,
-            if (root.left == null && root.right != null) {
+            if (root.left == null) {
                 return root.right;
-            } else if (root.left != null && root.right == null) {
+            } else if (root.right == null) {
                 return root.left;
             }
             // 3.左右孩子都不为空，此时root节点就是要待删除的节点
-            // 1. 此时去它的右子树的最左节点
+            // 1. 此时去找右子树的最左叶子节点；
             TreeNode cur = root.right;
             while (cur.left != null) {
                 cur = cur.left;
             }
-            //2.把root待删节点的左子节点挂到cur的左子节点上
+            //2.把待删节点root的左子节点挂到cur的左子节点上
             cur.left = root.left;
-            return root.right; // 记录此时root的右孩子节点，需要返回；
+            return root.right; // 返回root的右孩子节点；
         }
         if (root.val > key) root.left = deleteNode(root.left, key);
         if (root.val < key) root.right = deleteNode(root.right, key);

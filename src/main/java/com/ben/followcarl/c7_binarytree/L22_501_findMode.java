@@ -91,8 +91,8 @@ public class L22_501_findMode {
         if (root == null) return;
         dfs(root.left);
         // 处理节点
-        if (pre == null) {
-            count = 1; //此时cur指向最左边的节点,pre=null;
+        if (pre == null) { // 处理树中第一个节点。
+            count = 1;
         } else if (root.val == pre.val) {
             count++;
         } else {

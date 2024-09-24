@@ -8,7 +8,7 @@ import java.util.LinkedList;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-05-08  22:10
- * @Description: BST的中序遍历是有序的，所以每次找到中节点看它是否
+ * @Description: BST的中序遍历是有序的，所以每次找到中节点与前面的最小值比大小，比他大则更新最小值，如果当前最小值比节点值大，不是BST。
  * BFS 中序遍历模板题；
  * @Version: 1.0
  */

@@ -42,13 +42,13 @@ public class L25_701_insertIntoBST {
         if (root == null) return new TreeNode(val); //当root为空，则返回new的节点；
         TreeNode cur = root;
         TreeNode pre = root; // 记录上一个节点
-        // 找到要插入的节点位置，pre
+        // 借助cur遍历找到要插入的节点位置，pre
         while (cur != null) { // 用来不断寻找要插入节点的位置
             pre = cur;
             if (cur.val > val) cur = cur.left;
             else cur = cur.right;
         }
-        // 插入所给节点，挂左边还是挂右边。
+        // 插入所给节点，比较pre节点值和新插入节点值，大则挂左边，小则挂右边
         TreeNode node = new TreeNode(val);
         if (pre.val > val) pre.left = node;
         else pre.right = node;

@@ -3,6 +3,8 @@ package com.ben.followcarl.c7_binarytree;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -71,6 +73,28 @@ public class L21_530_getMinimumDifference {
             pre = cur;
             traversal(cur.right);
         }
+    }
+    // 中序遍历模板；
+    int minValue = Integer.MAX_VALUE;
+    TreeNode pre = null;
+    public int getMinimumDifference4(TreeNode root) {
+        if (root == null) return 0;
+        Deque<TreeNode> stack = new LinkedList<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) { // 从根节点开始一路向左，斜边入栈，直至为null
+                stack.push(cur);
+                cur = cur.left;//步骤一，遍历左子树
+            } else { // 当遇到叶子节点之后，弹出来第一个元素，加入结果集，然后遍历右孩子
+                cur = stack.pop();
+                if (pre != null) {
+                    minValue = Math.min(cur.val - pre.val, minValue);
+                }
+                pre = cur;
+                cur = cur.right;//步骤三，遍历右子树
+            }
+        }
+        return minValue;
     }
     @Test
     void testGetMinimumDifference2() {

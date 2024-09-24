@@ -9,9 +9,7 @@ package com.ben.followcarl.c7_binarytree;
  * 为啥第一次遇到就是呢？因为如果不是的话，cur要么向左子树走，那么会失去q孩子，cur向右走，失去p孩子；
  * 思路:
  * 1. 当前节点比p和q节点的值还要大的话,那么p和q一定是在当前节点的左子树里面,否则就在右子树
- * 2. 当前节点在p和q之间,一定是最近的公共祖先;
- * 原因:
- * 无论往当前节点的左孩子还是右孩子遍历,都会失去p或q作为孩子
+ * 2. 当前节点在p和q之间,一定是最近的公共祖先; 原因:无论往当前节点的左孩子还是右孩子遍历,都会失去p或q作为孩子
  * @Version: 1.0
  */
 public class L24_235_lowestCommonAncestor {
@@ -26,9 +24,9 @@ public class L24_235_lowestCommonAncestor {
     public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
         while (true) {
             if (root.val > p.val && root.val > q.val) {
-                root = root.left;
+                root = root.left; // 根节点比他两都大，一定在左子树；
             } else if (root.val < p.val && root.val < q.val) {
-                root = root.right;
+                root = root.right; // 比他两小，一定在右子树；
             } else {
                 break;
             }
