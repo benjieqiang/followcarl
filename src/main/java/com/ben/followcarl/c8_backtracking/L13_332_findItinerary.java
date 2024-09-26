@@ -56,8 +56,10 @@ public class L13_332_findItinerary {
     boolean find;
     private void backtracking(List<List<String>> tickets, boolean[] used) {
         if (find) return;
+        // 如果找到一个完整的行程（即路径长度 path.size() 等于 tickets.size() + 1，即使用完所有机票）
         if (path.size() == tickets.size() + 1) {
             res = new LinkedList<>(path);
+            find = true;
             return;
         }
         for (int i = 0; i < tickets.size(); i++) {
@@ -69,6 +71,7 @@ public class L13_332_findItinerary {
 
             if (used[i]) continue; // 当前机票已经用过了, 跳过;
             if (!tickets.get(i).get(0).equals(path.getLast())) continue;// 路径最后的机场（已到的机场）跟下一个出发的机场（当前tickets的机场）不匹配,跳过;
+            // 将机票的目的地添加到路径中
             path.add(tickets.get(i).get(1));
             used[i] = true;
             backtracking(tickets, used);// 找到第一个就是所求的
@@ -78,7 +81,7 @@ public class L13_332_findItinerary {
     }
 
     public List<String> findItinerary(List<List<String>> tickets) {
-        Collections.sort(tickets, (a, b) -> a.get(1).compareTo(b.get(1))); // 注意排序;
+        Collections.sort(tickets, (a, b) -> a.get(1).compareTo(b.get(1))); // 机票列表被按目的地字母序排序，
         path.add("JFK"); // 注意加入JFK;
         boolean[] used = new boolean[tickets.size()];
         backtracking(tickets, used);

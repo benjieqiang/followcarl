@@ -1,9 +1,6 @@
 package com.ben.followcarl.c8_backtracking;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: benjieqiang
@@ -64,6 +61,38 @@ public class L12_47_permuteUnique {
         }
     }
 
+    class Solution2 {
+        List<List<Integer>> res = new LinkedList<>();
+        List<Integer> path = new LinkedList<>();
+        boolean[] used;
+
+        public List<List<Integer>> permuteUnique(int[] nums) {
+            if (nums == null || nums.length == 0) return res;
+            Arrays.sort(nums);
+            used = new boolean[nums.length];
+            backtracking(nums);
+            return res;
+        }
+
+        private void backtracking(int[] nums) {
+            if (path.size() == nums.length) {
+                res.add(new LinkedList<>(path));
+                return;
+            }
+            HashSet<Integer> hset = new HashSet<>();
+            for (int i = 0; i < nums.length; i++) {
+                // 用于判断某个元素是否已经在当前递归路径中被使用过，同一个元素不能使用多次
+                if (used[i] == true) continue;
+                // 如果该元素已经在当前层被使用过，则跳过
+                if (hset.add(nums[i]) == false) continue;
+                path.add(nums[i]);
+                used[i] = true;
+                backtracking(nums);
+                path.remove(path.size() - 1);
+                used[i] = false;
+            }
+        }
+    }
     public List<List<Integer>> permuteUnique(int[] nums) {
         Arrays.sort(nums); //相同元素挨在一起，便于树层去重
         used = new boolean[nums.length];

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,19 +30,18 @@ import java.util.List;
  * 2. 终止条件: row == n; 往棋盘里面加入结果集;当然在单层回溯的时候就需要判断是否符合条件;
  * 3. 单层回溯逻辑:
  * for循环从0开始到n-1结束;
- * 判断此时是否符合条件;
- * 不符合跳过;
+ * 判断此时是否符合条件，不符合跳过;
  * 符合, 棋盘放置皇后 =》 递归下一层行数从row+1开始,
  * 结束撤销上一步操作, 棋盘放置.
- *
- *
+ * <p>
+ * <p>
  * 时间复杂度：
- *
+ * <p>
  * 在solveNQueens方法中，使用了回溯算法来尝试放置每一个皇后，最坏情况下需要遍历所有可能的解，因此时间复杂度为O(N!)，其中N是棋盘的大小。
  * 在isValid方法中，对每个放置的位置都要检查是否与之前的皇后位置冲突，这需要O(N)的时间。
  * 综合考虑，总体时间复杂度为O(N! * N)，因为回溯算法的复杂度是指数级的。
  * 空间复杂度：
- *
+ * <p>
  * 使用了一个二维字符数组chessboard来表示棋盘，其大小为NxN，因此空间复杂度为O(N^2)。
  * 使用了一个res列表来存储所有解，最坏情况下可能有N!个解，每个解都是一个N*N的棋盘，因此额外空间复杂度为O(N!*N^2)。
  * 综合考虑，总体空间复杂度为O(N!*N^2)。
@@ -61,16 +61,17 @@ public class L14_51_solveNQueens {
 
     private void backtracking(char[][] chessboard, int n, int row) {
         if (row == n) { // 表示成功放置了所有的皇后，然后将当前棋盘状态加入到结果中
-            List list = new ArrayList<>();
-            for (char[] ch : chessboard) {
-                list.add(new String(ch)); // 每一行转成字符串后，放到list中；
+            List<String> path = new ArrayList<>();
+            for (int i = 0; i < chessboard.length; i++) {
+                path.add(new String(chessboard[i]));
             }
-            res.add(list);
+            res.add(path);
         }
 
         for (int i = 0; i < n; i++) {
             if (!isValid(chessboard, row, i, n)) continue;
             chessboard[row][i] = 'Q';
+            //每次递归处理的是不同的行，因此同行的放置自然被避免
             backtracking(chessboard, n, row + 1);
             chessboard[row][i] = '.';
         }
@@ -93,20 +94,76 @@ public class L14_51_solveNQueens {
             if (board[i][col] == 'Q') return false;
         }
 
-        // 检查45度对角线, 左上方遍历;从（row - 1, col - 1）到（0，0）
+        // 检查左上对角线是否已有皇后  左上方遍历;从（row - 1, col - 1）到（0，0）
         for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
             if (board[i][j] == 'Q') return false;
         }
 
-        // 检查135度对角线, 右上方遍历，从(row - 1, col + 1)到(0，n-1)
+        // 检查右上对角线是否已有皇后 , 右上方遍历，从(row - 1, col + 1)到(0，n-1)
         for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
             if (board[i][j] == 'Q') return false;
         }
         return true;
     }
+
+    class Solution0926 {
+        List<List<String>> res = new LinkedList<>();
+
+        public List<List<String>> solveNQueens(int n) {
+            if (n == 0) return res;
+            char[][] board = new char[n][n];
+            for (char[] ch : board) {
+                Arrays.fill(ch, '.');
+            }
+            backtracking(board, 0, n);
+            return res;
+        }
+
+        private void backtracking(char[][] board, int row, int n) {
+            if (row == n) {
+                List<String> path = new LinkedList<>();
+                for (char[] ch : board) {
+                    path.add(new String(ch));
+                }
+                res.add(path);
+//                return;
+                // 不加return情况
+                // 适用于找到所有解的情况，N 皇后等问题。
+                // 每次找到一个解后，继续递归，回溯探索其他解。
+            }
+
+            for (int i = 0; i < n; i++) {
+                if (!isValid(board, row, i, n)) continue;
+                board[row][i] = 'Q';
+                backtracking(board, row + 1, n);
+                board[row][i] = '.';
+            }
+        }
+
+        private boolean isValid(char[][] board, int row, int col, int n) {
+            // 检查列 该列从0开始遍历到row
+            for (int i = 0; i < row; i++) {
+                if (board[i][col] == 'Q') return false;
+            }
+
+            // 检查左上对角线是否已有皇后  左上方遍历;从（row - 1, col - 1）到（0，0）
+            for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+                if (board[i][j] == 'Q') return false;
+            }
+
+            // 检查右上对角线是否已有皇后 , 右上方遍历，从(row - 1, col + 1)到(0，n-1)
+            for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+                if (board[i][j] == 'Q') return false;
+            }
+            return true;
+        }
+
+    }
+
     @Test
-    public void testNQueen(){
+    public void testNQueen() {
         int n = 4;
-        System.out.println(solveNQueens(n));
+//        System.out.println(solveNQueens(n));
+        System.out.println(new Solution0926().solveNQueens(n));
     }
 }

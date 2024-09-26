@@ -31,6 +31,7 @@ public class L27_669_trimBST {
     }
 
     public TreeNode trimBST2(TreeNode root, int low, int high) {
+        // 1. 找到root在[low,high]的第一个节点
         while (root != null && (root.val < low || root.val > high)) {
             if (root.val < low) {
                 root = root.right;
@@ -38,9 +39,11 @@ public class L27_669_trimBST {
                 root = root.left;
             }
         }
+        // 没有满足条件的节点。
         if (root == null) {
             return null;
         }
+        // 从root出发，只有有左孩子，左孩子不在low范围内，则让node指向下一个左孩子的右节点。也就是删除了node.left节点
         for (TreeNode node = root; node.left != null; ) {
             if (node.left.val < low) {
                 node.left = node.left.right;
@@ -48,6 +51,7 @@ public class L27_669_trimBST {
                 node = node.left;
             }
         }
+        // 同理，删除在high外的右节点。
         for (TreeNode node = root; node.right != null; ) {
             if (node.right.val > high) {
                 node.right = node.right.left;

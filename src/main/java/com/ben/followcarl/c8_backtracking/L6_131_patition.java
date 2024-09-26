@@ -22,13 +22,14 @@ import java.util.LinkedList;
  *
  * 切割问题就是组合问题:
  * 1. 树形结构的宽度就是字符串长度;
- * 2. 递归深度不知道,
+ * 2. 递归深度，递归的深度就是把字符串能切割多少次。传入index，
  *
+ * 难点：1. 递归；2.判断回文串
  * 回溯三部曲:
  * 1. void, String s, int index;// index用来决定下一层回溯的for循环从哪里开始,因为第一个元素取了就不能再去取了;
  * 2. index 只要达到字符串结尾的地方s.length就是收获结果的时候, 根据题意, 得有List<List<String>> res,LinkedList<String> path
  * 3. 单层回溯逻辑:
- *    1. 判断index到i的字符串是否是回文,是回文,就利用s.substring(index， i+1)的方法加入结果集中;不是回文就跳过;
+ *    1. 判断index到i的字符串是否是回文,是回文,就利用s.substring(index, i+1)的方法加入结果集中;不是回文就跳过;
  *    2. 执行下一层回溯逻辑; i+1; 下一层不能再取当前元素了， 所以i+1;
  *    3. 删除本次加入的字符串;
  * @Version: 1.0
@@ -50,8 +51,9 @@ public class L6_131_patition {
             return;
         }
         for (int i = startIndex; i < s.length(); i++) {
-            if (!isPalindrome(s, startIndex, i)) continue; // 非回文串则跳过；
-            path.add(s.substring(startIndex, i + 1)); // 否则加入
+            if (!isPalindrome(s, startIndex, i)) continue; // 非回文串则跳过；使用continue而不是break原因
+            // 比如efe字符串，虽然从0-1不是回文串，但是整体是回文串，efe
+            path.add(s.substring(startIndex, i + 1)); // 否则加入s的区间字符串
             backtracking(s, i + 1); // index从i+1开始，刚开始如果是第一层，则树形图第二层从第二个元素开始；不会重复取；
             path.removeLast();
         }

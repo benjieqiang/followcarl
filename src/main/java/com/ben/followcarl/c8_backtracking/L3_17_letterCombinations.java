@@ -32,9 +32,7 @@ import java.util.Scanner;
  */
 public class L3_17_letterCombinations {
 
-    List<String> res = new ArrayList<>(); // 存放字符串结果的集合
-    String[] numString = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}; // 建立数字和字符串的映射
-    StringBuilder sb = new StringBuilder();
+
     /**
      * @param digits: 题目给出的digits字符串 比如，digits = "23"
      * @param index: 用来标识字符串中第几个数字
@@ -49,6 +47,10 @@ public class L3_17_letterCombinations {
      * 可以看成常数，递归调用层数最大为 m+n。
      * @date 2023/5/19 12:50 AM
      */
+    List<String> res = new ArrayList<>(); // 存放字符串结果的集合
+    String[] numString = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}; // 建立数字和字符串的映射
+    StringBuilder sb = new StringBuilder();
+
     public void backtracking(String digits, int index) {
         if (index == sb.length()) {
             res.add(sb.toString());

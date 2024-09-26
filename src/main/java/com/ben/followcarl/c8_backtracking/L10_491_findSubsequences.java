@@ -28,7 +28,8 @@ import java.util.List;
  *
  * 思路: 首先不能排序, 排序后都是递增子序列了， 题目求的是排序数组
  * 1. 树层取数必须得递增: 首先path不能为空, 其次path的最后一个元素如果大于当前元素,则不能取;
- * 2. 树枝得去重, 不能重复取; 每层利用HashSet来去重,如果有元素已经加入到set中,再次add就是false,取反,说明当前元素已存在,跳过;
+ * 2. 树层得去重, 不能重复取; 每层利用HashSet来去重,如果有元素已经加入到set中,再次add就是false,取反,说明当前元素已存在,跳过;
+ * 3. 树枝去重使用i+1来保证下一次递归起始位置；
  *
  *
  * 时间复杂度：这里枚举所有子序列的时间代价是O(2^n)
@@ -51,7 +52,11 @@ public class L10_491_findSubsequences {
             // 树枝取数必须得递增, 如果当前元素的值小于path的最后一个元素，不能取.
             // path判空是为了防止null异常，第一次进来path是空的。
             // 树层不能重复取数：uset.add，如果有同一层的元素已经取过了，是加入不了的。返回false取反就是真;
+            //  path有元素，那么必须是递增的且path最后一个元素和当前值比较，如果比他大，不满足递增或者path满足，直接把这个数加入到hset中用来同层去重。
             if (!path.isEmpty() && nums[i] < path.get(path.size() - 1)|| !uset.add(nums[i])) continue;
+            // 同层去重逻辑，先判断uset中有没有当前num值，有的话跳过该值，没有下一行加入。
+//            if (!path.isEmpty() && nums[i] < path.get(path.size() - 1)|| uset.contains(nums[i])) continue;
+//            uset.add(nums[i]);
             path.add(nums[i]);
             backtracking(nums, i + 1);
             path.removeLast();

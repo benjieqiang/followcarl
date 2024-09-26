@@ -89,7 +89,7 @@ public class L2_216_combinationSum3 {
             res.add(new ArrayList<>(inner));
             return;
         }
-        for (int i = index; i <= 9; i++) {
+        for (int i = index; i <= 9 - (k - path.size()) + 1; i++) {
             inner.add(i);
             backtracking(k, n - i, i + 1);
             inner.removeLast();

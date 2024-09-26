@@ -42,11 +42,35 @@ public class L11_46_permute {
             path.removeLast();
         }
     }
-
     public List<List<Integer>> permute(int[] nums) {
-        used = new boolean[nums.length];
+        if (nums == null || nums.length == 0) return res;
         backtracking(nums);
         return res;
+    }
+
+    class Solution2 {
+
+        List<List<Integer>> res = new LinkedList<>();
+        List<Integer> path = new LinkedList<>();
+
+        public List<List<Integer>> permute(int[] nums) {
+            if (nums == null || nums.length == 0) return res;
+            backtracking(nums);
+            return res;
+        }
+
+        private void backtracking(int[] nums) {
+            if (path.size()  == nums.length) {
+                res.add(new LinkedList<>(path));
+                return;
+            }
+            for (int i = 0; i < nums.length; i++) {
+                if (path.contains(nums[i])) continue;
+                path.add(nums[i]);
+                backtracking(nums);
+                path.remove(path.size() - 1);
+            }
+        }
     }
 
     @Test

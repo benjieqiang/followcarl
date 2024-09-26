@@ -44,7 +44,7 @@ public class L5_40_combinationSum2 {
             return;
         }
         for (int i = startIndex; i < nums.length; i++) {
-            // used[i - 1] == true，说明同一树枝candidates[i - 1]使用过
+            // used[i - 1] == true，说明同一树枝（从上到下不同层）candidates[i - 1]使用过
             // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
             if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false) continue;
             sum += nums[i];
@@ -66,17 +66,17 @@ public class L5_40_combinationSum2 {
 
     /**
      * @author benjieqiang
-     * @description 首先写出一份不去重的代码, 发现树枝去重已经使用index去控制了，即index + 1；
+     * @description
+     * 首先写出一份不去重的代码, 发现树枝去重已经使用index去控制了，即index + 1；
      * 树层去重如何去控制呢?
      * 1. 树层去重先排序;
      * 2. 使用used数组控制同一层不再访问;
-     * 前面我们提到：要去重的是“同一树层上的使用过”，如何判断同一树层上元素（相同的元素）是否使用过了呢。
+     * 要去重的是“同一树层上的使用过”，如何判断同一树层上元素（相同的元素）是否使用过了呢。
      * <p>
-     * 如果candidates[i] == candidates[i - 1] 并且 used[i - 1] == false，就说明：前一个树枝，使用了candidates[i - 1]，
+     * 如果i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false，就说明：前一个树枝，使用了candidates[i - 1]，
      * 也就是说同一树层使用过candidates[i - 1]。
      * 比如1，1，2
-     * 1. 先取1，之后candidates[0] = 1, used[0] = 1，紧接着回溯到第二层，此时i从0+1的位置开始（树枝去重用index控制）。。。
-     * 之后会把used[0]变成false
+     * 1. 先取1，之后candidates[0] = 1, used[0] = 1，紧接着回溯到第二层，此时i从0+1的位置开始（树枝去重用index控制)，之后会把used[0]变成false
      * 2. 第二个取1的时候，因为上一个used[0]=false 且 当前元素和上一个元素相同，则说明是重复元素，跳过；
      * @date 2023/8/31 11:47 AM
      */
@@ -118,6 +118,7 @@ public class L5_40_combinationSum2 {
                 if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false) continue;
                 path.add(candidates[i]);
                 used[i] = true;
+                // 树枝去重使用i+1，让下一层从i的下一个元素开始拿值。也就是不重复拿
                 backtracking(candidates, target - candidates[i], i + 1);
                 path.removeLast();
                 used[i] = false;

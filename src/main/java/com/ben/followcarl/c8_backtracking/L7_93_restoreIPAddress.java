@@ -3,6 +3,7 @@ package com.ben.followcarl.c8_backtracking;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -55,7 +56,9 @@ public class L7_93_restoreIPAddress {
      * @author benjieqiang
      * @date 2023/9/2 3:05 PM
      */
+    // s：字符串，index：递归下一层for循环起始位置；num：小数点的数量，3表示分割成了4段；
     private void backtracking(String s, int index, int num) {
+        if (num >= 4) return;
         // 逗点数量为3时，说明是四段；判断第四段⼦字符串是否合法，如果合法就放进res中
         if (num == 3 && isValid(s, index, s.length() - 1)) {
             res.add(s);
@@ -63,8 +66,8 @@ public class L7_93_restoreIPAddress {
         }
 
         for (int i = index; i < s.length(); i++) {
-            if (!isValid(s, index, i)) break;
-            s = s.substring(0, i + 1) + "." + s.substring(i + 1); // 每次过来给i指向的字符后面加了一个.
+            if (!isValid(s, index, i)) break; // 如果不合法直接终止此次递归流程；
+            s = s.substring(0, i + 1) + "." + s.substring(i + 1); // 每次过来给i指向的字符后面加个点.
             backtracking(s, i + 2, num + 1); //所以index要从i+2位置开始
             s = s.substring(0, i + 1) + s.substring(i + 2); // 去掉.,因为.在i+1的位置，所以拼接字符串从i+2开始；
         }
@@ -84,13 +87,13 @@ public class L7_93_restoreIPAddress {
      */
     private boolean isValid(String s, int left, int right) {
         if (left > right) return false;
-        if (s.charAt(left) == '0' && left != right) return false; // s = "01"这种
+        if (s.charAt(left) == '0' && left != right) return false; // 子串起始是0，且子串的长度大于 1，比如s = "01"这种
 
         int num = 0;
         for (int i = left; i <= right; i++) {
             char ch = s.charAt(i);
             if (ch < '0' || ch > '9') return false; // 段中遇到⾮数字字符不合法
-            num = num * 10 + (ch - '0');
+            num = num * 10 + (ch - '0'); // 比如当我们处理子串123 时，首先 num 为 1，然后变为 12，最后变为 123
             if (num > 255) return false; // 段中如果⼤于255了不合法
         }
         return true;
@@ -106,6 +109,80 @@ public class L7_93_restoreIPAddress {
     public void testValidStr() {
         String str = "124";
         System.out.println(isValid(str, 0, str.length() - 1));
+    }
+
+    class Solution0925 {
+        List<String> res = new LinkedList<>();
+
+        public List<String> restoreIpAddresses(String s) {
+            if (s == null || s.length() == 0) return res;
+            backtracking(s, 0, 0); // index, dotNum;
+            return res;
+        }
+
+        private void backtracking(String s, int index, int num) {
+            if (num == 3 && isValid(s, index, s.length() - 1)) {
+                res.add(s);
+                return;
+            }
+            for (int i = index; i < s.length(); i++) {
+                if (!isValid(s, index, i)) break;
+                s = s.substring(0, i + 1) + "." + s.substring(i + 1);
+                backtracking(s, i + 2, num + 1);
+                s = s.substring(0, i + 1) + s.substring(i + 2);
+            }
+        }
+
+        private boolean isValid(String s, int left, int right) {
+            if (left > right) return false;
+            if (s.charAt(left) == '0' && left != right) return false;
+            int num = 0;
+            for (int i = left; i <= right; i++) {
+                char ch = s.charAt(i);
+                if (ch < '0' || ch > '9') return false;
+                num = num * 10 + ch - '0';
+                if (num > 255) return false;
+            }
+            return true;
+        }
+    }
+
+    class Solution {
+        List<String> res = new LinkedList<>();
+
+        public List<String> restoreIpAddresses(String s) {
+            if (s == null || s.length() == 0 || s.length() > 12) return res;
+            backtracking(s, 0, 0); // s, index, dotNum;
+            return res;
+        }
+
+        private void backtracking(String s, int index, int num) {
+            if (num >= 4) return;
+            if (num == 3 && isValid(s, index, s.length() - 1)) {
+                res.add(s);
+                return;
+            }
+            for (int i = index; i < s.length(); i++) {
+                if (!isValid(s, index, i)) break;
+                s = s.substring(0, i + 1) + "." + s.substring(i + 1);
+                backtracking(s, i + 2, num + 1); // 把s分成0-i+1， 点，i+1到末尾三段。在递归的下一层再进行判断。
+                s = s.substring(0, i + 1) + s.substring(i + 2);
+            }
+        }
+
+        private boolean isValid(String s, int left, int right) {
+            if (left > right) return false;
+            if (s.charAt(left) == '0' && left != right) return false;
+            int num = 0;
+            for (int i = left; i <= right; i++) {
+                char ch = s.charAt(i);
+                if (ch < '0' || ch > '9') return false;
+                num = num * 10 + ch - '0';
+                if (num > 255) return false;
+            }
+
+            return true;
+        }
     }
 
     @Test
