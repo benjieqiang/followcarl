@@ -19,7 +19,8 @@ public class L16_738_monotoneIncreasingDigits {
      * @return int
      * @description
      *  暴力解法:
-     *     时间复杂度：O(n × m) m为n的数字长度
+     *  从后往前遍历，判断n是否是递增的，是则返回当前值。超时代码
+     *     时间复杂度：O(n × m) m是n的数字长度
      *     空间复杂度：O(1)
      * @author benjieqiang
      * @date 2023/8/30 12:18 PM
@@ -31,7 +32,6 @@ public class L16_738_monotoneIncreasingDigits {
         return 0;
     }
 
-    // todo: 判断一个数字的各位上是否是递增
     private boolean check(int num) {
         int max = 10;
         while (num > 0) {
@@ -46,10 +46,11 @@ public class L16_738_monotoneIncreasingDigits {
     public int monotoneIncreasingDigits(int n) {
         String s = String.valueOf(n);
         char[] chars = s.toCharArray();
-        int flag = s.length(); //flag是害怕出现1000这种情况，如果每次更新右边的数，那么会得到900，不是最大的数，所以flag用来记录9从哪里开始
-        for (int i = s.length() - 1; i > 0; i--) { // i > 0是因为有i-1的情况所以不能=0，否则会越界；
-            if (chars[i - 1] > chars[i]) { // 当前元素小于上一个元素
-                // 更新flag
+        int flag = s.length();  // flag用来标记赋值9从哪里开始
+        //flag是害怕出现1000这种情况，如果每次更新右边的数，那么会得到900，不是最大的数，所以flag用来记录9从哪里开始
+        for (int i = s.length() - 1; i > 0; i--) {
+            if (chars[i - 1] > chars[i]) { // 当前元素大于上一个元素
+                // flag从上一个元素开始；
                 flag = i;
                 chars[i - 1]--;
             }

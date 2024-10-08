@@ -24,60 +24,43 @@ import java.util.List;
  * 解释: 区间 [1,4] 和 [4,5] 可被视为重叠区间。
  * <p>
  * 思路:
- * 1. 首先都是一个二维数组求区间的问题; 都需要先根据左边界或右边界进行排序;
- * 2. 本题当前左边界和上一个区间右边界相等也是重合的
- * 使用一个数组来记录第一个区间的左右区间,
- * 如果不重合就指向下一个区间，加入结果集;
- * 如果重合就取最大的右边界,
- * 3. 重合情况: intervals[i][0] <= intervals[i - 1][1]
- * 左区间已经排好序了,所以取最小的intervals[i - 1][0];
- * 找到最大的右区间 Math.max(intervals[i - 1][1], intervals[i][1])
- * 不重合情况: intervals[i][0] > intervals[i - 1][1] 把当前区间记录到一个list中;
- * <p>
- * 时间复杂度 ： O(NlogN) 排序需要O(NlogN)
- * 空间复杂度 ： O(logN)  java 的内置排序是快速排序 需要 O(logN)空间
+ * 1. 二维数组求区间的问题: 先根据左边界或右边界进行排序;
+ * 2. 使用List<int[]> res接收不重合的区间；
+ * 3. 从0开始遍历整个二维数组，比较res最后一个元素的右区间和当前元素的左区间
+ * 3.1 重合（<=），则更新右区间为最大右区间；
+ * 3.2 不重合，加入res；
  * @Version: 1.0
  */
 public class L15_56_merge {
-    //废弃, 不好理解
 
     public int[][] merge(int[][] intervals) {
-        List<int[]> res = new ArrayList<>();
-        // 先把数组按照第一个元素大小升序排列；
+        if (intervals == null || intervals.length == 0) return intervals;
+        // 比如 a[0] - b[0] 的结果可能会超出 int 的范围（大于 2^31 - 1 或小于 -2^31），导致溢出，而 Integer.compare() 则能安全处理这些情况。
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-        // 记录起始位置的左右边界，先加入第一个区间的左右边界；
-        int[] cur = intervals[0]; // cur[0]是左边界, cur[1]是右边界;
-        for (int i = 1; i < intervals.length; i++) {
-            // 发现重叠: 当前左区间 <= 上一个区间右边界;
-            if (intervals[i][0] <= cur[1]) {
-                // 更新重叠区间的右边界是最大值;
-                cur[1] = Math.max(intervals[i][1], cur[1]);
-            } else {
-                // 不重叠, 当前区间直接进入结果集, cur指向下一个区间;
-                res.add(cur);
-                cur = intervals[i];
-            }
-        }
-        res.add(cur);
-        return res.toArray(new int[res.size()][2]);
-    }
-
-    // 容易理解, 每次给集合里加的是最小左区间; 比较的是集合最后一个元素的右区间和当前元素的左区间
-    public int[][] merge2(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+//        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
         List<int[]> res = new ArrayList<>();
         for (int i = 0; i < intervals.length; i++) {
             int left = intervals[i][0];
             int right = intervals[i][1];
-            if (res.size() == 0 || left > res.get(res.size() - 1)[1]) { //不重叠
+            if (res.size() > 0 && left <= res.get(res.size() - 1)[1]) {
+                res.get(res.size() - 1)[1] = Math.max(right, res.get(res.size() - 1)[1]);
+            } else {
                 res.add(intervals[i]);
-            } else { //重叠, 更新最大右区间;
-                res.get(res.size() - 1)[1] = Math.max(intervals[i][1], res.get(res.size() - 1)[1]);
             }
         }
         return res.toArray(new int[res.size()][2]);
     }
 
+    // 安全写法
+//        Arrays.sort(intervals, (a, b) -> {
+//            if (a[0] < b[0]) {
+//                return -1;  // a[0] 小于 b[0]，返回负数，表示 a 在 b 前面
+//            } else if (a[0] > b[0]) {
+//                return 1;   // a[0] 大于 b[0]，返回正数，表示 a 在 b 后面
+//            } else {
+//                return 0;   // a[0] 等于 b[0]，返回 0，表示它们相等
+//            }
+//        });
     @Test
     public void testMerge() {
         int[][] res = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};

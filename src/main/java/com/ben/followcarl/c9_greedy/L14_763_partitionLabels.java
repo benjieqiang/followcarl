@@ -30,7 +30,7 @@ import java.util.List;
  *
  * 思路:
  * 1. 利用hash来统计每一个字符最后出现的位置, 最远下标就是分割点; key是字符-'a', 键是最远下标;
- * 2. 遍历字符串, 遍历到最远下标就是分割点;
+ * 2. 遍历字符串, 不断更新最远下标(right和hash[s.charAt(i)-  'a']取最大值)，当前下标和最远下标相等时是分割点；
  *
  * 时间复杂度：O(n)
  * 空间复杂度：O(1)，使用的hash数组是固定大小
@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class L14_763_partitionLabels {
     public List<Integer> partitionLabels(String s) {
-        int[] hash = new int[27]; // 26个字母，i为字符，hash[i]为字符出现的最后位置
+        int[] hash = new int[26]; // 26个字母，i为字符，hash[i]为字符出现的最后位置
         for (int i = 0; i < s.length(); i++) { // 统计每一个字符最后出现的位置
             hash[s.charAt(i) - 'a'] = i;
         }
@@ -59,7 +59,7 @@ public class L14_763_partitionLabels {
 
     @Test
     public void testString() {
-        String s = "ababcbacadefegdehijhklij";
+        String s = "jbabcbacadefegdehijhkliz";
         System.out.println(partitionLabels(s));
     }
 }

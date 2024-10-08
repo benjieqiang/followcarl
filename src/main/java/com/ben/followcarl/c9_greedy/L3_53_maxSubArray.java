@@ -23,7 +23,7 @@ public class L3_53_maxSubArray {
      * @param nums:
      * @return int
      * @description  暴力解法:
-     *  固定一个位置, 从下一个位置一直累加求各元素和, 如果大于结果集,重新赋值给res;
+     *  固定一个位置, 从下一个位置一直累加求各元素和, 如果大于结果集, 重新赋值给res;
      *  O n2的算法；
      * @author benjieqiang
      * @date 2023/6/1 9:30 AM
@@ -56,7 +56,7 @@ public class L3_53_maxSubArray {
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i]; // 求连续和
             res = Math.max(res, sum); //记录最大的和；
-            if (sum < 0) sum = 0; // 当连续和是负数，我们选下一个元素作为起点，也就是说把当前的sun清0
+            if (sum < 0) sum = 0; // 当连续和是负数，我们选下一个元素作为起点，也就是说把当前的sum清0
         }
         return res;
     }

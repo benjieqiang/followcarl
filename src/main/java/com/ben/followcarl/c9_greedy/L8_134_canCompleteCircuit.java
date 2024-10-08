@@ -31,6 +31,9 @@ public class L8_134_canCompleteCircuit {
         // 暴力遍历：把每个加油站为起点，模拟一圈，中途油没断且最后还有油则返回那个起点；
         for (int i = 0; i < cost.length; i++) {
             int res = gas[i] - cost[i]; // 记录剩余油量
+            // 假设 cost 数组的长度为 5，表示有 5 个加油站，索引范围是 0 到 4：
+            //如果 index 当前为 4（最后一个加油站），执行 index + 1 后，index 会变成 5。
+            //然后，5 % 5 的结果是 0，这样 index 就循环回到了第一个加油站（索引为 0）。
             int index = (i + 1) % cost.length;
             while (res > 0 && index != i) { // 模拟以i为起点行驶一圈
                 res += gas[index] - cost[index];
@@ -50,14 +53,14 @@ public class L8_134_canCompleteCircuit {
      *
      *  1. 统计每个站点的剩余油量之和一定是大于等于0的,这样才能跑完一圈;
      *  2. 如果小于0,说明i以前无论哪个位置出发都跑不过来;
-     *  3. 此时需要更新i的下一个站点i+1作为新的出发点 并重新统计剩余油量;
+     *  3. 此时更新i的下一个站点i+1作为新的出发点，并重新统计剩余油量;
      *  4. 最终发现res还是小于0, 说明跑不完一圈,所以返回-1,否则返回start;
      * @author benjieqiang
      * @date 2023/8/28 3:23 PM
      */
     public int canCompleteCircuit2(int[] gas, int[] cost) {
-        int res = 0; // 油箱最终的油量
-        int curSum = 0; // 统计每个站点的剩余油量
+        int res = 0; // 油箱总剩余油量
+        int curSum = 0; // 每个站点剩余油量
         int start = 0; // 起始位置
         for (int i = 0; i < gas.length; ++i){
             curSum += gas[i] - cost[i];
@@ -68,12 +71,13 @@ public class L8_134_canCompleteCircuit {
                 curSum = 0;
             }
         }
+        // 总剩余油量如果小于0，则跑不完一圈
         return res < 0 ? -1: start;
     }
     @Test
     public void testCanCompleteCircuit(){
         int[] gas = {1,2,3,4,5};
         int[] cost = {3,4,5,1,2};
-        System.out.println(canCompleteCircuit(gas, cost));
+        System.out.println(canCompleteCircuit2(gas, cost));
     }
 }

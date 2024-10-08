@@ -46,9 +46,8 @@ public class L7_1005_largestSumAfterKNegations {
      * 时间复杂度: O(nlogn)
      * 空间复杂度: O(1)
      *
-     *              如果不知道如何写装箱的排序方法, 那么就先排序, 从小到大先把小数给转成正数, 把里面的负数先转成正数;
-     *              如果剩下的k为偶数就不需要翻转, 如果为奇数, 先排序最后翻转最小值;
-     *              求数组和;
+     * 排序后遍历把所有负数转为正数，如果k剩余且为奇数，先排序再翻转最小值;
+     * 求数组和;
      * @author benjieqiang
      * @date 2023/8/28 3:02 PM
      */
@@ -76,5 +75,29 @@ public class L7_1005_largestSumAfterKNegations {
         int[] nums = {2,-3,-1,5,-4};
         int k = 2;
         System.out.println(largestSumAfterKNegations(nums, k));
+    }
+
+    @Test
+    public void testSortByAbs() {
+        int[] nums = {-3, 1, -2, 5, -4};
+
+        // 错误的，必须是Integer类型才能排序；
+//        Arrays.sort(nums, (a, b) -> Integer.compare(Math.abs(a), Math.abs(b)));
+
+
+        // 使用冒泡排序按绝对值排序
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = 0; j < nums.length - 1 - i; j++) {
+                if (Math.abs(nums[j]) > Math.abs(nums[j + 1])) {
+                    // 交换元素
+                    int temp = nums[j];
+                    nums[j] = nums[j + 1];
+                    nums[j + 1] = temp;
+                }
+            }
+        }
+
+        // 打印排序后的数组
+        System.out.println(Arrays.toString(nums));
     }
 }

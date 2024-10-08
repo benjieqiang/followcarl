@@ -9,12 +9,16 @@ import org.junit.Test;
  * @Description: 最大子序列之和 连续的.
  * 贪心算法见L3_53_maxSubArray
  * dp[i] 以nums[i]结尾的最大子序列和；
+ * dp[i]只有两个方向可以推出来:
+ * dp[i - 1] + nums[i]，即：nums[i]加入当前连续子序列和
+ * nums[i]，即：从头开始计算当前连续子序列和
  * 1. dp[i] = Math.max(dp[i-1] + nums[i], nums[i])
  * dp[i-1] + nums[i]: 延续这前面的和加上nums[i]的值
  * nums[i]: 从i这里开始计算；
  * 2. 初始化： dp[0] = nums[0];
  * 3. 遍历顺序,从1到nums.length-1,dp数组最大取到nums.length-1, 而且dp[nums.length - 1]一定存放的是最大值吗?
  *   不一定, nums = [-2,1,-3,4,-1,2,1,-5,4],连续子数组 [4,-1,2,1] 的和最大，为 6 所以要记录最大的dp值;
+ *   所以使用res记录每次得到的最大dp[i]
  * @Version: 1.0
  */
 public class L34_53_maxSubArray {

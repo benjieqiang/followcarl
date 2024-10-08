@@ -30,7 +30,7 @@ public class L23_121_maxProfit {
     }
 
     // 贪心算法：
-    // 局部最优：从左到右开始遍历数组, 最后的结果集是最大的那个res; 找到最小价格那天买，最大价格那天卖出, 最大利润就是: max-low放入res中;
+    // 局部最优：从左到右开始遍历数组: 找到最小价格那天买，最大价格那天卖出, 最大利润就是: max-low放入res中;
     public int maxProfit(int[] prices) {
         if (prices == null || prices.length == 0) return 0;
         int res = 0;

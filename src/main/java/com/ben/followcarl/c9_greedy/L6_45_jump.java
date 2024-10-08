@@ -24,7 +24,7 @@ import org.junit.Test;
  * @Version: 1.0
  */
 public class L6_45_jump {
-    // 不关心跳的细节，只看覆盖范围(nums[i] + i)能否到达终点。
+    // 当前可移动距离尽可能多走，如果还没到终点，步数再加一。不关心跳的细节，只看覆盖范围(nums[i] + i)能否到达终点。
     public int jump(int[] nums) {
         if (nums.length == 1) return 0; // 长度为1，不用跳，已经到了最后一个元素了, 原地踏步
         int res = 0;
@@ -34,7 +34,7 @@ public class L6_45_jump {
             nextCover = Math.max(nums[i] + i, nextCover);// 收集下一步最大的覆盖范围;
             if (i == curCover) { // 当i移动到当前的覆盖范围，发现还没到终点，则需要再走一步。
                 res++; // 再走一步
-                curCover = nextCover; //下一步的覆盖范围赋值给当前的覆盖范围;
+                curCover = nextCover; //当前的覆盖范围更新为此时i的覆盖范围；
                 if (curCover >= nums.length - 1) break;
             }
         }

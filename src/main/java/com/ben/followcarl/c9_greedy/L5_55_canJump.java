@@ -16,6 +16,7 @@ public class L5_55_canJump {
         // 看跳的范围，每次更新一个数，计算最大的跳跃步数，
         int cover = 0;
         for (int i = 0; i <= cover; i++) { // i只能在cover的范围内活动;
+            // 由于在跳跃中，你可能在前面的索引处已经有更大的跳跃范围，因此需要用 Math.max 来确保 cover 始终反映你能达到的最远位置。
             cover = Math.max(cover, nums[i] + i); // nums[i] + i: i代表当前位置，nums[i]表示第i的位置的最大步数
             if (cover >= nums.length - 1) return true;
         }

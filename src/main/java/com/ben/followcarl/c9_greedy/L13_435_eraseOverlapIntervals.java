@@ -44,11 +44,12 @@ public class L13_435_eraseOverlapIntervals {
      * @date 2023/8/29 9:47 PM
      */
     public int eraseOverlapIntervals2(int[][] intervals) {
+        // 左边界排序
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
 
-        int res = 0;
+        int res = 0; // res记录重叠区间数；
         for (int i = 1; i < intervals.length; i++) {
-            // 只要重叠就要记录最小右边界;
+            // 重叠则更新最小右边界;
             if (intervals[i][0] < intervals[i - 1][1]) {
                 res++;
                 intervals[i][1] = Math.min(intervals[i][1], intervals[i - 1][1]);
