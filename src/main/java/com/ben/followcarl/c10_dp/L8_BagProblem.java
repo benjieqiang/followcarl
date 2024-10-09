@@ -17,7 +17,8 @@ public class L8_BagProblem {
      * @param value:   物品价值
      * @param bagSize: 背包的大小
      * @return void
-     * @description 01背包，利用二维数组实现
+     * @description
+     * 01背包，利用二维数组实现
      * 1. dp[i][j]的含义：表示最大价值，是指从0～i的物品中任取物品放入容量为j的背包，得到的最大价值
      * i是从0～weight.length - 1的物品中取，所以dp有weight.length（物品长度）行；
      * j是放入0～bagSize的背包，所以dp有bagSize+1列；
@@ -47,7 +48,8 @@ public class L8_BagProblem {
         // 比如，最后的结果要想在最右下角进行收获，那意味着得有goods-1行，列需要bagSize+1
         // 不然会越界
 
-        // 只有j大于等于物品0的背包重量,才能放下物品0, 所以从weight[0]开始, 得到的最大价值就是物品0的价值value[0]
+        // 首行初始化：只有j大于等于物品0的背包重量,才能放下物品0, 所以从weight[0]开始, 得到的最大价值就是物品0的价值value[0]
+        // 首列不需要，因为定义时已经初始化成0了
         for (int j = weight[0]; j <= bagSize; j++) {
             dp[0][j] = value[0];
         }
@@ -67,28 +69,6 @@ public class L8_BagProblem {
             System.out.println(Arrays.toString(res));
         }
         return dp[goods - 1][bagSize];
-    }
-
-    public int test2WeiBagProblem2(int[] weight, int[] value, int bagSize) {
-        int[][] dp = new int[weight.length][bagSize + 1];
-
-        for (int j = weight[0]; j <= bagSize; j++) {
-            dp[0][j] = value[0];
-        }
-
-        // i [1,weight.length-1]
-        // j [1,bagSize]
-        for (int i = 1; i < weight.length; i++) {
-            for (int j = 1; j <= bagSize; j++) {
-                if (j < weight[i]) {
-                    dp[i][j] = dp[i - 1][j];
-                } else {
-                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);
-                }
-            }
-        }
-
-        return dp[weight.length - 1][bagSize];
     }
 
     @Test
@@ -157,11 +137,11 @@ public class L8_BagProblem {
         int[] dp = new int[bagSize + 1];
         dp[0] = 0;
         // 数组初始化完dp=[0,0,0,0,0]
-        // 当j = 4时，dp[4]表示放入4号背包所能装的最大价值；
+        // 当j = 4时，dp[4]表示容量为4的背包所能装的最大价值；
         // 从0开始遍历物品，dp[4] = max(dp[4],dp[4-weight[0]] + value[0]) = max(dp[4],dp[3]+15) = 15
         // 物品1，dp[4] = max(dp[4], dp[1]+20) = 20
         // 物品2，dp[4] = max(dp[4], dp[0]+30) = 30
-        // 先背包后物品, 4号背包最大价值是30,即放入物品2，但是实际上背包4的最大价值是35，也就是放入物品0和物品1
+        // 先背包后物品, 4号背包最大价值是30,即放入物品2，但是实际上背包4的最大价值是35，也就是放入物品0和物品1（重量分别是1和3）
         // j = 3. 物品0:dp[3] = max(dp[3], dp[3-weight[0]] + value[0]) = max(0,dp[2]+15) = 15
         // 物品1: dp[3] = max(dp[3], dp[3-weight[1]] + value[1]) = max(15, 20) = 20
         // 物品2: 因为j放不下weight[2]，所以dp[3]还是20
@@ -188,7 +168,9 @@ public class L8_BagProblem {
         int[] weight = {1, 3, 4};
         int[] value = {15, 20, 30};
         int bagSize = 4;
+        // 先物品后背包；[0, 15, 15, 20, 35]
         test1weiBagProblem(weight, value, bagSize);
+        // 先背包，后物品[0, 15, 15, 20, 30]
         test1weiBagProblem2(weight, value, bagSize);
     }
 }

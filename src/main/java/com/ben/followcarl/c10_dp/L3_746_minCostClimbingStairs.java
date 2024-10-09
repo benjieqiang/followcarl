@@ -7,7 +7,8 @@ import java.util.Arrays;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-10  20:57
- * @Description: 1. 站在顶楼应该是比数组的长度大于1，
+ * @Description:
+ * 1. 站在顶楼应该是比数组的长度大于1，
  * 2. cost[i] 是从楼梯第 i 个台阶向上爬需要支付的费用。站在0或1下标台阶不花钱，只有跳了一层或两层就会花钱。
  *                               ____
  *                               │ 顶 │
@@ -45,7 +46,7 @@ public class L3_746_minCostClimbingStairs {
      */
     public int minCostClimbingStairs2(int[] cost) {
         int dp0 = 0;
-        int dp1 = 1;
+        int dp1 = 0;
         for (int i = 2; i <= cost.length; i++) {
             int sum = Math.min(dp0 + cost[i - 2], dp1 + cost[i - 1]);
             dp0 = dp1;
@@ -58,5 +59,6 @@ public class L3_746_minCostClimbingStairs {
     public void testClimb() {
         int[] cost = {10,15,20};
         System.out.println(minCostClimbingStairs(cost));
+        System.out.println(minCostClimbingStairs2(cost));
     }
 }

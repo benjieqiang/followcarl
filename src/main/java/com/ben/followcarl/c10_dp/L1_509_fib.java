@@ -17,7 +17,7 @@ import java.util.Arrays;
  */
 public class L1_509_fib {
     public int fib(int n) {
-        if (n == 0 || n == 1) return n;
+        if (n <= 1) return n;
         // 1. 确定dp[i]的含义：第i个斐波那契数的值；
         int[] dp = new int[n + 1]; // 举例: n为2, dp[2]表示第2个fib, 如果数组长度为2, 取不到dp[2].所以加1
         // 2. 递推公式 dp[i] = dp[i - 1] + dp[i - 2];
@@ -41,7 +41,7 @@ public class L1_509_fib {
      * @date 2023/8/20 10:03 AM
      */
     int fib3(int n) {
-        if (n == 0 || n == 1) return n;
+        if (n <= 1) return n;
         int dp1 = 0;
         int dp2 = 1;
         for (int i = 2; i <= n; i++) {

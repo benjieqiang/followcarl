@@ -52,7 +52,7 @@ public class L7_96_numTrees {
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= i; j++) { //j从0遍历到i;能取到i;
                 // 一共有i个元素, 去除根结点一个元素, 剩下第j个元素左子树有j - 1个元素，右子树有i - j个元素
-                // (j - 1) + j + (i - j) = i
+                // (j - 1) + 1 + (i - j) = i
                 dp[i] += dp[j - 1] * dp[i - j];
             }
         }

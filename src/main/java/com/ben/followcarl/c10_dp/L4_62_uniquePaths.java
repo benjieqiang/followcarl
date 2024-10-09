@@ -22,6 +22,7 @@ import java.util.Arrays;
  */
 public class L4_62_uniquePaths {
     public int uniquePaths(int m, int n) {
+        if (m == n && n == 1) return m;
         // 1. dp[i][j]的含义，代表在第i行j列的位置有这么些走法；
         // 2. 递推公式： 取决于上面和左面走了多少种走法，加一起就是当前元素的走法 dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
         int[][] dp = new int[m][n];
@@ -37,21 +38,9 @@ public class L4_62_uniquePaths {
         return dp[m - 1][n - 1];
     }
 
-    public int uniquePaths2(int m, int n) {
-        int[][] dp = new int[m][n];
-        for (int i = 0; i < m; i++) dp[i][0] = 1; // 首列
-        for (int j = 0; j < n; j++) dp[0][j] = 1; // 首行
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
-            }
-        }
-        return dp[m - 1][n - 1];
-    }
-
     @Test
     public void testUniquePaths() {
         int m = 3, n = 7;
-        System.out.println(uniquePaths2(m, n));
+        System.out.println(uniquePaths(m, n));
     }
 }
