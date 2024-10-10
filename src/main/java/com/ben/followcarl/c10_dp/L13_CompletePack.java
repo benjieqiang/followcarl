@@ -24,7 +24,17 @@ import java.util.Arrays;
  * 关于遍历顺序确定是排列还是组合问题:
  * 1. 组合: 先遍历物品后遍历背包; 比如物品0, 物品1加入背包的顺序只能是{物品0, 物品1}, 不可能出现先物品1后物品0的情况;
  * 2. 排列: 先背包后物品; 背包固定了, 物品成了变量,  那么会出现{物品0,物品1}或{物品1, 物品0}的情况.
- * 可以画一个表取推算一下;
+ *
+ * 背包问题：
+ * 1. 看求最大价值还是多少种方法？
+ * 问多少种方法：装满背包有几种方法的递推公式: dp[j] = dp[j] + dp[j - nums[i]]
+ * 问装满时的最大价值：dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
+ * 2. 重复取？重复就是完全背包；不重复就是01背包
+ *   2.1 完全背包：都是正序，组合先物品后背包，背包遍历从weight[1]开始，排列先背包后物品，只有背包大于等于物品重量才能加入；
+ *      1. 组合: 先物品后遍历背包; 比如物品0, 物品1加入背包的顺序只能是{物品0, 物品1}, 不可能出现先物品1后物品0的情况;
+ *      2. 排列: 先背包后物品; 背包固定了, 物品成了变量,  那么会出现{物品0,物品1}或{物品1, 物品0}的情况.
+ *   2.2 01背包：一维，正序物品倒序背包；
+ *
  * @Version: 1.0
  */
 public class L13_CompletePack {
@@ -34,10 +44,10 @@ public class L13_CompletePack {
     public void testCompletePack(){
         int[] weight = {1, 3, 4};
         int[] value = {15, 20, 30};
-        int bagWeight = 4;
-        int[] dp = new int[bagWeight + 1];
+        int bagSize = 4;
+        int[] dp = new int[bagSize + 1];
         for (int i = 0; i < weight.length; i++){ // 遍历物品
-            for (int j = weight[i]; j <= bagWeight; j++){ // 遍历背包容量
+            for (int j = weight[i]; j <= bagSize; j++){ // 遍历背包容量
                 dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
             }
         }
@@ -49,9 +59,9 @@ public class L13_CompletePack {
     public void testCompletePackAnotherWay(){
         int[] weight = {1, 3, 4};
         int[] value = {15, 20, 30};
-        int bagWeight = 4;
-        int[] dp = new int[bagWeight + 1];
-        for (int j = 0; j <= bagWeight; j++){ // 遍历背包容量
+        int bagSize = 4;
+        int[] dp = new int[bagSize + 1];
+        for (int j = 0; j <= bagSize; j++){ // 遍历背包容量
             for (int i = 0; i < weight.length; i++){ // 遍历物品
                 if (j >= weight[i]){ // 背包容量为j时，能装下物品i的重量weight[i];
                     dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
