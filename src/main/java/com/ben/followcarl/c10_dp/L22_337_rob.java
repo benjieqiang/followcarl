@@ -8,9 +8,10 @@ import java.util.HashMap;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-16  20:58
- * @Description: 小偷开始偷二叉树了，相邻节点不能偷。树形dp基础题，后续遍历
+ * @Description:
+ * 小偷开始偷二叉树了，相邻节点不能偷。树形dp基础题，后序遍历因为通过递归函数的返回值来做下一步计算。
  * 1. int[] robTree(TreeNode root)
- * dp数组（dp table）以及下标的含义：
+ * dp数组以及下标的含义：
  * 下标为0记录不偷该节点所得到的的最大金钱，
  * 下标为1记录偷该节点所得到的的最大金钱。
  * 2. 在遍历的过程中，如果遇到空节点的话，很明显，无论偷还是不偷都是0，所以就返回
@@ -58,7 +59,7 @@ public class L22_337_rob {
         int[] right = robTree(root.right); // 右
 
         // 中
-        int val1 = Math.max(left[0], left[1]) + Math.max(right[0], right[1]); //不偷当前节点, 偷左右孩子, 左右孩子偷不偷取最大;
+        int val1 = Math.max(left[0], left[1]) + Math.max(right[0], right[1]); //不偷当前节点, 偷左右孩子, 偷或者不偷中取最大（）;
         int val2 = root.val + left[0] + right[0];// 偷当前节点, 左右孩子不能偷;
         return new int[]{val1, val2};
     }
@@ -96,7 +97,7 @@ public class L22_337_rob {
         if (root == null) return 0;
         if (root.left == null && root.right == null) return root.val;
         if (map.containsKey(root)) return map.get(root);
-        // 偷root
+        // 偷root，左右孩子都不能偷，但是可以偷下下一层的左右孩子。
         int val1 = root.val;
         if (root.left != null) val1 += rob3(root.left.left) + rob3(root.left.right); //不偷root.left;
         if (root.right != null) val1 += rob3(root.right.left) + rob3(root.right.right); //不偷root.right;

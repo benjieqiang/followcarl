@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-17  16:38
- * @Description: 股票只能买卖一次
+ * @Description: 股票只能买卖一次，最大利润
  * @Version: 1.0
  */
 public class L23_121_maxProfit {
@@ -76,14 +76,39 @@ public class L23_121_maxProfit {
         dp[0][1] = 0;
         for (int i = 1; i < length; i++) {
             dp[i][0] = Math.max(dp[i - 1][0], -prices[i]); // 前i-1天持有维持到第i天 + 第i天才买入;
-            dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]); // 前i-1天不持有持续到第i天 + 前i-1天一直持有直到第i天卖出
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]); // 前i-1天不持有持续到第i天 + 前i-1天一直持有直到第i天卖出
         }
         return dp[length - 1][1];
     }
+    /**
+     * @param prices:
+     * @return int
+     * @description 优化为滚动数组
+     * @author benjieqiang
+     * @date 2024/10/11 11:40 AM
+     */
+    public int maxProfit3(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+
+        int length = prices.length;
+        // 初始化持有和不持有股票的最大收益
+        int hold = -prices[0];  // 第一天持有股票，收益为负数，即花费了prices[0]的钱
+        int notHold = 0;        // 第一天不持有股票，收益为0
+
+        for (int i = 1; i < length; i++) {
+            // 更新第i天的持有股票和不持有股票的最大收益
+            hold = Math.max(hold, -prices[i]);  // 比较：前一天的持有收益 vs 今天买入后的持有收益
+            notHold = Math.max(notHold, hold + prices[i]);  // 比较：前一天不持有收益 vs 今天卖出后的收益
+        }
+
+        return notHold;  // 最终返回不持有股票的最大收益
+    }
+
     @Test
     public void testMaxProfit() {
         int[] prices = {7,1,5,3,6,4};
         System.out.println(maxProfit0(prices));
         System.out.println(maxProfit2(prices));
+        System.out.println(maxProfit3(prices));
     }
 }
