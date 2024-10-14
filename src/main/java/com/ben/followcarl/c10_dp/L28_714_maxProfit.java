@@ -40,6 +40,18 @@ public class L28_714_maxProfit {
         return dp[length - 1][1];
     }
 
+    public int maxProfit2(int[] prices, int fee) {
+        if (prices == null || prices.length == 0) return 0;
+        int length = prices.length;
+        //hold, nothold
+        int hold = -prices[0];
+        int nothold = 0;
+        for (int i = 1; i < length; i++) {
+            hold = Math.max(hold, nothold - prices[i]);
+            nothold = Math.max(nothold, hold + prices[i] - fee);
+        }
+        return nothold;
+    }
     @Test
     public void testMaxProfit() {
         int[] prices = {1, 3, 2, 8, 4, 9};

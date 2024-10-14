@@ -34,8 +34,8 @@ public class L23_121_maxProfit {
     public int maxProfit(int[] prices) {
         if (prices == null || prices.length == 0) return 0;
         int res = 0;
-        int low = Integer.MAX_VALUE;
-        for (int i = 0; i < prices.length; i++) {
+        int low = prices[0];
+        for (int i = 1; i < prices.length; i++) {
             low = Math.min(low, prices[i]); //找到左边最小的值
             res = Math.max(res, prices[i] - low);
         }
@@ -44,13 +44,13 @@ public class L23_121_maxProfit {
 
     // dp
     /*
-      1. 确定dp数组的含义: 用二维数组来表示持有和不持有第i天的股票所拥有的最大现金；
-      1.1 dp[i][0] 持有(不代表第i天买入)股票最大金额：表示在[0,i]这个范围内，我可以任选一天买入这个股票，如果在第i天买
+      1. 确定dp数组的含义: 用二维数组来表示持有和不持有第i天的股票所拥有的最大收益；
+      1.1 dp[i][0] 持有(不代表第i天买入)股票最大收益：表示在[0,i]这个范围内, 任选一天买入股票，如果在第i天买
       股票，那么说明在0-i-1这几天里啥也没动，一直放着，手上现金一直为0；买入股票就会花-prices[i];
-      1.2 dp[i][1] 不持股票最大金额：表示在[0,i]这个范围内，任意一天把卖股票，可以在第i天卖这个股票，
+      1.2 dp[i][1] 不持股票最大收益：表示在[0,i]这个范围内，任意一天卖股票，可以在第i天卖这个股票，
       也可以在i天之前就卖了，那么一直保持这个卖之后的手上现金的状态。
 
-      结果在dp[len - 1][1]中最大值, 表示的是最后一天不持有该股票手上所拥有的现金.
+      结果在dp[len - 1][1]中最大值, 表示的是最后一天不持有该股票手上所拥有的最大收益.
       2. 确定递推公式:
       dp[i][0] = max(dp[i-1][0], -prices[i])
        - dp[i-1][0]表示在第i天不买股票，那就维持前一天手上所持有的金额
@@ -63,7 +63,7 @@ public class L23_121_maxProfit {
       dp[0][0] = -prices[0]; // 第0天持有这个股票，买的话得花-prices[0]的钱，
       dp[0][1] = 0；// 第0天卖股票，还没买股票怎么能卖呢？所以是0；
       4. 遍历顺序:
-      i => [0, len]
+      i => [0, len)
 
      */
     public int maxProfit2(int[] prices) {

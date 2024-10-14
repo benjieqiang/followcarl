@@ -14,6 +14,8 @@ public class L26_188_maxProfit {
     // dp
     /*
       1. dp数组的含义
+      dp[i][j]，其中：i 表示第 i 天。j 表示第 j 次交易操作，奇数表示持有（买入）股票的状态，偶数表示不持有（卖出）股票的状态。
+
       dp[i][0] 表示第i天持有的最大现金，不操作，
       dp[i][1] 表示第一次持有：在前i-1天就持有了，到了第i天不进行买入操作 + 到第i天才真正的买入了股票。
       dp[i][2] 表示第一次不持有：在前i-1天就卖了，到了第i天不操作 + 等到第i天才进行卖出股票；
@@ -32,21 +34,30 @@ public class L26_188_maxProfit {
 
       发现规律:
       第一天可以买卖多次, 卖的时候, j为偶数卖出,最大利润为0, 奇数买入,最大利润为-prices[0]
+
+      时间复杂度: O(n * k)，其中 n 为 prices 的长度
+      空间复杂度: O(n * k)
      */
     public int maxProfit(int k, int[] prices) {
         if (prices == null || prices.length == 0) return 0;
-        int[][] dp = new int[prices.length][2 * k + 1]; // 需要定义2*k + 1个
+        // dp[i][j]，其中：i 表示第 i 天。j 表示第 j 次交易操作，奇数表示持有（买入）股票的状态，偶数表示不持有（卖出）股票的状态。
+        // 每次交易包括一次买入和一次卖出，买入是奇数次操作，卖出是偶数次操作。
+        // 对于 k 次交易，2 * k + 1 表示从0到2k的买入卖出操作；
+        int[][] dp = new int[prices.length][2 * k + 1];
+        // 在第一天时，如果是持有股票状态（即 j 为奇数的列），它的初始状态为 -prices[0]，表示买入一股股票后的利润是负数（即花费了钱）
         for (int j = 1; j < 2 * k; j += 2) {
             dp[0][j] = -prices[0]; //保证在j为奇数时是第j次持有；
         }
-        for (int j = 0; j < 2 * k; j += 2) {
+        for (int j = 0; j < 2 * k; j += 2) { // j += 2.保证了下面dp[i - 1][j]是卖出的操作;j为偶数才能卖出；
             for (int i = 1; i < prices.length; i++) {
+                // 买入操作: 保持前一天持有股票的动作 vs 只有当我们在前一天不持有股票时+才能在i天买入
                 dp[i][j + 1] = Math.max(dp[i - 1][j + 1], dp[i - 1][j] - prices[i]);
+                // 卖出操作：保持前一天不持有股票的状态 vs 前一天买入+i天卖出
                 dp[i][j + 2] = Math.max(dp[i - 1][j + 2], dp[i - 1][j + 1] + prices[i]);
             }
         }
 
-        return dp[prices.length - 1][2 * k];
+        return dp[prices.length - 1][2 * k]; //
     }
 
     @Test
