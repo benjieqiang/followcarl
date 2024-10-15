@@ -7,7 +7,8 @@ import java.util.Arrays;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-21  22:38
- * @Description: s = "abc", t = "ahbgdc",判断s是否是t的子序列，是
+ * @Description:
+ * s = "abc", t = "ahbgdc",判断s是否是t的子序列，是
  *
  * 非连续
  * 与1143题区别就是，如果删元素一定是字符串t

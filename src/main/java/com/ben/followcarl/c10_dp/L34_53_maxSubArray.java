@@ -23,7 +23,7 @@ import org.junit.Test;
  */
 public class L34_53_maxSubArray {
     public int maxSubArray(int[] nums) {
-        int[] dp = new int[nums.length];
+        int[] dp = new int[nums.length]; // i从0到num.length - 1 dp[nums.length-1] 已经遍历到nums数组最后一个元素，所以只需要让dp长度为nums.length;
         dp[0] = nums[0];
         int res = dp[0]; // res保存最大的dp[i]
         for (int i = 1; i < nums.length; i++) {

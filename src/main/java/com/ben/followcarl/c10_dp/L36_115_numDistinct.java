@@ -5,20 +5,22 @@ import org.junit.Test;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-24  10:17
- * @Description: todo: dp[i-1][j-1]
+ * @Description:
  * 求给你两个字符串 s 和 t ，统计并返回在 s 的 子序列 中 t 出现的个数。
  * s中删除元素后能变成多少个t；
- * 1. dp[i][j] 以i-1结尾的s中有以j-1为结尾的t的个数；
- * 2. 递归公式:
- *  s[i-1] == t[j-1]， dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
- *      - dp[i-1][j-1]: 当两个元素相同时，不考虑s[i-1]和t[j-1]的字母，就等于上一个元素s[i-2]的s中t[j-2]的结尾t的个数
- *      - dp[i-1][j]： 不使用s[i-1]的元素，
- *      比如s = bagg, t = bag， s[3] == t[2]
- *      可以使用s[3]进行匹配,也可以不使用s[3]进行匹配:
- *      使用s[3]匹配得到的是: s[0]s[1]s[3]
- *      不使用s[3]匹配, 那就意味着t[2]也不能用: s[0]s[1], t[0]t[1]
+ * 翻译：从s中挑选子串，看能匹配t串多少次；
  *
- *  s[i -1] != t[j - 1]，此时dp[i][j] = dp[i - 1][j]，解释：模拟在s中删除这个元素,不考虑当前元素, 不使用s[i - 1]的元素进行匹配的个数；
+ * 1. dp[i][j] 从开头到s[i-1]的子串中，出现『从开头到t[j-1]的子串』的 次数。即：前 i 个字符的 s 子串中，出现前 j 个字符的 t 子串的次数。
+ * 2. dp公式:
+ * s 为babgbag，t 为bag，末尾字符相同，于是 s 有两种选择：这两种情况是相互独立的，因此我们需要将它们的匹配次数相加，得到总的匹配次数。
+ *      用s[s.length-1]去匹配掉t[t.length-1]，问题规模缩小：继续考察babgba和ba
+ *      不这么做，但t[t.length-1]仍需被匹配，于是在babgba中继续挑，考察babgba和bag
+ *  2.1. 末尾字符相同，选或者不选。
+ *  s[i-1] == t[j-1]， dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
+ *   - dp[i-1][j-1]: 选s末尾元素来匹配t末尾元素，那么问题变成看前i-1的s中有前j-1个t几个？即从开头到s[i-2]的子串s中有多少个从开头到t[j-2]的子串t；
+ *   - dp[i-1][j]： 不选s的末尾元素，即s[i-1]，那就是说看前i-1个字符的s中有多少个出现j个字符的t子串个数；
+ *  2.2 末尾元素不同，直接忽略当前s末尾元素，从前i-1个字符的s中选符合j个字符的t子串；
+ *  s[i -1] != t[j - 1]，此时dp[i][j] = dp[i - 1][j]
  *
  * 3. 初始化 dp[i][j]从哪些可以推出来? 画图进行分析；
  * dp[i - 1][j - 1]  dp[i -1][j]
@@ -39,7 +41,7 @@ public class L36_115_numDistinct {
     public int numDistinct(String s, String t) {
         if (s.length() < t.length()) return 0;
         int[][] dp = new int[s.length() + 1][t.length() + 1];
-        for (int i = 0; i < s.length(); i++) dp[i][0] = 1; // 初始化的重点; 首列
+        for (int i = 0; i < s.length(); i++) dp[i][0] = 1; // 前i个s子串中各自能匹配一个空串t
 
         for (int i = 1; i <= s.length(); i++) {
             for (int j = 1; j <= t.length(); j++) {

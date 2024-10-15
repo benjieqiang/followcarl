@@ -5,6 +5,7 @@ package com.ben.followcarl.c10_dp;
  * @CreateTime: 2023-06-21  18:19
  * @Description: 本质是最长公共子序列问题。
  * 代码都没变,直接拷贝过来;
+ * 直线不能相交，这就是说明在字符串A中 找到一个与字符串B相同的子序列，且这个子序列不能改变相对顺序，只要相对顺序不改变，链接相同数字的直线就不会相交。
  * @Version: 1.0
  */
 public class L33_1035_maxUncrossedLines {

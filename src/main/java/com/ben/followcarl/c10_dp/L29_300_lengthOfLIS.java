@@ -31,7 +31,6 @@ public class L29_300_lengthOfLIS {
                     dp[i] = Math.max(dp[j] + 1, dp[i]);
                 }
             }
-//            System.out.println(Arrays.toString(dp));
             if (dp[i] > res) res = dp[i];
         }
         return res;

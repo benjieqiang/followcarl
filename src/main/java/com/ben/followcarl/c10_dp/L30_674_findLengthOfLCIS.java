@@ -12,7 +12,8 @@ import java.util.Arrays;
  * dp[i] = Math.max(dp[i], dp[i- 1] + 1);
  * 如果 nums[i] > nums[i - 1]，那么以 i 为结尾的连续递增的子序列长度 一定等于 以i - 1为结尾的连续递增的子序列长度 + 1;
  * 即：dp[i] = dp[i - 1] + 1;
- *
+ * 如果 nums[i] <= nums[i-1]，说明当前序列不再是递增的，但你不需要显式地将长度重置为0，因为代码逻辑通过 Arrays.fill(dp, 1) 和不更新 dp[i]，
+ * 已经隐含地处理了这个情况。每当 nums[i] <= nums[i-1] 时，dp[i] 保持为 1，相当于从当前元素重新开始计算新的递增序列长度。
  * @Version: 1.0
  */
 public class L30_674_findLengthOfLCIS {
