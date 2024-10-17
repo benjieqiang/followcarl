@@ -15,9 +15,11 @@ import java.util.LinkedList;
  */
 public class L4_42_trap {
     /**
-     * 1.暴力解法思路: 开始和结尾接不了雨水,因为不是封闭的, 每一列能存的雨水取决于左右柱子最底的那个, 木桶理论;
-     * 求和就是所有列
-     * 每一列雨水的高度= 左边比他高的 占有的空间height[i]；
+     * 1.暴力解法思路:
+     * 按照列来计算，宽度一定是1，每一列的雨水高度求和。
+     *
+     * 开始和结尾接不了雨水,因为不是封闭的, 每一列能存的雨水取决于左右柱子最底的那个, 木桶理论;
+
      * 按照列来计算，每一列雨水的宽度 = 1；
      * 该列接到的雨水体积 = 1 *（ Math.min(lHeight, rHeight) - height[i]）;
      * 1、for循环遍历整个数组，开头和结尾无法接雨水，因为没有形成封闭的区间；
@@ -27,19 +29,21 @@ public class L4_42_trap {
      **/
     public int trap1(int[] height) {
         int res = 0;
+        // 从头到尾按列求；
         for (int i = 0; i < height.length; i++) {
-            // 第一个柱子和最后一个柱子不接雨水
+            // 1. 第一个柱子和最后一个柱子不接雨水
             if (i == 0 || i == height.length - 1) continue;
             int left = height[i]; // 记录左边柱子的最高高度
-            // 从i-1位置到0遍历;
+            // 2. 找当前第i列的左侧最高列： 从i出发到0，找比当前height[i]高的；
             for (int l = i - 1; l >= 0; l--) {
                 if (height[l] > left) left = height[l];
             }
-            // 从i+1的length遍历;
+            // 3. 找当前第i列的右侧最高咧；从i出发到length，找比当前height[i]高的；
             int right = height[i]; // 记录右边柱子的最高高度
             for (int r = i + 1; r < height.length; r++) {
                 if (height[r] > right) right = height[r];
             }
+            // 4. 求当前列装水体积；正数放入；
             int h = Math.min(left, right) - height[i];
             if (h > 0) res += h;
         }
@@ -88,23 +92,45 @@ public class L4_42_trap {
      *  单调栈思路：横向求解, 按行来求
      *  0  1  2  3  4
      * {60,20,20,10,30}
-     * 1、定义一个单调栈，递增的，首先放入数组的第一个元素的位置，也就是第一个柱子的位置.栈顶 [0:60] 栈低，这里0表示第一个柱子的下标，60表示的值；
-     * 2、从1到size遍历整个数组，如果发现当前元素，即柱子的高度比栈顶的元素的高度还小或相等，继续放入，[3:10, 2:20, 1:20, 0:60]
-     * 3、当前柱子高度大于栈顶元素，到了收获结果的时候了，此时发现最后一个下标4的柱子高度30，大于栈顶的元素对应的值10,栈顶的下一个元素的值为20，
-     * 放入的是该元素的左边最大的值的位置（左侧最高柱子）
-     * 4、持续遍历指导当前柱子的高度不大于栈顶元素，才不会进行比较；
+     *  __60__
+     * │      │
+     * │      │
+     * │      │                     __30__
+     * │      │__20__ __20__       │      │
+     * │      │      │      │__10__│      │
+     * │      │      │      │      │      │
+          0      1      2      3       4
+     * 1、定义一个单调栈，按照高度递增，首先放入数组的第一个元素的位置，也就是第一个柱子的位置. stack = [0:60] top is 0，这里0表示第一个柱子的下标，60表示高度；
+     * 2、从1到size遍历整个数组，如果发现当前元素（高度）< 栈顶的元素的高度，入栈； 当前元素 == 栈顶元素高度， 更新为最右边的下标（先弹出，再入新）；
+     *    stack = [3:10, 2:20, 0:60] top is 3;
+     * 3、当前元素（高度）30大于栈顶元素对应的10，收获结果，30 > 10，出现凹槽
+     *  1. 中间柱子：st弹出栈顶元素 mid = 3，柱高是10， st = [2:20, 0:60]
+     *  2. 栈不为空, 中间柱子的左侧柱高 = 栈顶元素对应高度 = 20
+     *      h = 当前柱高和左侧柱高取最小 - 中间柱子高度 = 20 - 10 = 10
+     *      计算左右柱子宽度：w = 当前下标 - 中间柱子下标 - 1 = 4 - 2 - 1 = 1
+     *      sum = 10 * 1 = 10;
+
+     *     此时栈st = [2:20, 0:60]，下一个while循环，当前柱高30 和栈顶元素柱高20，出现凹槽
+     *     1. 中间柱子弹出： 栈顶元素对应高度，mid = 20； 剩下栈st = [0:60]
+     *     2. 栈不为空，记录左柱子：栈顶元素0柱高left = 60
+     *                h = 当前和左柱子取min - mid = 30 - 20 = 10
+     *                w = 当前 - left - 1 = 4 - 0 - 1 = 30;
+     *          sum = 10 + 30 = 40;
+     *
+     *  3. 4入栈，当前栈是 st = [4: 30, 0:60]，i遍历到末尾结束循环；
+     *
      *   while(!st.isEmpty() && height[i] > st.peek()) {
      *           int mid = st.peek(); //栈顶元素
      *           st.pop(); //弹出，因为该元素的下一个元素是它左侧最高列
      *           if (!st.isEmpty()) {
      *               int left = st.peek();
      *               int h = Math.min(height[i], height[left]) - height[mid]; //得到雨水的高度
-     *               int w = i - mid - 1;//
+     *               int w = i - left - 1;//
      *               if (h*w > 0) sum += h * w;
      *           }
-     * }
-     *
-     * st.push(i);
+     *    }
+     *   st.push(i);
+
      * */
     public int trap3(int[] height) {
         int sum = 0;
@@ -114,17 +140,17 @@ public class L4_42_trap {
             if (height[i] < height[st.peek()]) {
                 st.push(i);
             } else if (height[i] == height[st.peek()]) {
-                // 相邻的柱子，先弹出，再放入,保证栈里面只放一个高度一样的柱子;
+                // 高度相等的柱子，先弹出，再放入, 保证栈里面只放最右边柱子的下标；这个柱子离当前元素i最近。
                 st.pop();
                 st.push(i);
             } else {
-                // height[i]是右边的柱子;
+                // height[i]是右边的柱子; 发现高柱子，对应出现凹槽；
                 while (!st.isEmpty() && height[i] > height[st.peek()]) {
                     int mid = st.pop(); // 中间的柱子弹出去
                     if (!st.isEmpty()) {
                         int left = st.peek(); // 左边的柱子
                         int h = Math.min(height[i], height[left]) - height[mid]; // 高度;
-                        int w = i - left - 1; // 宽度减1
+                        int w = i - left - 1; // i - left表示左柱子和右柱子之间的距离，减1表示中间盛水的宽度；
                         sum += h * w;
                     }
                 }
@@ -135,39 +161,40 @@ public class L4_42_trap {
         return sum;
     }
 
-    class Solution {
-        public int trap(int[] height) {
-            int sum = 0;
-            int length = height.length;
-            if (length == 0) return sum;
-
-            Deque<Integer> st = new LinkedList<>();
-            st.push(0);
-            for (int i = 1; i < length; i++) {
-                if (height[i] <= height[st.peek()]) {
-                    st.push(i);
-                } else {
-                    while (!st.isEmpty() && height[i] > height[st.peek()]) {
-                        int mid = height[st.pop()];
-                        if (!st.isEmpty()) {
-                            int left = height[st.peek()];
-                            int h = Math.min(height[i], left) - mid;
-                            int w = i - st.peek() - 1; //
-                            sum += h * w;
-                        }
+    public int trapError(int[] height) {
+        if (height == null || height.length == 0) return 0;
+        int sum = 0;
+        Deque<Integer> st = new LinkedList<>();
+        st.push(0);
+        for (int i = 1; i < height.length; i++) {
+            if (height[i] < height[st.peek()]) {
+                st.push(i);
+            } else if (height[i] == height[st.peek()]) {
+                st.pop();
+                st.push(i);
+            } else {
+                while (!st.isEmpty() && height[i] > height[st.peek()]) {
+                    int mid = st.pop();
+                    if (!st.isEmpty()) {
+                        int left = st.peek();
+                        int h = Math.min(height[left], height[i]) - height[mid];
+                        int w = i - left - 1;
+                        if (h * w > 0) sum += w * h;
                     }
-                    st.push(i); // *
+                    st.push(i); // 错误点：还没比较完，就把当前元素下标加入到栈中，应该依次把栈中的元素的首大给找完，在入栈。
                 }
             }
-
-            return sum;
         }
+
+        return sum;
     }
     @Test
     public void testTrap() {
-        int[] nums = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};//6
-//        int[] nums = {60,20,20,10,30}; //
+//        int[] nums = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};//6
+        int[] nums = {60,20,20,10,30}; //
         System.out.println(Arrays.toString(nums));
-        System.out.println(trap3(nums));
+//        System.out.println(trap2(nums));
+//        System.out.println(trap3(nums));
+        System.out.println(trapError(nums));
     }
 }

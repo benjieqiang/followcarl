@@ -17,9 +17,8 @@ public class L5_84_largestRectangleArea {
 
     /*
      * 暴力解法思路：
-     * 1.遍历整个数组，当前柱子为i，找到左边比它矮的柱子，找到右边比它矮的柱子，找不到说明这跟柱子能贯穿整个柱状图；
-     * 2.如果左边柱子比当前柱子矮，说明不能向左扩展了；如果右边柱子比当前柱子矮，也不能向右扩展，
-     * 最后结果就是向左向右扩展形成的最大宽度w = right - left - 1; h = heights[i]当前柱子高度；
+     * 1.遍历整个数组，当前柱子为i，从中心分别向左右扩展，寻找首个左矮柱子和首个右矮柱子；两个最矮柱子中间就是当前柱子能覆盖的柱子。
+     * 2.左右矮柱子之间的宽度w = right - left - 1; h = heights[i]当前柱子高度；
      * */
     public int largestRectangleArea(int[] heights) {
         int sum = 0;
@@ -40,22 +39,23 @@ public class L5_84_largestRectangleArea {
         return sum;
     }
 
+
     /**
      * @param heights:
      * @return int
-     * @description 双指针
+     * @description 双指针 todo:没搞懂；
      * 难点在寻找左柱子数组和右柱子数组
      * @author benjieqiang
      * @date 2023/8/17 7:57 PM
      */
     public int largestRectangleArea2(int[] heights) {
-        int size = heights.length;
-        int[] minLeftIndex = new int[size];
-        int[] minRightIndex = new int[size];
+        int length = heights.length;
+        int[] minLeftIndex = new int[length];
+        int[] minRightIndex = new int[length];
 
         // 记录每个柱子 左边第一个小于该柱子的下标
         minLeftIndex[0] = -1; // 注意这里初始化，防止下面while死循环
-        for (int i = 1; i < size; i++) {
+        for (int i = 1; i < length; i++) {
             int t = i - 1;
             // 这里不是用if，而是不断向左寻找的过程
             while (t >= 0 && heights[t] >= heights[i]) t = minLeftIndex[t];
@@ -65,17 +65,17 @@ public class L5_84_largestRectangleArea {
         System.out.println(Arrays.toString(minLeftIndex));
 
         // 记录每个柱子 右边第一个小于该柱子的下标
-        minRightIndex[size - 1] = size; // 注意这里初始化，防止下面while死循环
-        for (int i = size - 2; i >= 0; i--) {
+        minRightIndex[length - 1] = length; // 注意这里初始化，防止下面while死循环
+        for (int i = length - 2; i >= 0; i--) {
             int t = i + 1;
             // 这里不是用if，而是不断向右寻找的过程
-            while (t < size && heights[t] >= heights[i]) t = minRightIndex[t];
+            while (t < length && heights[t] >= heights[i]) t = minRightIndex[t];
             minRightIndex[i] = t;
         }
         System.out.println(Arrays.toString(minRightIndex));
         // 求和
         int res = 0;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < length; i++) {
             int sum = heights[i] * (minRightIndex[i] - minLeftIndex[i] - 1);
             res = Math.max(sum, res);
         }
@@ -83,21 +83,23 @@ public class L5_84_largestRectangleArea {
     }
 
     /*
-     *  单调栈：从栈顶到栈底是单调递减的, 从大到小的顺序 ，找到当前元素mid 的左边比它小的柱子left和右边比它小的柱子right；
-     *  末尾加0：比如[2,4,6,8] 一直往栈里面加是这样的[8,6,4,2]，一直结束不了，因为找不到一个数小于当前栈顶的元素
-     *  头部加0：比如[8,6,4, 2], 往栈里面加成为[8]，此时heights[1]= 6和栈顶元素比较比它小，那么要开始进行收获结果了，
-     *  mid = st.peek(); st.pop(); left应该是栈顶元素，但是此时栈已经为空了，没法给left赋值，所以需要加上0。进行计算。
-     *  for循环遍历数组，当前元素大于等于栈顶元素就一直入栈；
-     *  当前元素比栈顶元素小的时候，进行收获结果的操作：
-     *  利用while来持续比较和栈顶元素的大小，直到当前元素不小于栈顶元素，则把该元素入栈；
-     *  mid = st.peek(); // 栈顶元素
-     *  st.pop();// 弹出该元素因为要拿出它的左边最小的柱子的下标；
-     *  left = st.pop();
-     *  只要栈不为空，h = heights[mid]; w = i - left - 1;
-     *  面积为h * w
-     *  res = max(h*w, res);
-
+     *  单调递减栈(从大到小的顺序) 找当前柱子首个左矮柱子和首个右矮柱子，中间宽度 * 当前柱高 = s
+        1. 数组首尾加0 来结束栈;
+     *  末尾加0的原因：对于原来递增数组，[2,4,6,8]， 先加入首元素，stack = [0:2] 之后因为全部元素大于栈顶元素，都入栈
+     *   stack = [3:8,2:6,1:4,2:0], top is 3. 加末尾0让他强制走入while循环中求当前柱子的左右矮柱子。
      *
+     *  头部加0的原因：比如递减[8,6,4,2], 先加入首元素，stack = [0:8], 从第一个元素6开始遍历，因为6小于8，所以找到了矮柱子，
+     *  进入while循环，此时中间柱子mid = 8, 右矮柱子right = 6，栈为空了，左矮柱子没有，所以直接跳过，一次加入6，4，2得到结果是0。加头部0是为了防止这种情况。
+     *  heights = [2,4]
+     *  1. 扩容： heights = [0,2,4,0];
+     *  2. 首元素入栈，stack = [0:0] top is 0;
+     *  3. for循环从1开始遍历到3，比较当前柱子高度和栈顶柱子的高度大小，大的等的入栈，小的比较
+     *      1. i = 1 heights[1] = 2 > 0, 入栈， stack = [1:2, 0:0]
+     *      2. i = 2, 高度4 > 2,入栈， stack = [2:4, 1:2, 0:0]
+     *      3. i = 3, 高度0 < 4，找到右矮柱子了。
+     *       while循环，栈不为空，mid = st.pop();
+     *      left柱子 = st.pop()2，w = i - left - 1，两个左右矮柱子之间的距离，
+     *      高度是heights[mid] s = Math.max(s, w *h);
      *
      *  */
     public int largestRectangleArea3(int[] heights) {
@@ -119,13 +121,15 @@ public class L5_84_largestRectangleArea {
             if (heights[i] >= heights[st.peek()]) {
                 // 只要发现当前柱子比栈顶的柱子要高, 入栈.因为要找下一个矮柱子
                 st.push(i);
+            } else if (heights[i] == heights[st.peek()]) {
+                st.pop(); // 这个可以加，可以不加，效果一样，思路不同
+                st.push(i);
             } else {
-                // 发现矮柱子
-                while(!st.isEmpty() && heights[i] < heights[st.peek()]) {
-                    int mid = st.peek();
-                    st.pop();
-                    if (!st.isEmpty()){
-                        int left = st.peek();
+                // 发现右矮柱子
+                while (!st.isEmpty() && heights[i] < heights[st.peek()]) {
+                    int mid = st.pop(); // 当前柱子
+                    if (!st.isEmpty()) {
+                        int left = st.peek(); // 左矮柱子
                         int h = heights[mid];
                         int w = i - left - 1; // 比如以5为基准,左边比5小的数字的下标是1, 右边比5小的下标是4, 那么要求中间的长度是
                         // 4 - 1 - 1 = 2;
@@ -142,7 +146,9 @@ public class L5_84_largestRectangleArea {
     public void testLarge() {
         int[] nums = {2, 1, 5, 6, 2, 3};
 //        int[] nums = {4,2}; //4
-        System.out.println(largestRectangleArea(nums));
+//        System.out.println(largestRectangleArea(nums));
+        System.out.println(largestRectangleArea2(nums));
+//        System.out.println(largestRectangleArea3(nums));
     }
 
 }

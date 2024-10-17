@@ -70,10 +70,39 @@ public class L3_503_nextGreaterElements {
         }
         return res;
     }
+    /**
+     * @param nums:
+     * @return int
+     * @description test
+     * @author benjieqiang
+     * @date 2024/10/17 10:31 AM
+     */
+    public int[] nextGreaterElements3(int[] nums) {
+        if (nums == null || nums.length == 0) return nums;
+        int length = nums.length;
+        int[] res = new int[length];
+        Arrays.fill(res, -1);
+        Deque<Integer> stack = new LinkedList<>();
+        stack.push(0);
+        for (int i = 1; i < length * 2; i++) {
+            int index = i % length;
+            if (nums[index] <=  nums[stack.peek()]) {
+                stack.push(index);
+            } else {
+                while (!stack.isEmpty() && nums[index] > nums[stack.peek()]) {
+                    res[stack.peek()] = nums[index];
+                    stack.pop();
+                }
+
+                stack.push(index);
+            }
+        }
+        return res;
+    }
     @Test
     public void textNextGre() {
         int[] nums = {1, 2, 1}; //{2,-1,2}
-        int[] res = nextGreaterElements2(nums);
+        int[] res = nextGreaterElements3(nums);
         System.out.println(Arrays.toString(res));
     }
 }
