@@ -40,7 +40,7 @@ package com.ben.followcarl.c12_graph;
  * grid[i][j] 的值为 '0' 或 '1'
  * @Version: 1.0
  */
-public class L3_200_numIslands {
+public class L3_200_numIslands_dfs {
 
     /**
      * @param grid:
@@ -81,7 +81,7 @@ public class L3_200_numIslands {
     /**
      * @author benjieqiang
      * @return int
-     * @description 利用visted数组标记, 如果访问过,就不会再去访问该岛屿;
+     * @description 利用visited数组标记, 如果访问过,就不会再去访问该岛屿;
      * 时间复杂度：O(MN)，其中 M 和 N 分别为行数和列数。
      * <p>
      * 空间复杂度：O(MN)，在最坏情况下，整个网格均为陆地，深度优先搜索的深度达到 MNM NMN。
@@ -98,24 +98,23 @@ public class L3_200_numIslands {
         public int numIslands(char[][] grid) {
             int m = grid.length;
             int n = grid[0].length;
-            boolean[][] visted = new boolean[m][n];
+            boolean[][] visited = new boolean[m][n];
 
             int res = 0;
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (!visted[i][j] && grid[i][j] == '1') {
+                    if (!visited[i][j] && grid[i][j] == '1') {
                         res++;
-                        dfs(grid, visted, i, j);
+                        dfs(grid, visited, i, j); // dfs结束意思是：以i，j为中心的小岛都找到并且标记了。
                     }
                 }
             }
             return res;
         }
 
-        private void dfs(char[][] grid, boolean[][] visted, int i, int j) {
-            if (visted[i][j] || grid[i][j] == '0') return;
+        private void dfs(char[][] grid, boolean[][] visited, int i, int j) {
 
-            visted[i][j] = true;
+            visited[i][j] = true;
 
             for (int k = 0; k < 4; k++) {
                 int numsX = i + nums[k][0];
@@ -123,7 +122,9 @@ public class L3_200_numIslands {
                 if (numsX < 0 || numsX >= grid.length || numsY < 0 || numsY >= grid[0].length) {
                     continue;
                 }
-                dfs(grid, visted, numsX, numsY);
+                if (!visited[numsX][numsY] && grid[numsX][numsY] == '1') {
+                    dfs(grid, visited, numsX, numsY);
+                }
             }
         }
     }

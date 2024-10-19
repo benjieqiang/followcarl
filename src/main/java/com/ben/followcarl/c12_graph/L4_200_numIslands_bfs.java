@@ -43,7 +43,7 @@ import java.util.LinkedList;
  * grid[i][j] 的值为 '0' 或 '1'
  * @Version: 1.0
  */
-public class L4_200_numIslands {
+public class L4_200_numIslands_bfs {
 
     /**
      * @param grid:
@@ -52,7 +52,7 @@ public class L4_200_numIslands {
      * @author benjieqiang
      * @date 2023/9/6 10:31 AM
      */
-    int[][] nums = {
+    int[][] dir = {
             {-1, 0},
             {1, 0},
             {0, -1},
@@ -62,35 +62,35 @@ public class L4_200_numIslands {
     public int numIslands(char[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-        boolean[][] used = new boolean[m][n];
+        boolean[][] visited = new boolean[m][n];
         int res = 0;
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (!used[i][j] && grid[i][j] == '1') {
+                if (!visited[i][j] && grid[i][j] == '1') {
                     res++;
-                    bfs(grid, used, i, j);
+                    bfs(grid, visited, i, j); // bfs结束是以i，j为中心的相连小岛都找到了。
                 }
             }
         }
         return res;
     }
 
-    private void bfs(char[][] grid, boolean[][] used, int i, int j) {
+    private void bfs(char[][] grid, boolean[][] visited, int i, int j) {
         Deque<int[]> queue = new LinkedList<>();
         queue.add(new int[]{i, j});
-        used[i][j] = true; // 加入队列, 立即标记;
+        visited[i][j] = true; // 加入队列, 立即标记;
         while (!queue.isEmpty()) {
             int[] tmp = queue.remove();
             int m = tmp[0];
             int n = tmp[1];
             for (int k = 0; k < 4; k++) {
-                int x = m + nums[k][0];
-                int y = n + nums[k][1];
+                int x = m + dir[k][0];
+                int y = n + dir[k][1];
                 if (x < 0 || x == grid.length || y < 0 || y == grid[0].length) continue;
-                if (!used[x][y] && grid[x][y] == '1') {
+                if (!visited[x][y] && grid[x][y] == '1') {
                     queue.add(new int[]{x, y});
-                    used[x][y] = true; // 加入队列表示已经访问过;
+                    visited[x][y] = true; // 加入队列表示已经访问过;
                 }
             }
         }

@@ -26,7 +26,7 @@ public class L2_bfs {
             for (int i = 0; i < 4; i++) { // 开始向当前节点的四个方向上右左下去遍历
                 int nextx = curx + dir[i][0];
                 int nexty = cury + dir[i][1]; // 获取周边四个方向的坐标
-                if (nextx < 0 || nextx >= grid.length || nexty < 0 || nexty >= grid[0].length) continue;  // 坐标越界了，直接跳过
+                if (nextx < 0 || nextx >= grid.length || nexty < 0 || nexty >= grid[0].length) continue;  // 坐标越界直接跳过
                 if (!visited[nextx][nexty]) { // 如果节点没被访问过
                     que.add(new int[]{nextx, nexty});  // 队列添加该节点为下一轮要遍历的节点
                     visited[nextx][nexty] = true; // 只要加入队列立刻标记，避免重复访问

@@ -29,12 +29,6 @@ public class L5_695_maxAreaOfIsland {
     };
     int count;
 
-    // dfs思路: 主函数遇到陆地 计数为0，也就是不计数，所有的岛屿数统计都放到dfs中去统计
-    // 进去不符合递归终止条件就count++, for循环只判断边界, 判断逻辑放到递归终止条件上。最后用res收获结果;
-    // count = dfs中的count数;
-    // 还有一种思路: count分为两部分: 一个是主函数的岛屿数, 一个是符合上下左右的岛屿数;
-    // dfs只处理下一个节点，即在主函数遇到岛屿就计数为1，dfs处理接下来的相邻陆地, 在遍历上下左右时把count++;
-    // count =  主函数的1个岛屿 + 上下左右符合条件的count数;
 
     public int maxAreaOfIsland(int[][] grid) {
         int m = grid.length;
@@ -44,7 +38,7 @@ public class L5_695_maxAreaOfIsland {
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (!used[i][j] && grid[i][j] == 1) {
-                    count = 0;
+                    count = 0; // 每一次进来都给赋值成0，dfs表示从ij出发找到了一片相连小岛，找到就返回了。
                     dfs(grid, used, i, j);
                     res = Math.max(res, count);
                 }
@@ -71,8 +65,6 @@ public class L5_695_maxAreaOfIsland {
         int[][] nums = {{-1,0}, {1, 0}, {0, -1}, {0, 1}};
         int count;
         private void bfs(int[][] grid, boolean[][] used, int i, int j) {
-            if (used[i][j] || grid[i][j] == 0) return;
-
             Deque<int[]> queue = new LinkedList<>();
             queue.add(new int[]{i, j});
             used[i][j] = true;
@@ -118,5 +110,7 @@ public class L5_695_maxAreaOfIsland {
         int[][] nums = {{-1,0}, {1, 0}, {0, -1}, {0, 1}};
         System.out.println(nums.length);
         System.out.println(nums[0].length);
+
+
     }
 }
