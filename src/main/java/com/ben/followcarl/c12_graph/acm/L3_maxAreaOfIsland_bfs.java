@@ -20,32 +20,42 @@ package com.ben.followcarl.c12_graph.acm;
  * 4
  * @Version: 1.0
  */
-
 import java.util.*;
-
 public class L3_maxAreaOfIsland_bfs {
-
     static int count = 0;
+    static int[][] dir = {{-1,0},{1,0},{0,-1},{0,1}};
 
-    static int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    private static void bfs(int[][] grid, boolean[][] visited, int i, int j) {
+        Deque<int[]> queue = new LinkedList<>();
 
-    private static void dfs(int[][] grid, boolean[][] visited, int i, int j) {
+        queue.add(new int[]{i,j});
         visited[i][j] = true;
-        count++;
-        for (int k = 0; k < 4; k++) {
-            int curx = i + dir[k][0];
-            int cury = j + dir[k][1];
 
-            if (curx < 0 || curx >= grid.length || cury < 0 || cury >= grid[0].length) {
-                continue;
+        count++;
+
+        while (!queue.isEmpty()) {
+            int[] cur = queue.remove();
+            int curx = cur[0];
+            int cury = cur[1];
+
+            for (int k = 0; k < 4; k++) {
+                int nextx = curx + dir[k][0];
+                int nexty = cury + dir[k][1];
+
+                if (nextx < 0 || nextx >= grid.length || nexty < 0 || nexty >= grid[0].length)
+                    continue;
+                if (!visited[nextx][nexty] && grid[nextx][nexty] == 1) {
+                    bfs(grid, visited, nextx, nexty);
+                }
             }
-            if (!visited[curx][cury] && grid[curx][cury] == 1)
-                dfs(grid, visited, curx, cury);
         }
+
     }
+
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         int m = sc.nextInt();
         int n = sc.nextInt();
 
@@ -55,21 +65,18 @@ public class L3_maxAreaOfIsland_bfs {
                 grid[i][j] = sc.nextInt();
             }
         }
-
-        int res = 0; // 利用res统计每一个ij的最大面积；
+        int res = 0;
         boolean[][] visited = new boolean[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
+                count = 0;
                 if (!visited[i][j] && grid[i][j] == 1) {
-                    count = 0;
-                    dfs(grid, visited, i, j);
-
-                    res = Math.max(res, count);
+                    bfs(grid, visited, i, j);
                 }
+                res = Math.max(res, count);
             }
         }
 
         System.out.println(res);
-
     }
 }
