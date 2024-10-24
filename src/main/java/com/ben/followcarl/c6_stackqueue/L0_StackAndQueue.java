@@ -41,6 +41,7 @@ public class L0_StackAndQueue {
      * @return void
      * @description queue: 首-》尾
      * add/addLast, remove/removeFirst, getFirst
+     * [1,2,3,4] front is 1, tail is 4
      * @author benjieqiang
      * @date 2023/10/11 8:22 PM
      */
