@@ -62,7 +62,7 @@ public class L2_27_removeElement {
      * @date 2023/7/2 8:55 PM
      */
     public int removeElement2(int[] nums, int val) {
-        int slow = 0; // slow指向的是新数组的下标；
+        int slow = 0; // slow统计的是新数组的元素个数；
         // fast用来寻找新数组的元素，就是不含有目标元素的数组；
         for (int fast = 0; fast < nums.length; fast++) {
             if (nums[fast] != val) {

@@ -68,10 +68,10 @@ public class L4_209_minSubArrayLen {
     }
 
     public int minSubArrayLen4(int target, int[] nums) {
-        int res = Integer.MAX_VALUE;
+        int res = Integer.MAX_VALUE; // min subArray length
         int left = 0;
         int right = 0;
-        int sum = 0;
+        int sum = 0; // subArrays sum.
         while (right < nums.length) {
             sum += nums[right];
             // 只要满足条件：即窗口里的值大于或等于target，从里面循环找最短的

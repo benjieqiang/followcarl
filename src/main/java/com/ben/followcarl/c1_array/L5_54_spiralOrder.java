@@ -10,6 +10,12 @@ import java.util.List;
  * 1、顺时针打印矩阵，模拟题，需要每次确认好i开始和结束的位置，矩阵变的哪个元素；
  * 2、矩阵的结束条件？m行n列的矩阵，如何结束？
  * 这题考过:
+ * 1. initialize left = 0, right = n -1, top = 0, bottom = m - 1.
+ * 2. traversal
+ *  from (top,left->right) ++top > bottom break,
+ *  from (top->bottom, right) --right < left break.
+ *  from (bottom, right->left) ++bottom > top break.
+ *  from (bottom->top, left) ++left > right break
  * @Version: 1.0
  */
 public class L5_54_spiralOrder {

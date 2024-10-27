@@ -2,6 +2,7 @@ package com.ben.followcarl.c1_array;
 
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -63,6 +64,7 @@ public class L4_904_totalFruit {
             hashMap.put(fruits[right], hashMap.getOrDefault(fruits[right], 0) + 1);
             // 最长的子序列，不满足要求的时候，移除left对应元素，left右移
             while (hashMap.size() > 2) {
+                // 缩小窗口
                 hashMap.put(fruits[left], hashMap.get(fruits[left]) - 1);
                 if (hashMap.get(fruits[left]) == 0) { // 水果都没有了，不能还继续占着map的位置，所以得删除掉；
                     hashMap.remove(fruits[left]);
@@ -77,14 +79,10 @@ public class L4_904_totalFruit {
     /**
      * @param fruits:
      * @return int
-     * @description 这次是真看样例，都理解不了是啥题意：其实就是从任意位置开始，同时使用两个篮子采集，一旦选择后不能修改篮子所装的水果种类，当所有树处理完或遇到第一棵种类不同的树则停止。
+     * @description
+     * 这次是真看样例，都理解不了是啥题意：其实就是从任意位置开始，同时使用两个篮子采集，一旦选择后不能修改篮子所装的水果种类，当所有树处理完或遇到第一棵种类不同的树则停止。
      *
-     * 滑动窗口模拟题：使用 j 和 i 分别代表滑动窗口的两端，窗口种类不超过 222 种为合法。
-     *
-     * 作者：宫水三叶
-     * 链接：https://leetcode.cn/problems/fruit-into-baskets/solutions/1437444/shen-du-jie-xi-zhe-dao-ti-he-by-linzeyin-6crr/
-     * 来源：力扣（LeetCode）
-     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     * 滑动窗口模拟题：使用 j 和 i 分别代表滑动窗口的两端，窗口种类不超过 2 种为合法。
      * @author benjieqiang
      * @date 2023/12/18 6:17 PM
      */
@@ -92,14 +90,16 @@ public class L4_904_totalFruit {
         int res = 0;
         int left = 0;
         int right = 0;
-        int n = fruits.length;
-        int[] cnts = new int[n + 1];
-        int count = 0;
-
-        while (right < n) {
-            if (++cnts[fruits[right]] == 1) count++;
+        // key: fruits kinds, fruits[i], value: count;
+        int[] window = new int[fruits.length + 1];
+        int count = 0; // if count > 2 we need shrink window
+        while (right < fruits.length) {
+            window[fruits[right]]++; // inc
+            if (window[right] == 1) count++;
             while (count > 2) {
-                if (--cnts[fruits[left]] == 0) count--;
+                window[fruits[left]]--;
+                // if left fruit num equals 0, decrease count;
+                if (window[fruits[left]] == 0) count--;
                 left++;
             }
             res = Math.max(res, right - left + 1);
@@ -114,6 +114,6 @@ public class L4_904_totalFruit {
 //        int[] fruits = {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4};
         int[] fruits = {1, 2, 3, 2, 2};
 //        int[] fruits = {1, 2, 1};
-        System.out.println(totalFruit(fruits));
+        System.out.println(totalFruit3(fruits));
     }
 }

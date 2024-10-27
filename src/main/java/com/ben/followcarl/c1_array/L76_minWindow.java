@@ -1,5 +1,7 @@
 package com.ben.followcarl.c1_array;
 
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,9 +51,7 @@ import java.util.Map;
  */
 public class L76_minWindow {
     public String minWindow(String s, String t) {
-        if (s == null || s == "" || t == null || t == "" || s.length() < t.length()) {
-            return "";
-        }
+        if (s == null || s == "" || t == null || t == "" || s.length() < t.length()) return "";
 
         Map<Character, Integer> need = new HashMap<>();
         Map<Character, Integer> window = new HashMap<>();
@@ -106,6 +106,7 @@ public class L76_minWindow {
     // 而条件 need[d] >= window[d] 表示在缩小窗口时，确保缩小后的窗口仍然包含了字符串 t 中字符的正确数量。
 
     public String minWindow2(String s, String t) {
+        if (s == null || s == "" || t == null || t == "" || s.length() < t.length()) return "";
         int[] need = new int[128]; // need存放t中每个字符出现的词频；
         int[] window = new int[128]; // 统计窗口中每个字符出现次数
 
@@ -126,9 +127,9 @@ public class L76_minWindow {
             window[c]++; // 扩大窗口
             //
             if (need[c] > 0 && need[c] >= window[c]) valid++;
-            // 当满足条件时出现了解，不满足条件，则继续向右移动窗口。
+            // 最小窗口，找到则收获结果
             while (valid == t.length()) {
-                char d = s.charAt(left);
+                char d = s.charAt(left); // 最左字符
                 if (need[d] > 0 && need[d] >= window[d]) valid--;
                 if (right - left + 1 < minLen) {
                     minLen = right - left + 1;
@@ -145,10 +146,11 @@ public class L76_minWindow {
     }
 
 
-    public static void main(String[] args) {
-//        String s = "ADOBECODEBANC", t = "ABC";
-        String s = "aa", t = "aa";
+    @Test
+    public void test(String[] args) {
+        String s = "ADOBECODEBANC", t = "ABC";
+//        String s = "aa", t = "aa";
 //        输出："BANC"
-        System.out.println(new L76_minWindow().minWindow2(s, t));
+        System.out.println(minWindow2(s, t));
     }
 }
