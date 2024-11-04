@@ -20,6 +20,10 @@ import org.junit.Test;
  * 输入: "a good   example"
  * 输出: "example good a"
  * 解释: 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。
+ * <p>
+ * 时间复杂度：O(n)，其中 n 为输入字符串的长度。
+ * <p>
+ * 空间复杂度：需要 O(n) 的空间来存储字符串
  * @Version: 1.0
  */
 public class L4_151_reverseWords {
@@ -84,58 +88,6 @@ public class L4_151_reverseWords {
         }
     }
 
-    class Solution2 {
-        public String reverseWords(String s) {
-            if (s == null || s.length() == 0) return s;
-            StringBuilder sb = removeSpaces(s);
-            reverse(sb, 0, sb.length() - 1);
-            reverseEachWord(sb);
-            return sb.toString();
-        }
-
-        private StringBuilder reverseEachWord(StringBuilder sb) {
-            int left = 0;
-            int end = 0;
-            while (left < sb.length()) {
-                while (end < sb.length() && sb.charAt(end) != ' ') {
-                    end++;
-                }
-                reverse(sb, left, end - 1);
-                left = end + 1;
-                end++;
-            }
-            return sb;
-        }
-
-        private StringBuilder reverse(StringBuilder sb, int left, int right) {
-            while (left < right) {
-                char tmp = sb.charAt(left);
-                sb.setCharAt(left, sb.charAt(right));
-                sb.setCharAt(right, tmp);
-                left++;
-                right--;
-            }
-
-            return sb;
-        }
-        private StringBuilder removeSpaces(String s) {
-            int left = 0;
-            int right = s.length() - 1;
-            StringBuilder sb = new StringBuilder();
-            while (s.charAt(left) == ' ') left++;
-            while (s.charAt(right) == ' ') right--;
-
-            for (int i = left; i <= right; i++) {
-                char ch = s.charAt(i);
-                if (ch != ' ') {
-                    sb.append(ch);
-                } else if (sb.charAt(sb.length() - 1) != ' ') {
-                    sb.append(ch);
-                }
-            }
-            return sb;
-        }
-    }
 
     class Solution3 {
         public String reverseWords(String s) {
@@ -185,60 +137,20 @@ public class L4_151_reverseWords {
             }
         }
     }
+
     class Solution4 {
         public String reverseWords(String s) {
-            if (s == null || s.length() == 0) return s;
-            char[] chars = removeSpace(s);
-            reverse(chars, 0, chars.length - 1);
-            reverseEachWord(chars);
-            return new String(chars);
-        }
-
-        private char[] removeSpace(String s) {
-            char[] chars = s.toCharArray();
-            char[] res = new char[s.length()];
-
-            int left = 0;
-            int right = chars.length - 1;
-
-            while (chars[left] == ' ') left++;
-            while (chars[right] == ' ') right--;
-            int index = 0;
-            for (int i = left; i <= right; i++) {
-                char ch = chars[i];
-                if (ch != ' ') {
-                    res[index++] = ch;
-                } else if (index > 0 && res[index - 1]  != ' ') {
-                    res[index++] = ' ';
-                }
+            String[] strs = s.trim().split(" ");        // 删除首尾空格，分割字符串
+            StringBuilder res = new StringBuilder();
+            for (int i = strs.length - 1; i >= 0; i--) { // 倒序遍历单词列表
+                if (strs[i].equals("")) continue;        // 遇到空字符串跳过，.equals("")是比较空字符串，.equals(" ")里面一个单独的空格字符。
+                res.append(strs[i] + " ");              // 将单词拼接至 StringBuilder
             }
-            char[] finalRes = new char[index];
-            System.arraycopy(res, 0, finalRes, 0, index);
-            return finalRes;
-        }
-
-        private void reverse(char[] chars, int left, int right) {
-            while (left <= right) {
-                char tmp = chars[left];
-                chars[left] = chars[right];
-                chars[right] = tmp;
-                left++;
-                right--;
-            }
-        }
-
-        private void reverseEachWord(char[] chars) {
-            int left = 0;
-            int end = 0;
-            while (left < chars.length) {
-                while (end < chars.length && chars[end] != ' ') end++;
-                reverse(chars, left, end - 1);
-                left = end + 1;
-                end++;
-            }
+            return res.toString().trim();               // 转化为字符串，删除尾部空格，并返回
         }
 
     }
+
     @Test
     public void testReverse() {
         String s = "  hello  world  ";

@@ -25,18 +25,18 @@ public class L2_350_intersection {
         }
 
         // Step 2: Find intersection with nums2
-        List<Integer> intersectionList = new ArrayList<>();
+        List<Integer> resList = new ArrayList<>();
         for (int num : nums2) {
             if (countMap.containsKey(num) && countMap.get(num) > 0) {
-                intersectionList.add(num);
+                resList.add(num);
                 countMap.put(num, countMap.get(num) - 1); // Decrement count
             }
         }
 
         // Step 3: Convert list to array
-        int[] result = new int[intersectionList.size()];
-        for (int i = 0; i < intersectionList.size(); i++) {
-            result[i] = intersectionList.get(i);
+        int[] result = new int[resList.size()];
+        for (int i = 0; i < resList.size(); i++) {
+            result[i] = resList.get(i);
         }
 
         return result;
@@ -61,6 +61,7 @@ public class L2_350_intersection {
      * @description
      * Sorting takes O(n log n) for nums1 and O(m log m) for nums2.
      * The two-pointer iteration takes O(n + m).
+     * O(max(n log n, m log m, n + m))
      * @author benjieqiang
      * @date 2024/8/4 3:26 PM
      */

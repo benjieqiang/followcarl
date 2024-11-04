@@ -39,7 +39,6 @@ public class L1_344_reverseString {
             left++;
             right--;
         }
-        System.out.println(Arrays.toString(s));
     }
 
     @Test

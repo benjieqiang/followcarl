@@ -15,6 +15,9 @@ import java.util.List;
  * a, b, c, and d are distinct.
  * nums[a] + nums[b] + nums[c] + nums[d] == target
  * You may return the answer in any order.
+ * 时间复杂度: O(n^3)
+ * 空间复杂度: O(1)
+ *
  * @Version: 1.0
  */
 public class L7_18_fourSum {
@@ -25,11 +28,9 @@ public class L7_18_fourSum {
         // 剪枝
         for (int k = 0; k < nums.length; k++) {
             if (nums[k] > target && target > 0) break; //剪枝
-            // nums[k]去重
-            if (k > 0 && nums[k] == nums[k - 1]) continue;
+            if (k > 0 && nums[k] == nums[k - 1]) continue; // nums[k]去重
             for (int i = k + 1; i < nums.length; i++) {
-                // 剪枝
-                if (nums[k] + nums[i] > target && target > 0) break;
+                if (nums[k] + nums[i] > target && target > 0) break;// 剪枝
                 if (i > k + 1 && nums[i] == nums[i - 1]) continue; // nums[i]去重
                 int left = i + 1;
                 int right = nums.length - 1;
@@ -60,23 +61,23 @@ public class L7_18_fourSum {
     public List<List<Integer>> fourSum2(int[] nums, int target) {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(nums);
-//        if (nums[0] > target) return res; // target有可能是负数，所以不能加这句
-        for (int i = 0; i < nums.length; i++) {
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+            if (nums[i] > target && target > 0) break;
             if (i > 0 && nums[i] == nums[i - 1]) continue;
-
-            for (int k = i + 1; k < nums.length; k++) {
-                if (k > i + 1 && nums[k] == nums[k - 1]) continue;
-
-                int left = k + 1;
-                int right = nums.length - 1;
+            for (int j = i + 1; j < length; j++) {
+                if (nums[i] + nums[j] > target && target > 0) break;
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+                int left = j + 1;
+                int right = length - 1;
                 while (left < right) {
-                    long sum = (long) nums[i] + nums[k] + nums[left] + nums[right];
-                    if (sum > target) {
-                        right--;
-                    } else if (sum < target) {
+                    long sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum < target) {
                         left++;
+                    } else if (sum > target) {
+                        right--;
                     } else {
-                        res.add(Arrays.asList(nums[i], nums[k], nums[left], nums[right]));
+                        res.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
                         while (left < right && nums[left] == nums[left + 1]) left++;
                         while (left < right && nums[right] == nums[right - 1]) right--;
                         left++;
@@ -92,8 +93,9 @@ public class L7_18_fourSum {
     @Test
     public void test_FourSum() {
 //        int[] nums = {1, 0, -1, 0, -2, 2};
-        int[] nums = {-3, -2, -1, 0, 0, 1, 2, 3};
-        int target = 0;
+//        int[] nums = {-3, -2, -1, 0, 0, 1, 2, 3}; //0
+        int[] nums = {2,2,2,2,2};
+        int target = 8;
         List<List<Integer>> lists = fourSum(nums, target);
         List<List<Integer>> lists2 = fourSum2(nums, target);
         System.out.println(lists);

@@ -6,10 +6,12 @@ import org.junit.Test;
  * @Author: benjieqiang
  * @CreateTime: 2023-07-11  20:05
  * @Description: 链表相交的公共节点
+ * O(m + n)，其中 m 和 n 是两个链表的长度。
+ * O(1)
  * @Version: 1.0
  */
 public class L6_160_getIntersectionNode {
-    // A length: a+c, B length: b+c. c: the length of intersection segment.
+    // A nodes count: a+c, B nodes code: b+c. c: the nodes count of intersection segment.
     // if intersect, a+c+b+c = b+c+a+c, the result is the intersection node;
     // if not，a + b = b+a, a,b will be null
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {

@@ -2,6 +2,8 @@ package com.ben.followcarl.c4_string;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * @description
  * Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
@@ -46,7 +48,7 @@ public class L6_28_strStr {
     }
 
     private void getNext(int[] next, String s) {
-        //1. 初始化，i指向后缀末尾，j指向前缀末尾
+        //1. 初始化，i指向后缀末尾，j指向当前匹配的最长相等前后缀的末尾位置。
         int j = 0; //第一个字符串的最长相等前后缀肯定为0，原因看最长相等前后缀的定义。
         next[0] = 0;
         //2. 循环遍历模式字符串，来更新next[i]的值，next[i]表示的就是i之前的字符串的最长相等前后缀；
@@ -55,7 +57,7 @@ public class L6_28_strStr {
             while (j > 0 && s.charAt(j) != s.charAt(i)) {
                 j = next[j - 1];
             }
-            // 4. 前后缀相同，我们需要更新next数组
+            // 4. 前后缀相同，更新next数组
             if (s.charAt(j) == s.charAt(i))
                 j++;
             next[i] = j;
@@ -92,13 +94,15 @@ public class L6_28_strStr {
     }
     @Test
     public void test_Str() {
-        String haystack = "aaabaaabbbabaa";
-        String needle = "babb";
+        String haystack = "aabaabaaf";
+        String needle = "aabaaf";
 
-        int i = strStr(haystack, needle);
-        int i2 = strStr1(haystack, needle);
-        System.out.println(i);
-        System.out.println(i2);
+//        int i = strStr(haystack, needle);
+        int[] next = new int[needle.length()];
+        getNext(next, needle);
+        System.out.println(Arrays.toString(next));
+//        int i2 = strStr1(haystack, needle); // O((n -m) * m)
+//        System.out.println(i2);
 
     }
 

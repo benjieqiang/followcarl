@@ -37,9 +37,9 @@ class MyStack {
         queue = new LinkedList<>();
     }
 
-    // 进来一个元素就重新排列队列，比如原来是
-    // 队首1 ，新加入元素2， 得到1-》2；
-    // 此时队列排序成： 2-》1， 对应栈顶2-》1；返回栈顶元素getFirst(); 移除栈顶元素remove();
+    // 进来一个元素就重新排列队列，eg:
+    // 队首1 ，新加入元素2， 得到1-》2；front is 1
+    // 此时队列排序成： 2-》1， 对应栈顶2-》1；返回栈顶元素getFirst(); 移除栈顶元素removeFirst();
     public void push(int x) {
         queue.add(x);
         int size = queue.size();

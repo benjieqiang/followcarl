@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2024-08-04  18:31
- * @Description: Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+ * @Description:
+ * Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
  *
  * Notice that the solution set must not contain duplicate triplets.
  * 1. sort; if nums[0] > 0 return null;

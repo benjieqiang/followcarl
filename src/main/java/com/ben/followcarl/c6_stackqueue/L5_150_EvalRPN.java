@@ -54,6 +54,7 @@ public class L5_150_EvalRPN {
                 st.push(Integer.valueOf(str));
             }
         }
+
         return st.pop();
     }
 

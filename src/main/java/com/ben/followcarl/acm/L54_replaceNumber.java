@@ -95,7 +95,7 @@ public class L54_replaceNumber {
          * @author benjieqiang
          * @date 2024/8/4 10:31 PM
          */
-        private  String replaceNumber3(String str) {
+        private String replaceNumber3(String str) {
             if (str == null || str.length() == 0) return str;
 
             int dotCount = 0;
@@ -114,7 +114,7 @@ public class L54_replaceNumber {
             int right = newLength - 1;
 
             while (left >= 0) {
-                if (str.charAt(left) >= '0' && str.charAt(left)  <= '9') {
+                if (str.charAt(left) >= '0' && str.charAt(left) <= '9') {
                     chars[right--] = 'r';
                     chars[right--] = 'e';
                     chars[right--] = 'b';
@@ -131,6 +131,41 @@ public class L54_replaceNumber {
             return new String(chars);
         }
 
+    }
+
+    class Main {
+        public void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+
+            String str = sc.nextLine();
+
+            char[] chars = str.toCharArray();
+
+            int count = 0;
+            for (char ch : chars) {
+                if (ch < 'a' || ch > 'z') count += 5;
+            }
+
+            char[] newChars = new char[str.length() + count];
+
+            int left = chars.length - 1;
+            int right = newChars.length - 1;
+
+            while (left >= 0) {
+                if (chars[left] < 'a' || chars[left] > 'z') {
+                    newChars[right--] = 'r';
+                    newChars[right--] = 'e';
+                    newChars[right--] = 'b';
+                    newChars[right--] = 'm';
+                    newChars[right--] = 'u';
+                    newChars[right--] = 'n';
+                    left--;
+                } else {
+                    newChars[right--] = chars[left--];
+                }
+            }
+            System.out.println(new String(newChars));
+        }
     }
 
     @Test

@@ -12,8 +12,7 @@ class L6_239_MaxSlidingWindowTest {
         int[] res = new int[8];
         int k = 3;
         for (int i = 0; i < res.length; i++) {
-            int i1 = scanner.nextInt();
-            res[i] = i1;
+            res[i] = scanner.nextInt();
         }
         System.out.println(Arrays.toString(res));
 
@@ -88,30 +87,36 @@ public class L6_239_MaxSlidingWindow {
     public int[] maxSlidingWindow2(int[] nums, int k) {
         // 原数组为空或者只有一组元素，直接返回
         if (nums == null || nums.length == 1) return nums;
-
+        // 队列中存放最大值下标，队头是数组中最大值的下标；
         Deque<Integer> deque = new LinkedList<>();
-        // 最终存放结果的数组：长度举例说明：比如[1], k = 1, 结果是[1]; 所以要加1；
+        // 用来存储每个窗口的最大值，因为有nums.length - k + 1个窗口，
+        // 长度举例说明：比如[1], k = 1, 结果是[1]; 所以要加1；
         int[] res = new int[nums.length - k + 1];
 
-
-        for (int right = 0; right < nums.length; right++) {
+        int right = 0;
+        // 使用 right 作为右边界，依次遍历数组 nums。
+        while (right < nums.length) {
             // 如果队列不为空，且当前元素大于等于队尾元素，则移除队尾元素，小弟都撤走，直到遇到新的老大停下来或队列都空了停止；
-            // nums[right]: 当前元素，nums[deque.getLast()]: 队尾元素
+            // 为啥先移除队尾元素，因为是单调递减数组，从后往前比较，给新老大找位置；
+            // nums[right]: 当前元素，
+            // nums[deque.getLast()]: 队尾元素
             while (!deque.isEmpty() && nums[right] > nums[deque.getLast()]) {
                 deque.removeLast();
             }
             deque.addLast(right); // 队列存入当前元素（最大元素）的下标；
 
-            // 判断队首元素是否在窗口内；队首元素下标小于窗口的left时，队首元素不在窗口内，删除队首元素；
+            // 判断队首元素（下标）是否在窗口内；队首元素下标小于窗口的left时，队首元素不在窗口内，删除队首元素；
             int left = right - k + 1;
-            if (deque.getFirst() < left) {
+            if (left > deque.getFirst()) {
                 deque.removeFirst();
             }
 
-            // 窗口形成，收获结果：当窗口右边界right + 1大于等于窗口长度（k）时，此时队首元素就是该窗口最大值，加入结果集；
-            if (right + 1 >= k) {
+            // 窗口形成，收获结果：当窗口右边界right到达k-1下标时，前面有k个元素即形成窗口，因为数组下标是从 0 开始的。
+            // 队首就是最大值；
+            if (right >= k - 1) {
                 res[left] = nums[deque.getFirst()];
             }
+            right++;
         }
         return res;
     }
@@ -127,10 +132,11 @@ public class L6_239_MaxSlidingWindow {
     /*
     {1, 3, -1, -3, 5, 3, 6, 7}
     right => [0, nums.length - 1];
-    双端队列，单调递减，代码里面存放下标, 解释过程存放实际的值；
-    1. right = 0, nums[0] = 1, 队列为空，入队，得到{1},
-    2. right = 1, nums[1] = 3, 队列不为空，队尾元素1 < 3,弹出队尾值1，3入队, {3}
-    3. right = 2, nums[2] = -1, 队尾值3 > -1， 入队得到 {3,-1}, 窗口l = 0， r = 2，res = [3];
+    双端队列，值是单调递减，代码里面存放下标, 下标是单调递增的；
+    使用right遍历数组，遇到比队尾大的元素就把当前队列清空，加入新的最大元素的下标，
+    1. right = 0, nums[0] = 1, 队列为空，入队，得到{1}, front is 1
+    2. right = 1, nums[1] = 3, 队列不为空，队尾元素1 < 3, 弹出队尾值1，3入队, {3}, front is 3
+    3. right = 2, nums[2] = -1, 队尾值3 > -1， -1入队得到 {3,-1}, 窗口l = 0， r = 2，res = [3];
     4. right = 3, nums[3] = -3, 队尾-1 > -3, 入队{3,-1,-3}, 窗口l = 1, r = 3, res = [3,3]
      */
 }

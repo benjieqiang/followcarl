@@ -45,25 +45,19 @@ public class L4_24_swapPairs {
         return dummyHead.next;
     }
     public ListNode swapPairs4(ListNode head) {
-        // Base case: if the list is empty or has only one node, return head
         if (head == null || head.next == null) {
             return head;
         }
-
-        // Nodes to be swapped
-        ListNode firstNode = head;
-        ListNode secondNode = head.next;
-
-        // Recursively swap the remaining pairs
-        firstNode.next = swapPairs4(secondNode.next);
-
-        // Swap the first two nodes
-        secondNode.next = firstNode;
-
-        // Return the new head of the swapped pair
-        return secondNode;
+        // 从后往前来交换。假设是最后一层，3->4->null. head = 3, newHead = 4.
+        // head.next = null; newHead.next = 3, return 4就是交换后的头节点给上一层递归
+        // 交换后新链表的头节点
+        ListNode newHead = head.next;
+        // 老节点指向返回后的链表头节点；
+        head.next = swapPairs4(newHead.next);
+        // 新链表的头节点指向老节点
+        newHead.next = head;
+        return newHead; // 返回新链表头节点
     }
-
 
     @Test
     public void testSwapPairs() {
@@ -75,7 +69,7 @@ public class L4_24_swapPairs {
         node2.next = node3;
         node3.next = node4;
 
-        ListUtils.printListNode(swapPairs2(node1));
+//        ListUtils.printListNode(swapPairs2(node1));
         ListUtils.printListNode(swapPairs4(node1));
     }
 }

@@ -62,7 +62,7 @@ public class L3_977_sortedSquares {
     }
     @Test
     public void testSortedSquares() {
-        int[] nums = null;
+        int[] nums = {-4,-1,0,4,10};
         System.out.println(Arrays.toString(sortedSquares(nums)));
     }
 }

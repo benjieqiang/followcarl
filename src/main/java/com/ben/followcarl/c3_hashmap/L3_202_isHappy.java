@@ -48,9 +48,9 @@ public class L3_202_isHappy {
     public int getSum(int n) {
         int sum = 0;
         while (n > 0) {
-            int temp = n % 10;
+            int temp = n % 10; // n reminder 10, get the last digit of n;
             sum += temp * temp;
-            n = n / 10;
+            n = n / 10; // n is divided by 10, remove the last digit of n;
         }
         return sum;
     }

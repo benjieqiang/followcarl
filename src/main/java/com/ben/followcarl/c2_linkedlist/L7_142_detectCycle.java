@@ -11,7 +11,7 @@ package com.ben.followcarl.c2_linkedlist;
  * 所以： (x + y) * 2 = x + y + n (y + z)
  * x = (n - 1) (y + z) + z
  * n = 1,则说明，fast走了一圈就和slow指针相遇了，且入口节点就是相遇节点
- * x = z；说明从起始节点和相遇节点，两个指针同时走，相遇则是入口节点；
+ * x = z；说明从起始节点和相遇节点，重新出发两个新指针，相遇则是入口节点；
  * @Version: 1.0
  */
 public class L7_142_detectCycle {
@@ -23,7 +23,7 @@ public class L7_142_detectCycle {
             fast = fast.next.next; // 走两步
             slow = slow.next; // 走一步
 
-            if (fast == slow) { // 相遇时，从头节点和相遇节点同时出发，再次相遇就是所求；
+            if (fast == slow) { // 相遇时，从头节点和相遇节点同时出发，再次相遇就是入口节点；
                 ListNode index1 = head;
                 ListNode index2 = fast;
                 while (index1 != index2) {

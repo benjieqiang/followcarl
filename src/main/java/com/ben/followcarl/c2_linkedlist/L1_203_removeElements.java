@@ -30,6 +30,13 @@ public class L1_203_removeElements {
         return dummy.next;
     }
 
+    public ListNode removeElements2(ListNode head, int val) {
+        if (head == null) return head;
+
+        head.next = removeElements(head.next, val);
+        return head.val == val ? head.next : head;
+    }
+
     @Test
     public void testRemoveElements() {
         int val = 6;

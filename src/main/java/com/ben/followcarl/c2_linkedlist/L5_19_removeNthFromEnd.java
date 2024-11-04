@@ -43,6 +43,7 @@ public class L5_19_removeNthFromEnd {
         while (n-- > 0) {
             fast = fast.next;
         }
+        // fast走到待删节点
         fast = fast.next;
 
         // 让left去删
@@ -94,10 +95,12 @@ public class L5_19_removeNthFromEnd {
 //        removeNthFromEnd2(node1, 2);
 //        removeNthFromEnd2(new ListNode(1), 1);
 
-        ListNode n1 = new ListNode(1);
-        ListNode n2 = new ListNode(2);
-        n1.next = n2;
-        ListUtils.printListNode(removeNthFromEnd(node1, 2));
+//        ListNode n1 = new ListNode(1);
+//        ListNode n2 = new ListNode(2);
+//        n1.next = n2;
+        ListUtils.printListNode(node1);
+        System.out.println();
+        ListUtils.printListNode(removeNthFromEnd2(node1, 3));
     }
 
 }

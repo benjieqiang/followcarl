@@ -1,5 +1,7 @@
 package com.ben.followcarl.c3_hashmap;
 
+import org.junit.Test;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-07-11  21:01
@@ -11,7 +13,7 @@ package com.ben.followcarl.c3_hashmap;
  */
 public class L2_383_canConstruct {
     public boolean canConstruct(String ransomNote, String magazine) {
-        int[] res = new int[26]; // ransomNote and magazine consist of lowercase English letters
+        int[] res = new int[128]; // ransomNote and magazine consist of lowercase English letters
         for (char ch : magazine.toCharArray()) {
             res[ch]++;
         }
@@ -46,5 +48,12 @@ public class L2_383_canConstruct {
         // All characters were found in sufficient quantity
         return true;
     }
+
+    @Test
+    public void test() {
+        String ransomNote = "aa", magazine = "aab";
+        System.out.println(canConstruct(ransomNote, magazine));
+    }
+
 
 }

@@ -95,7 +95,7 @@ public class L4_904_totalFruit {
         int count = 0; // if count > 2 we need shrink window
         while (right < fruits.length) {
             window[fruits[right]]++; // inc
-            if (window[right] == 1) count++;
+            if (window[fruits[right]] == 1) count++;
             while (count > 2) {
                 window[fruits[left]]--;
                 // if left fruit num equals 0, decrease count;
@@ -111,9 +111,10 @@ public class L4_904_totalFruit {
 
     @Test
     public void testFruits() {
-//        int[] fruits = {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4};
-        int[] fruits = {1, 2, 3, 2, 2};
+        int[] fruits = {3, 3, 3, 1, 2, 1, 1, 2, 3, 3, 4};
+//        int[] fruits = {1, 2, 3, 2, 2};
 //        int[] fruits = {1, 2, 1};
+        System.out.println(totalFruit2(fruits));
         System.out.println(totalFruit3(fruits));
     }
 }

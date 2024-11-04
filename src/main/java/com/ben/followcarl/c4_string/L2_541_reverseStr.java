@@ -35,7 +35,8 @@ public class L2_541_reverseStr {
             char[] cs = s.toCharArray();
             int length = s.length();
             for (int left = 0; left < length; left += 2 * k) {
-                // 每2k个翻转前k个，剩余字符判断够不够k个来解决，如果是right = length-1说明剩下的字符串长度小于k，不足k则需要反转；
+                // 每2k个翻转前k个，剩余字符判断够不够k个
+                // 如果是right = length-1说明剩下的字符串长度小于k，不足k则需要反转；
                 // 如果是left + k - 1说明是剩下的字符串长度大于k个，只反转前k个
                 int start = left;
                 int right = Math.min(length - 1, start + k - 1);
@@ -79,8 +80,10 @@ public class L2_541_reverseStr {
 
     @Test
     public void testStr() {
-        String s = "abcdefg";
-        int k = 2;
+//        String s = "abcdefg";
+//        int k = 2;
+        String s = "abcdefghijo";
+        int k = 4;
 
         System.out.println(new Solution().reverseStr(s, k));
     }
