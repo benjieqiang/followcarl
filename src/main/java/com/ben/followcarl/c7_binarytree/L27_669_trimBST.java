@@ -40,9 +40,7 @@ public class L27_669_trimBST {
             }
         }
         // 没有满足条件的节点。
-        if (root == null) {
-            return null;
-        }
+        if (root == null) return null;
         // 从root出发，只有有左孩子，左孩子不在low范围内，则让node指向下一个左孩子的右节点。也就是删除了node.left节点
         for (TreeNode node = root; node.left != null; ) {
             if (node.left.val < low) {
@@ -62,6 +60,17 @@ public class L27_669_trimBST {
         return root;
     }
 
+    public TreeNode trimBST4(TreeNode root, int low, int high) {
+        if (root == null) return null;
+        // if root.val < low, left subtree < low, handle right subtree.
+        if (root.val < low) return trimBST4(root.right, low, high);
+        // if root.val > high, right subtree > high. not in [low, high], handle left subtree;
+        if (root.val > high) return trimBST4(root.left, low, high);
+        // root val in [low, high], recursive root.left and root.right;
+        root.left = trimBST4(root.left, low, high);
+        root.right = trimBST4(root.right, low, high);
+        return root;
+    }
     @Test
     public void test_TrimBST() {
         //root = [3,0,4,null,2,null,null,1]

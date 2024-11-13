@@ -25,8 +25,8 @@ public class L6_559_maxDepth {
     public int maxDepth2(Node root) {
         if (root == null) return 0;
         int depth = 0;
-        for (int i = 0; i < root.children.size(); i++) {
-            depth = Math.max(depth, maxDepth(root.children.get(i)));
+        for (Node node : root.children) {
+            depth = Math.max(depth, maxDepth(node));
         }
         return depth + 1;
     }

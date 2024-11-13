@@ -26,9 +26,10 @@ public class L25_701_insertIntoBST {
      */
     public TreeNode insertIntoBST(TreeNode root, int val) {
         if (root == null) {
-            // 找到了要插入的位置
+            // 下一层找到了要插入的位置
             return new TreeNode(val);
         }
+        // 本层使用root.left或root.right接住，这样就插入了新节点
         if (val < root.val) {
             root.left = insertIntoBST(root.left, val);
         } else {

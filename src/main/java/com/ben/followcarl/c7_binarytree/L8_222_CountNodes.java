@@ -39,9 +39,8 @@ public class L8_222_CountNodes {
             right = right.right;
             rightDepth++;
         }
-        if (leftDepth == rightDepth) {
-            return (2 << leftDepth) - 1; // 注意一定要带括号：(2<<1) 相当于2^2，返回满足满二叉树的子树节点数量
-        }
+        // 注意一定要带括号：(2<<1) 相当于2^2，返回满足满二叉树的子树节点数量
+        if (leftDepth == rightDepth) return (2 << leftDepth) - 1;
         // 如果两侧高度不一致，则使用后序遍历的方法，
         return countNodes2(root.left) + countNodes2(root.right) + 1;
     }
@@ -63,9 +62,6 @@ public class L8_222_CountNodes {
             }
         }
         return res;
-    }
-    public static void main(String[] args) {
-
     }
 
     @Test

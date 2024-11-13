@@ -59,7 +59,7 @@ public class L22_501_findMode {
     /**
      * @param root:
      * @return int
-     * @description TODO: 8.14
+     * @description
      * @author benjieqiang
      * @date 2023/8/14 4:11 PM
      */
@@ -68,12 +68,13 @@ public class L22_501_findMode {
         dfs(root);
         // 不知道如何使用API的话
         int[] res = new int[resList.size()];
+        //        return resList.stream().mapToInt(Integer::intValue).toArray();
+
         //把集合list转化为数组
         for (int i = 0; i < resList.size(); i++) {
             res[i] = resList.get(i);
         }
         return res;
-//        return resList.stream().mapToInt(Integer::intValue).toArray();
     }
 
     /**

@@ -16,9 +16,8 @@ public class L5_572_isSubtree {
     }
 
     private boolean compare(TreeNode left, TreeNode right) {
-        if (left == null && right != null) return false;
-        if (left != null && right == null) return false;
         if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
         if (left.val != right.val) return false;
 
         return compare(left.left, right.left) && compare(left.right, right.right);

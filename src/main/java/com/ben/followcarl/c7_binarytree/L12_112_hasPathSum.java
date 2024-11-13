@@ -76,18 +76,12 @@ public class L12_112_hasPathSum {
         return hasPathSum3(root.left, targetSum - root.val) || hasPathSum3(root.right, targetSum - root.val);
     }
 
-
+    // 需要找到一条符合的路径，所以需要返回值
+    // 在递归中完成回溯
     public boolean hasPathSum2(TreeNode root, int targetSum) {
         if (root == null) return false;
-        boolean res = traversal(root, 0, targetSum);
-        return res;
-    }
-
-    private boolean traversal(TreeNode root, int sum, int targetSum) {
-        if (root == null) return false;
-        sum += root.val;
-        if (sum == targetSum && root.left == null && root.right == null) return true;
-        return traversal(root.left, sum, targetSum) || traversal(root.right, sum, targetSum);
+        if (targetSum == root.val && root.left == null && root.right == null) return true;
+        return hasPathSum2(root.left, targetSum - root.val) || hasPathSum2(root.right, targetSum - root.val);
     }
 
     @Test
@@ -102,7 +96,7 @@ public class L12_112_hasPathSum {
 
 
         int targetSum = 5;
-        boolean res = hasPathSum2(node1, targetSum);
+        boolean res = hasPathSum3(node1, targetSum);
         System.out.println(res);
     }
 

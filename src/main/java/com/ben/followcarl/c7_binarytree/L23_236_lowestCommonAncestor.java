@@ -25,7 +25,7 @@ public class L23_236_lowestCommonAncestor {
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) return root; //空
-        if (root == p || root == q) return root; // 遇到p或q向上返回;
+        if (root == p || root == q) return root; // 遇到自己就是自己的祖先，p或q向上返回;
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
         if (left != null && right != null) {

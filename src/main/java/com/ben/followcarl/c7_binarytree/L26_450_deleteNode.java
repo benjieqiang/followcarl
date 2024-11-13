@@ -11,14 +11,14 @@ import org.junit.Test;
  * 1. 未找到,返回null
  * 2. 找到待删节点,有四种情况
  *      1. 左右孩子为空,直接删,返回null。情况1
- *      2. 左右孩子有一个为空, 返回不为空的孩子;(2种情况)
+ *      2. 左右孩子有一个为空, 返回不为空的孩子;
  *      3. 左右孩子都不为空, 先找右孩子的最左节点, 再把待删节点的左孩子挂到右孩子最左节点的左边;
  * 3. 递归去看左右孩子是否需要删除,比较key与当前节点值，来决定走左子树还是右子树；
  * @Version: 1.0
  */
 public class L26_450_deleteNode {
     public TreeNode deleteNode(TreeNode root, int key) {
-        if (root == null) return root; // 未找到要删除的节点，此时root为空
+        if (root == null) return root; // 未找到代删节点，此时root为空
         // 找到，即root是待删节点
         if (root.val == key) {
             //1.左右孩子为空, 叶子节点,直接返回null

@@ -50,6 +50,7 @@ public class L11_513_findBottomLeftValue {
             // 收集结果
             maxDepth = depth;
             res = root.val;
+            System.out.println(res);
         }
         if (root.left != null) traversal(root.left, depth + 1);
         if (root.right != null) traversal(root.right, depth + 1);

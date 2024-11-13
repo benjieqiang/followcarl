@@ -32,7 +32,7 @@ public class L5_101_IsSymmetric {
             if ((rightNode != null && leftNode == null) || (rightNode == null && leftNode != null) || (rightNode.val != leftNode.val)) {
                 return false;
             }
-            // 栈每次入栈是：右外及内。左结点的左孩子+右节点的右孩子， 左结点的右孩子+右节点的左孩子，
+            // 栈每次入栈是：由外及内。左结点的左孩子+右节点的右孩子， 左结点的右孩子+右节点的左孩子，
             stack.push(leftNode.left);
             stack.push(rightNode.right);
             stack.push(leftNode.right);

@@ -16,12 +16,14 @@ import java.util.List;
  */
 public class L21_530_getMinimumDifference {
     List<Integer> resList = new ArrayList<>();
+
     void traversal(TreeNode root) {
         if (root == null) return;
         traversal(root.left);
         resList.add(root.val);
         traversal(root.right);
     }
+
     /**
      * @param root:
      * @return int
@@ -30,7 +32,7 @@ public class L21_530_getMinimumDifference {
      * @date 2023/5/9 10:04 PM
      */
     public int getMinimumDifference(TreeNode root) {
-        if(root == null) return 0;
+        if (root == null) return 0;
         traversal(root);
         int val = Integer.MAX_VALUE;
         for (int i = 1; i < resList.size(); i++) {
@@ -39,8 +41,9 @@ public class L21_530_getMinimumDifference {
         }
         return val;
     }
+
     @Test
-    void testGetMinimumDifference() {
+    public void testGetMinimumDifference() {
 
     }
 
@@ -48,12 +51,13 @@ public class L21_530_getMinimumDifference {
     class Solution {
         int res = Integer.MAX_VALUE;
         TreeNode pre = null;
+
         /**
          * @param root:
          * @return void
-         * @description 递归的时候,利用pre来记录当前节点的上一个节点
+         * @description 递归的时候, 利用pre来记录当前节点的上一个节点
          * cur 指向当前节点；
-         *
+         * <p>
          * 左中右的递归；
          * @author benjieqiang
          * @date 2023/8/14 3:32 PM
@@ -74,9 +78,11 @@ public class L21_530_getMinimumDifference {
             traversal(cur.right);
         }
     }
+
     // 中序遍历模板；
     int minValue = Integer.MAX_VALUE;
     TreeNode pre = null;
+
     public int getMinimumDifference4(TreeNode root) {
         if (root == null) return 0;
         Deque<TreeNode> stack = new LinkedList<>();
@@ -96,9 +102,15 @@ public class L21_530_getMinimumDifference {
         }
         return minValue;
     }
-    @Test
-    void testGetMinimumDifference2() {
 
+    @Test
+    public void testGetMinimumDifference2() {
+        //10^ 5和Integer.MAX_VALUE哪个大
+        double max = Math.pow(2, 32);
+        int maxInt = Integer.MAX_VALUE;
+        System.out.println(max);
+        System.out.println(maxInt);
+        System.out.println(max > maxInt);
     }
 
 
@@ -119,6 +131,7 @@ public class L21_530_getMinimumDifference {
         }
         return res;
     }
+
     private void traversal(TreeNode root, List<Integer> list) {
         if (root == null) return;
         traversal(root.left, list);

@@ -1,5 +1,7 @@
 package com.ben.followcarl.c7_binarytree;
 
+import org.junit.Test;
+
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -31,12 +33,10 @@ public class L7_111_minDepth {
     }
 
     /**
-     * 迭代法，层序遍历，只要左右孩子为空，则就找到第一个叶子节点，直接返回当前的depth；
+     * 迭代法，层序遍历，只要左右孩子为空，则就找到首个叶子节点，直接返回当前的depth；
      */
     public int minDepth2(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
+        if (root == null) return 0;
         Deque<TreeNode> deque = new LinkedList<>();
         deque.add(root);
         int depth = 0;
@@ -45,30 +45,17 @@ public class L7_111_minDepth {
             depth++;
             for (int i = 0; i < size; i++) {
                 TreeNode node = deque.remove();
-                if (node.left == null && node.right == null) {
-                    // 是叶子结点，直接返回depth，因为从上往下遍历，所以该值就是最小值
-                    return depth;
-                }
-                if (node.left != null) {
-                    deque.add(node.left);
-                }
-                if (node.right != null) {
-                    deque.add(node.right);
-                }
+                // 找到首个叶子结点，直接返回depth，因为从上往下遍历，所以该值就是最小值
+                if (node.left == null && node.right == null) return depth;
+                if (node.left != null) deque.add(node.left);
+                if (node.right != null) deque.add(node.right);
             }
         }
         return depth;
     }
 
     class Solution {
-        /**
-         * @param root:
-         * @return int
-         * @description dfs解法： 最小深度是从根节点到最近**叶子节点**的最短路径上的节点数量
-         * 多了判断；
-         * @author benjieqiang
-         * @date 2024/2/19 11:04 AM
-         */
+        // dfs解法： 最小深度是从根节点到最近**叶子节点**的最短路径上的节点数量
         public int minDepth(TreeNode root) {
             if (root == null) return 0;
             int leftDepth = minDepth(root.left); // 左子树深度
@@ -82,5 +69,22 @@ public class L7_111_minDepth {
             // 如果左右子树都不为空，递归计算左右子树的最小深度，取最小值
             return Math.min(leftDepth, rightDepth) + 1;
         }
+    }
+
+    @Test
+    public void testMinDepth() {
+        //  root = [3,9,20,null,null,15,7]
+        TreeNode node1 = new TreeNode(3);
+        TreeNode node2 = new TreeNode(9);
+        TreeNode node3 = new TreeNode(20);
+        TreeNode node4 = new TreeNode(15);
+        TreeNode node5 = new TreeNode(7);
+        node1.left = node2;
+        node1.right = node3;
+        node3.left = node4;
+        node3.right = node5;
+
+        int res = minDepth(node1);
+        System.out.println(res);
     }
 }

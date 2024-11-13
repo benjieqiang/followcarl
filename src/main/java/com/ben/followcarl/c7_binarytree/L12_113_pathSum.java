@@ -2,6 +2,7 @@ package com.ben.followcarl.c7_binarytree;
 
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -100,6 +101,38 @@ public class L12_113_pathSum {
         }
     }
 
+    public List<List<Integer>> pathSum3(TreeNode root, int targetSum) {
+        List<List<Integer>> res = new LinkedList<>();
+        if (root == null) return res;
+        Deque<Object> stack = new LinkedList<>();
+        stack.push(root);
+        stack.push(root.val);
+        stack.push(new LinkedList<>(Arrays.asList(root.val)));
+        while (!stack.isEmpty()) {
+            List<Integer> path = (LinkedList)stack.pop();
+            int sum = (int)stack.pop();
+            TreeNode node = (TreeNode)stack.pop();
+            if (targetSum == sum && node.left == null && node.right == null) {
+                res.add(path);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+                stack.push(sum + node.left.val);
+                path.add(node.left.val);
+                stack.push(new LinkedList<>(path));
+                path.remove(path.size() - 1);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+                stack.push(sum + node.right.val);
+                path.add(node.right.val);
+                stack.push(new LinkedList<>(path));
+                path.remove(path.size() - 1);
+            }
+        }
+
+        return res;
+    }
     @Test
     public void testPathSum() {
 
@@ -122,7 +155,7 @@ public class L12_113_pathSum {
         node6.right = node9;
 
         int targetSum = 22;
-        List<List<Integer>> res = pathSum(node1, targetSum);
+        List<List<Integer>> res = pathSum3(node1, targetSum);
         System.out.println(res);
 
     }

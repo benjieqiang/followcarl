@@ -31,7 +31,9 @@ public class L4_226_InvertTree {
         // 2. 递归结束的条件，为空则返回当前结点；
         if (root == null) return root;
         // 3. 单层递归的逻辑。
-        swap(root);
+        TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
         System.out.println(root.val);
         invertTree(root.left);
         invertTree(root.right);
@@ -44,7 +46,7 @@ public class L4_226_InvertTree {
         root.right = tmp;
     }
 
-    // bfs 迭代
+    // bfs 迭代，出栈时，依次交换以他为根节点的左右孩子。
     public TreeNode invertTree2(TreeNode root) {
         if (root == null) return root;
         Deque<TreeNode> stack = new LinkedList<>();

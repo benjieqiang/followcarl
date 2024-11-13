@@ -2,6 +2,8 @@ package com.ben.followcarl.c7_binarytree;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-05-08  15:03
@@ -67,6 +69,28 @@ public class L17_654_constructMaximumBinaryTree {
         root.left = construct(nums, 0, index);
         root.right = construct(nums, index + 1, nums.length);
 
+        return root;
+    }
+
+    public TreeNode constructMaximumBinaryTree3(int[] nums) {
+        if (nums == null || nums.length == 0) return null;
+        int maxVal = nums[0];
+        int index = 0;
+        // get maxValue & index;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > maxVal) {
+                maxVal = nums[i];
+                index = i;
+            }
+        }
+        TreeNode root = new TreeNode(maxVal);
+        // split nums;
+        int[] leftNums = Arrays.copyOfRange(nums, 0, index);
+        int[] rightNums = Arrays.copyOfRange(nums, index + 1, nums.length);
+        // build root.left, root.right;
+        root.left = constructMaximumBinaryTree(leftNums);
+        root.right = constructMaximumBinaryTree(rightNums);
+        // return root;
         return root;
     }
     @Test

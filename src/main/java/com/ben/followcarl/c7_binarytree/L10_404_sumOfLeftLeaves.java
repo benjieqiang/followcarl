@@ -39,35 +39,19 @@ public class L10_404_sumOfLeftLeaves {
     public int sumOfLeftLeaves2(TreeNode root) {
         if (root == null) return 0;
         if (root.left == null && root.right == null) return 0;
-        int leftValue = sumOfLeftLeaves2(root.left);
-        if (root.left != null && root.left.left == null && root.left.right == null) {
-            leftValue = root.left.val;
-        }
-        int rightValue = sumOfLeftLeaves2(root.right);
 
+        int leftValue = 0;
+        // Check if root.left is a left leaf
+        if (root.left != null && root.left.left == null && root.left.right == null) {
+            leftValue = root.left.val;  // Use the left leaf value directly
+        } else {
+            leftValue = sumOfLeftLeaves2(root.left);  // Recur only if it's not a left leaf
+        }
+
+        int rightValue = sumOfLeftLeaves2(root.right);  // Recur on right subtree
         return leftValue + rightValue;
     }
 
-
-    class Solution {
-        /**
-         * @param root:
-         * @return int
-         * @description 如果求所有节点，那就是当前节点值 + 左孩子的所有节点值 + 右孩子的所有节点值；
-         * 加上条件：只求左孩子：遍历到当前节点，它的左孩子不为空，且左孩子的左右孩子为空，则说明找到了左节点，得到的左孩子值加上当前节点右孩子的所求节点；
-         * @author benjieqiang
-         * @date 2024/2/19 3:09 PM
-         */
-        public int sumOfLeftLeaves(TreeNode root) {
-            if (root == null) return 0;
-            if (root.left == null && root.right == null) return 0;
-            if (root.left != null && root.left.left == null && root.left.right == null) {
-                return root.left.val + sumOfLeftLeaves(root.right);
-            }
-
-            return sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right);
-        }
-    }
 
     @Test
     public void testSum() {

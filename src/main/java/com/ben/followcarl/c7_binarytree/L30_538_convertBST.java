@@ -54,4 +54,22 @@ public class L30_538_convertBST {
         }
         return root;
     }
+
+    class Solution {
+        public TreeNode convertBST(TreeNode root) {
+            dfs(root, 0);
+            return root;
+        }
+
+        private int dfs(TreeNode root, int pre) {
+            if (root == null) return pre;
+            // Traverse the right subtree first, passing the updated pre value
+            pre = dfs(root.right, pre);
+            // Update root value and pre
+            root.val += pre;
+            pre = root.val;
+            // Traverse the left subtree with the new pre value
+            return dfs(root.left, pre);
+        }
+    }
 }

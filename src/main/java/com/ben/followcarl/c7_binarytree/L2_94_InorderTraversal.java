@@ -25,10 +25,10 @@ public class L2_94_InorderTraversal {
             if (cur != null) { // 如果当前节点不为空，将当前节点以及其左子树的所有左孩子节点压入栈中
                 stack.push(cur); // 当前节点入栈
                 cur = cur.left; // 移动到左子树
-            } else { // 如果当前节点为空，则表示左子树已经遍历完毕，需要处理栈顶元素
+            } else { // 如果当前节点为空，弹出栈顶节点，此时这个节点的左子树已经全部处理完
                 cur = stack.pop(); // 弹出栈顶元素
-                list.add(cur.val); // 将栈顶元素的值加入结果集
-                cur = cur.right; // 移动到右子树
+                list.add(cur.val); // 加入中节点
+                cur = cur.right; // 处理右节点
             }
         }
         return list; // 返回中序遍历结果列表
@@ -56,9 +56,9 @@ public class L2_94_InorderTraversal {
     5
   4   6
  1 2
- * 1. 往栈中把左孩子全压入，stack = [1,4,5]，栈顶是1，由于无左孩子，所以走else逻辑，
- * 2. 先拿出栈顶元素1， 把1放入结果集res中，stack = [4,5], res = [1]，移动到当前元素的右节点；
- * 3. 结点1的右边孩子为空，但是栈不为空，继续进入while循环，走else分支，弹出栈顶元素4，stack = [5], res = [1, 4]，cur指向右孩子2；
+ * 1. 往栈中把左孩子全压入，stack = [1,4,5]，top is 1，由于无左孩子，所以走else逻辑，
+ * 2. 先拿出栈顶元素1， 把1放入结果集res中，stack = [4,5], res = [1]，移动到当前节点1的右节点；
+ * 3. 结点1的右边孩子为空，但是栈不为空，继续进入while循环，走else分支，弹出栈顶元素4，stack = [5], top is 5, res = [1, 4]，cur指向右孩子2；
  * 4. 结点4的右孩子2放入栈中，stack = [2,5], res = [1,4]，cur此时指2的左孩子= null, 但stack不为空，走else逻辑；
  * 5. 2出栈，入res，stack = [5], res = [1,4,2]
  * 6. 2无右孩子，cur = null, 所以继续else逻辑，5出栈，stack = []. cur指向右孩子6, res = [1,4,2,5]

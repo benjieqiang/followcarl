@@ -58,11 +58,9 @@ public class L10_257_binaryTreePaths {
 
     private void traversal(TreeNode root, String str, List<String> res) {
         if (root == null) return;
-        // 遇到叶子结点就停下来，收集结果
         str += root.val;
-        if (root.left == null && root.right == null) {
-            res.add(str);
-        }
+        // 遇到叶子结点就停下来，收集结果
+        if (root.left == null && root.right == null) res.add(str);
         // 递归和回溯是同时进行，这里入参执行完，自己就回溯了
         traversal(root.left, str + "->", res);
         traversal(root.right, str + "->", res);
