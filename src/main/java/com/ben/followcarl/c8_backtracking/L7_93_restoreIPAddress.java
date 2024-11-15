@@ -50,7 +50,7 @@ public class L7_93_restoreIPAddress {
      * @param s:     题目给的字符串
      * @param index: 用来决定for循环下一层从哪里开始
      * @param num:   统计字符串中小数点的个数,为3会收获结果;
-     * @return void
+     * @return void  O of three to the power of four
      * @description * 时间复杂度: O(3^4)，IP地址最多包含4个数字，每个数字最多有3种可能的分割方式，则搜索树的最大深度为4，每个节点最多有3个子节点。
      * * 空间复杂度: O(n)
      * @author benjieqiang
@@ -181,6 +181,43 @@ public class L7_93_restoreIPAddress {
                 if (num > 255) return false;
             }
 
+            return true;
+        }
+    }
+
+    //方法一：但使用stringBuilder，故优化时间、空间复杂度，因为向字符串插入字符时无需复制整个字符串，从而减少了操作的时间复杂度，也不用开新空间存subString，从而减少了空间复杂度。
+    class Solution2 {
+        List<String> result = new ArrayList<>();
+
+        public List<String> restoreIpAddresses(String s) {
+            StringBuilder sb = new StringBuilder(s);
+            backTracking(sb, 0, 0);
+            return result;
+        }
+
+        private void backTracking(StringBuilder s, int startIndex, int dotCount) {
+            if (dotCount == 3 && isValid(s, startIndex, s.length() - 1)) {
+                result.add(s.toString());
+                return;
+            }
+            for (int i = startIndex; i < s.length(); i++) {
+                if (!isValid(s, startIndex, i)) break;
+                s.insert(i + 1, '.');
+                backTracking(s, i + 2, dotCount + 1);
+                s.deleteCharAt(i + 1);
+            }
+        }
+
+        //[start, end]
+        private boolean isValid(StringBuilder s, int start, int end) {
+            if (start > end) return false;
+            if (s.charAt(start) == '0' && start != end) return false;
+            int num = 0;
+            for (int i = start; i <= end; i++) {
+                int digit = s.charAt(i) - '0';
+                num = num * 10 + digit;
+                if (num > 255) return false;
+            }
             return true;
         }
     }

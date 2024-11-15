@@ -13,7 +13,8 @@ import java.util.List;
  * <p>
  * 示例: 输入: n = 4, k = 2 输出: [ [2,4], [3,4], [2,3], [1,2], [1,3], [1,4], ]
  * <p>
- * 时间复杂度: O(n * 2^n)
+ * 分析回溯问题的时间复杂度，有一个通用公式：路径长度×搜索树的叶子数。对于本题，它等于 O(k⋅C(n,k))。
+ * C(n,k)= k!⋅(n−k)!/n!
  * 空间复杂度: O(n)
  * @Version: 1.0
  */
@@ -45,9 +46,11 @@ public class L1_77_combine {
          * 2.  k - path.size() : 还需要从集合中选几个元素；
          * 3.  for循环还需要遍历多少次呢？
          *   n - (k - path.size()) + 1
-         *  举例: 如果path.size() = 0, n = 4，k = 3，
-         *       目前没有从集合中选任何元素（path.size为0）n - (k - 0) + 1 即 4 - ( 3 - 0) + 1 = 2。
-         *       当path.size() = 0 时，i可选范围是【1，2】, i如果为3, 肯定选不出来大小为3的集合;
+         *  举例: 为啥要加1呢？
+         *       如果path.size() = 0, n = 4，k = 3，
+         *       想象树顶是集合[1,2,3,4],进来之后startIndex是1，可以选1/2/3/4.
+         *      （path.size为0）n - (k - 0) + 1 即 4 - ( 3 - 0) + 1 = 2。
+         *       也就是说，第一次选元素，边界上界就是2.选3，4都没用，凑不够k=3个数。
          * */
     }
 
@@ -64,8 +67,8 @@ public class L1_77_combine {
     public void testCombine() {
         int n = 4;
         int k = 2;
-        List<List<Integer>> res = combine(4, 2);
-        System.out.println(res);
+        List<List<Integer>> res = combine(4, 3);
+        System.out.println(res); // [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]]
     }
 
 }

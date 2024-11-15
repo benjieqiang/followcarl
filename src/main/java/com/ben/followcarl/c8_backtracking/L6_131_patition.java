@@ -51,7 +51,8 @@ public class L6_131_patition {
             return;
         }
         for (int i = startIndex; i < s.length(); i++) {
-            if (!isPalindrome(s, startIndex, i)) continue; // 非回文串则跳过；使用continue而不是break原因
+            if (!isPalindrome(s, startIndex, i)) continue;
+            // 非回文串则跳过；使用continue而不是break原因
             // 比如efe字符串，虽然从0-1不是回文串，但是整体是回文串，efe
             path.add(s.substring(startIndex, i + 1)); // 否则加入s的区间字符串
             backtracking(s, i + 1); // index从i+1开始，刚开始如果是第一层，则树形图第二层从第二个元素开始；不会重复取；

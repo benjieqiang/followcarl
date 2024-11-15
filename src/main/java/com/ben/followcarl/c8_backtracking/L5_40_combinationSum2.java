@@ -115,6 +115,7 @@ public class L5_40_combinationSum2 {
                 return;
             }
             for (int i = index; i < candidates.length; i++) {
+                // 树层去重，元素相等且上一个元素使用过了，
                 if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false) continue;
                 path.add(candidates[i]);
                 used[i] = true;
@@ -160,9 +161,40 @@ public class L5_40_combinationSum2 {
         }
     }
 
+    class Solution3 {
+        List<List<Integer>> res = new LinkedList<>();
+        List<Integer> path = new LinkedList<>();
+
+        public List<List<Integer>> combinationSum(int[] candidates, int target) {
+            if (candidates == null || candidates.length == 0) return res;
+            Arrays.sort(candidates);
+            boolean[] used = new boolean[candidates.length];
+            backtracking(candidates, target, 0, used);
+            return res;
+        }
+
+        private void backtracking(int[] candidates, int target, int startIndex, boolean[] used) {
+            if (target < 0) return;
+            if (target == 0) {
+                res.add(new LinkedList<>(path));
+                return;
+            }
+            for (int i = startIndex; i < candidates.length; i++) {
+                if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false) continue;
+                path.add(candidates[i]);
+                used[i] = true;
+                backtracking(candidates, target - candidates[i], i + 1, used);
+                path.remove(path.size() - 1);
+                used[i] = false;
+            }
+        }
+    }
+
     @Test
     public void testCombinationSum2() {
-        int[] candidates = {4, 3, 2, 3, 5, 2, 1};
-        System.out.println(combinationSum2(candidates, 5));
+//        int[] candidates = {4, 3, 2, 3, 5, 2, 1};, 5
+        int[] candidates = {2,3,5};// 8
+        System.out.println(new Solution2().combinationSum2(candidates, 8));
+//        System.out.println(new Solution3().combinationSum(candidates, 8));
     }
 }
