@@ -13,22 +13,22 @@ import java.util.Arrays;
  */
 public class L1_455_findContentChildren {
     // 错误写法：大饼干满足大胃口孩子，修改为：只能先遍历胃口，再遍历饼干
-//    public int findContentChildren(int[] g, int[] s) {
-//        // 排序之后，大饼干优先给大胃口的孩子
-//        Arrays.sort(g);
-//        Arrays.sort(s);
-//        int index = g.length - 1; // 饼干长度
-//        int res = 0; //结果集
-//        // 从后往前遍历
-//        for (int i = s.length - 1; i >= 0; i--) {
-//            // 饼干从后往前遍历, 如果大饼干尺寸大于等于孩子胃口,收集结果;
-//            if (index >= 0 && s[i] >= g[index]) {
-//                res++;
-//                index--;
-//            }
-//        }
-//        return res;
-//    }
+    public int findContentChildrenWrong(int[] g, int[] s) {
+        // 排序之后，大饼干优先给大胃口的孩子
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int index = g.length - 1; // 饼干长度
+        int res = 0; //结果集
+        // 从后往前遍历
+        for (int i = s.length - 1; i >= 0; i--) {
+            // 饼干从后往前遍历, 如果大饼干尺寸大于等于孩子胃口,收集结果;
+            if (index >= 0 && s[i] >= g[index]) {
+                res++;
+                index--;
+            }
+        }
+        return res;
+    }
     public int findContentChildren(int[] g, int[] s) {
         // 排序之后，大饼干优先给大胃口的孩子
         Arrays.sort(g);
@@ -63,6 +63,7 @@ public class L1_455_findContentChildren {
     public void testFindContentChildren(){
         int[] g = {7,8,9,10};
         int[] s = {5,6,7,8};
+        System.out.println(findContentChildrenWrong(g, s));
         System.out.println(findContentChildren(g, s));
         System.out.println(findContentChildren2(g, s));
 

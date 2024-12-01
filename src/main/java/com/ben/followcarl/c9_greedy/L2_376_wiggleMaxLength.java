@@ -67,8 +67,9 @@ public class L2_376_wiggleMaxLength {
     https://leetcode-cn.com/problems/wiggle-subsequence/solution/zheng-ming-wei-shi-yao-dong-tai-gui-hua-97d4m/
      * 每有一个「峰」到「谷」的下降趋势，down 值才会增加，
      * 每有一个「谷」到「峰」的上升趋势，up 值才会增加。
-     * 且过程中 down 与 up 的差的绝对值值恒不大于 1，即 up≤down+1 且 down≤up+1，
-     * 于是有 max(up,down+1)=down+1 且 max(up+1,down)=up+1。
+     * 且过程中 down 与 up 的差的绝对值值恒不大于 1，
+     * 即 up≤down+1 且 down≤up+1，
+     * 所以： max(up,down+1)=down+1 且 max(up+1,down)=up+1。
      * 这样我们可以省去不必要的比较大小的过程。
      * @author benjieqiang
      * @date 2024/4/15 5:13 PM

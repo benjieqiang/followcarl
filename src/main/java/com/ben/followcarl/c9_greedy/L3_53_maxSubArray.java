@@ -2,18 +2,19 @@ package com.ben.followcarl.c9_greedy;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-01  09:18
- * @Description:
- * 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
- *
+ * @Description: 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+ * <p>
  * 示例:
- *
+ * <p>
  * 输入: [-2,1,-3,4,-1,2,1,-5,4]
  * 输出: 6
  * 解释:  连续子数组  [4,-1,2,1] 的和最大，为  6。
- *
  * @Version: 1.0
  */
 public class L3_53_maxSubArray {
@@ -22,9 +23,9 @@ public class L3_53_maxSubArray {
     /**
      * @param nums:
      * @return int
-     * @description  暴力解法:
-     *  固定一个位置, 从下一个位置一直累加求各元素和, 如果大于结果集, 重新赋值给res;
-     *  O n2的算法；
+     * @description 暴力解法:
+     * 固定一个位置, 从下一个位置一直累加求各元素和, 如果大于结果集, 重新赋值给res;
+     * O n2的算法；
      * @author benjieqiang
      * @date 2023/6/1 9:30 AM
      */
@@ -60,11 +61,30 @@ public class L3_53_maxSubArray {
         }
         return res;
     }
+
+    public void maxSubArray3(int[] nums) {
+        int res = Integer.MIN_VALUE;
+        int sum = 0;
+        List<Integer> resList = new ArrayList<>();
+        List<Integer> curList = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            curList.add(nums[i]);
+            if (sum > res) {
+                resList = new ArrayList<>(curList);
+            }
+            if (sum < 0) curList.clear();
+        }
+        System.out.println(resList);
+    }
+
+
     @Test
     public void testMaxSubArray() {
-        int[] nums = {5,4,-1,7,8};
+        int[] nums = {5, 4, -1, 7, 8};
 //        int[] nums = {-2, -1};
         System.out.println(maxSubArray1(nums));
         System.out.println(maxSubArray(nums));
+        maxSubArray3(nums);
     }
 }
