@@ -21,6 +21,7 @@ import java.util.Arrays;
  * @Version: 1.0
  */
 public class L4_62_uniquePaths {
+    // O(m*n)遍历m*n的二维数组；
     public int uniquePaths(int m, int n) {
         if (m == n && n == 1) return m;
         // 1. dp[i][j]的含义，代表在第i行j列的位置有这么些走法；
@@ -38,6 +39,30 @@ public class L4_62_uniquePaths {
         return dp[m - 1][n - 1];
     }
 
+    /**
+     * @param m:
+     * @param n:
+     * @return int
+     * @description 降维成一维数组，滚动数组，dp[i][j] = dp[i][j - 1] + dp[i - 1][j];
+     * dp[i][j]只和上侧和左侧有关，压缩一下，就是把dp[i]去掉，把和行有关的参数去掉
+     * dp[j] = dp[j] + dp[j - 1];
+     * O(n)空间
+     * @author benjieqiang
+     * @date 2024/12/14 10:13 AM
+     */
+    public int uniquePaths2(int m, int n) {
+        // dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+        // i [0, m - 1] j [0, n - 1]
+        // dp[m - 1][n - 1]
+        int[] dp = new int[n];
+        for (int i = 0; i < n; i++) dp[i] = 1;
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[j] += dp[j - 1];
+            }
+        }
+        return dp[n - 1];
+    }
     @Test
     public void testUniquePaths() {
         int m = 3, n = 7;

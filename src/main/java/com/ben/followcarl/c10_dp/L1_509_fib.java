@@ -36,7 +36,7 @@ public class L1_509_fib {
     /**
      * @param n:
      * @return int
-     * @description 优化空间复杂度为o1
+     * @description 优化空间复杂度为o1，先计算和，之后a，b都前进一位，即a=b，b=sum；
      * @author benjieqiang
      * @date 2023/8/20 10:03 AM
      */

@@ -39,7 +39,7 @@ import java.util.Arrays;
  */
 public class L13_CompletePack {
 
-    // 先物品后背包;
+    // 先物品后背包; 组合
     @Test
     public void testCompletePack(){
         int[] weight = {1, 3, 4};
@@ -54,7 +54,7 @@ public class L13_CompletePack {
         System.out.println(Arrays.toString(dp));
     }
 
-    // 先背包后物品
+    // 先背包后物品，排列
     @Test
     public void testCompletePackAnotherWay(){
         int[] weight = {1, 3, 4};

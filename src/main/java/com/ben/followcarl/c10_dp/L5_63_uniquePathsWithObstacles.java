@@ -2,6 +2,8 @@ package com.ben.followcarl.c10_dp;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-06-10  21:42
@@ -31,33 +33,36 @@ public class L5_63_uniquePathsWithObstacles {
         return dp[m - 1][n - 1];
     }
 
+    /**
+     * @param obstacleGrid:
+     * @return int
+     * @description 有障碍物，从 j=0 开始更新路径数以确保正确性。
+     * @author benjieqiang
+     * @date 2024/12/14 10:45 AM
+     */
     public int uniquePathsWithObstacles2(int[][] obstacleGrid) {
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
-
         if (obstacleGrid[0][0] == 1 || obstacleGrid[m - 1][n - 1] == 1) return 0;
-        int[][] dp = new int[m][n];
+        // if (obstacleGrid[i][j] == 0) dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
 
-        for (int i = 0; i < m; i++) {
-            if (obstacleGrid[i][0] == 1) break;
-            dp[i][0] = 1;
+        int[] dp = new int[n];
+        for (int i = 0; i < n; i++) {
+            if (obstacleGrid[0][i] == 1) break;
+            dp[i] = 1;
         }
-
-        for (int j = 0; j < n; j++) {
-            if (obstacleGrid[0][j] == 1) break;
-            dp[0][j] = 1;
-        }
-
-
+//        System.out.println(Arrays.toString(dp));
         for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                if (obstacleGrid[i][j] == 0) {
-                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            for (int j = 0; j < n; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    dp[j] = 0;
+                } else if (j > 0){
+                    dp[j] += dp[j - 1];
                 }
             }
         }
-
-        return dp[m - 1][n - 1];
+//        System.out.println(Arrays.toString(dp));
+        return dp[n - 1];
     }
 
     @Test
@@ -67,6 +72,14 @@ public class L5_63_uniquePathsWithObstacles {
                 {0,1,0},
                 {0,0,0}
         };
-        System.out.println(uniquePathsWithObstacles(obs));
+        System.out.println(uniquePathsWithObstacles2(obs));
+    }
+    @Test
+    public void testObstacle2() {
+        int[][] obs = {
+                {0,0},
+                {1,0},
+        };
+        System.out.println(uniquePathsWithObstacles2(obs));
     }
 }
