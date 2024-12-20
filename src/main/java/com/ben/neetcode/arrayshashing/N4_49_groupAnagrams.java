@@ -1,4 +1,4 @@
-package com.ben.followcarl.c3_hashmap;
+package com.ben.neetcode.arrayshashing;
 
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ import java.util.*;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * @Version: 1.0
  */
-public class L2_49_groupAnagrams {
+public class N4_49_groupAnagrams {
 
     // 时间复杂度：O(nklogk)，其中 n 是 strs 中的字符串的数量，k 是 strs 中的字符串的的最大长度。需要遍历 n 个字符串，对于每个字符串，
     // 需要 O(klogk) 的时间进行排序以及 O(1) 的时间更新哈希表，因此总时间复杂度是 O(nklogk)。
