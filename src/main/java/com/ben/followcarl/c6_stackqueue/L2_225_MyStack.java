@@ -48,6 +48,7 @@ class MyStack {
             queue.add(queue.remove());
     }
 
+    // remove => removeFirst
     public int pop() {
         return queue.remove();
     }

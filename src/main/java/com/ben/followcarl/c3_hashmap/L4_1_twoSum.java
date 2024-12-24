@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * @Author: benjieqiang
  * @CreateTime: 2023-07-19  22:56
- * @Description: 两数之和
+ * @Description: 两数之和, 只能用一次，不能更改数组元素顺序
  *  什么时候使用哈希法，当我们需要查询一个元素是否出现过，或者一个元素是否在集合里的时候，就要第一时间想到哈希法。
  * map：元素为key，下标为value;
  * 遍历数组，如果发现target - nums[i]该元素在map中出现，说明找到了和为target的下标：i和map.get(target-nums[i]);
@@ -21,21 +21,19 @@ import java.util.HashMap;
  * @Version: 1.0
  */
 public class L4_1_twoSum {
+    // O(n), O(n)
     public int[] twoSum(int[] nums, int target) {
         HashMap<Integer, Integer> map = new HashMap<>();
-        int[] res = new int[2];
         for (int i = 0; i < nums.length; i++) {
             int tmp = target - nums[i];
 
             if (map.containsKey(tmp)) {
-                // map.get(tmp) != null
-                res[0] = i;
-                res[1] = map.get(tmp);
+                return new int[]{map.get(tmp), i};
             }
             map.put(nums[i], i);
         }
 
-        return res;
+        return new int[0];
     }
 
 

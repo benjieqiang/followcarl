@@ -1,4 +1,4 @@
-package com.ben.followcarl.c3_hashmap;
+package com.ben.neetcode.string;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ import java.util.List;
  * 9. left++, right--;
  *  * @Version: 1.0
  */
-public class L6_15_threeSum {
+public class N3_15_threeSum {
 
     //  O(n^2) O（1）or O(n) depending on the sorting algorithm.
     public List<List<Integer>> threeSum(int[] nums) {

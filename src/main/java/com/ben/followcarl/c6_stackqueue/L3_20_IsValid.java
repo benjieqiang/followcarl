@@ -50,6 +50,19 @@ public class L3_20_IsValid {
         return st.isEmpty();
     }
 
+    public boolean isValid2(String s) {
+        // 1. () 2. ]}}] 3. (]{)
+        if (s == null || s.length() == 0) return false;
+        Deque<Character> stack = new LinkedList<>();
+        for (char ch : s.toCharArray()) {
+            if (ch == '(') stack.push(')');
+            else if (ch == '[') stack.push(']');
+            else if (ch == '{') stack.push('}');
+            else if (stack.isEmpty() || stack.pop() != ch) return false;
+        }
+        return stack.isEmpty();
+    }
+
     @Test
     public void testIsValid() {
 //        String s = "()[]{}";
