@@ -1,4 +1,4 @@
-package com.ben.followcarl.c1_array;
+package com.ben.neetcode.slidingwindow;
 
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ import java.util.Map;
  * 则在while循环里面去移除左边界，最后while循环满足条件再跳出。说明找到了最优解。
  * @Version: 1.0
  */
-public class L4_3_lengthOfLongestSubstring {
+public class N2_3_lengthOfLongestSubstring {
     // s may consist of printable ASCII characters.
     // ASCII 码总共有 128 个字符，范围为 0-127。所以窗口大小是128
     public int lengthOfLongestSubstring(String s) {

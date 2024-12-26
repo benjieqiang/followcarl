@@ -1,4 +1,4 @@
-package com.ben.followcarl.c6_stackqueue;
+package com.ben.neetcode.stack;
 
 import org.junit.Test;
 
