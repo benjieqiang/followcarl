@@ -6,22 +6,6 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Scanner;
-
-class EvalRPNTest {
-    // 接受一个键盘输入一个字符串数组；
-    // String str=scanner.nextLine(); //得到输入字符串
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String[] strings = new String[5];
-        for (int i = 0; i < strings.length; i++) {
-            strings[i] = scanner.next();
-        }
-        System.out.println("strings = " + Arrays.toString(strings));
-
-        System.out.println(new L5_150_EvalRPN().evalRPN2(strings));
-    }
-}
-
 /**
  * @author benjieqiang
  * @description 逆波兰表达式：
@@ -36,7 +20,7 @@ class EvalRPNTest {
  * 4. 栈顶元素就是最终值；
  * @date 2023/7/26 10:33 PM
  */
-public class L5_150_EvalRPN {
+public class N3_150_EvalRPN {
     public int evalRPN2(String[] tokens) {
         Deque<Integer> st = new LinkedList<>();
         for (String str : tokens) {
